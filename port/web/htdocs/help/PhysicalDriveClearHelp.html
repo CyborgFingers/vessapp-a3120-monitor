@@ -1,0 +1,43 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Physical Drive icon Clear tab</title>
+</head>
+
+<body>
+
+<h3>Physical Drive Clear</h3>
+
+<p>The Physical Drive–Clear tab enables you to clear certain conditions from a physical drive.
+The Clear tab only appears when those conditions are present.</p>
+<ul>
+<li><b>Stale</b> – The physical drive contains obsolete disk array information. </li>
+<li><b>PFA</b> – The physical drive has errors resulting in a prediction of failure. </li>
+</ul>
+
+<p><b>Note:</b> Be sure you have corrected the condition
+by a physical drive replacement, rebuild operation, etc., first. Then clear
+the condition in <script>writeSoftwareName()</script>.</p>
+
+<p>To clear a Stale or PFA status from a physical drive:</p>
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Enclosures icon.</li>
+<li>Click on the Enclosure icon.</li>
+<li>Click on the Physical Drives icon.</li>
+<li>Click on the Physical Drive icon.</li>
+<li>In Management View, click on the Clear tab.</li>
+<li>Click on the <b>Submit</b> button.<br>
+The physical drive reverts to unconfigured status.</li>
+</ol>
+
+<p><b>Note:</b> If a physical drive has both a Stale and a PFA condition, run the Clear function once to remove the
+Stale condition, then click again to remove the PFA condition.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>SAS Management icon, Information tab, Port setting link</title>
+</head>
+
+<body>
+
+<h3>SAS Port Settings</h3>
+
+<p>The SAS Managment Information tab displays information about all of the SAS 
+  ports on the <script>writeModelName()</script> subsystem. A SAS Controller can have one or two SAS channels. Each SAS channel has two ports:</p>
+<ul>
+<li>Host In or Data Port (a table-routed port)</li>
+<li>Host In/Out or Data Cascade Port (a subtractive-routed port)</li>
+</ul>
+<p>See the <i><script>writeModelName()</script> Product Manual</i> for information about how these ports are physically connected 
+to the Host PC or other subsystems.</p>
+
+<p>To make settings to the SAS ports:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View.</li>
+<li>Click the Administrative Tools icon.</li> 
+<li>Click the SAS Management icon. </li>
+<li>In the Management window, find the Port whose settings you want to change, then the <b>Port</b> link.</li>
+<li>From the Cable Signal Strength dropdown menu, choose a value.<br>
+  The range is 1 to 8. 1 is the default.<br>
+  Signal strength correlates to cable length in meters.<br>
+   Example: If you have a 2 m SAS cable, set signal strength to 2.<br>
+	If performance is unsatisfactory (see <a href="SASmgtPortStatHelp.html">SAS 
+    Port Statistics</a>), try settings of 1 and 3, then use the best setting for 
+    your system.</li>
+  <li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Controller icon Settings tab</title>
+</head>
+
+<body>
+
+<h3>Controller Settings</h3>
+
+<p>The Controller–Settings tab enables you to make Controller settings. If your subsystem has two controllers, any settings you make to one controller will automatically apply to the 
+other controller.</p>
+
+<p>To make Controller settings:</p>
+
+<ol>
+  <li>Click the Subsystem icon in Tree View.</li>
+<li>Click the Controllers icon.</li>
+<li>Click the Controller.</li>
+<li>Click the Settings tab in Management View.</li>
+<li>Make the following settings as needed:</li>
+
+<h4><script>writeModel4Name()</script> subsystems</h4>
+
+<ul>
+<li>Optional. Enter a name into the Alias field.<br>
+ Maximum of 48 characters. Use letters, numbers, space between words, and underscore.<br><br></li>
+	 
+<li>Check the Enable SMART Log box to enable the Self-Monitoring, Analysis and  Reporting System (SMART).</li>
+<li>Enter a polling interval (1 to 1440 minutes) in the SMART Polling Interval field.<br><br></li>
+
+<li>Check the <a href=CapacityCoercionHelp.html>Enable Coercion</a> box to enable this feature.<br>
+When disk drives of different capacities are used in the same array,
+coercion reduces the usable capacity of the larger disk drive(s) in order
+to match the smallest capacity drive.</li>
+  <li>Choose a coercion method from the <a href=CapacityCoercionHelp.html>Coercion</a> 
+    Method dropdown menu. The choices are: 
+    <ul>
+<li><b>GB Truncate</b> ?(Default) Reduces the useful capacity to the nearest 1,000,000,000 byte boundary.</li>
+<li><b>10GB Truncate</b> ?Reduces the useful capacity to the nearest 10,000,000,000 byte boundary.</li>
+<li><b>Group Rounding</b> ?Uses an algorithm to determine how much to truncate. Results in the maximum amount of usable drive capacity.</li>
+<li><b>Table Rounding</b> ?Applies a predefined table to determine how much to truncate.<br><br></li>
+</ul>
+
+<li>Enter a time interval (1 to 12 seconds) in the Write Back <a href=CachePolicyHelp.html>Cache</a> Flush Interval field.<br><br></li>
+
+<li>Enter a time interval (15 to 255 seconds) in the Enclosure Polling Interval field.<br>
+This is the time interval in which the controller polls all of the components in the enclosure.<br><br></li>
+
+<li>Check the <a href="AdaptiveWritebackCacheHelp.html">Adaptive 
+Writeback Cache</a> box to enable this feature.<br><br></li>
+	
+<li>From the <b>Spindown Type</b> dropdown menu, choose which HDDs you want to spin-down for power saving.<br>
+The choices are all disk drives and spare drives only.<br><br></li>
+
+<li>Enter a power level into the <b>HDD Power Levels</b> field. See Note 2, below. The choices are: 
+<ul>
+<li><b>0</b> ?Disables the feature. The read/write heads never park.</li>
+<li><b>1</b> ?Parks the read/write heads after the specified period of idle time.</li>
+<li><b>3</b> ?Parks the read/write heads, lowers rotation speed, and spins down after the specified period of idle time.<br>
+Enter an idle time period in the field below.</li>
+</ul>
+
+<li>Enter an idle time period into the <b>HDD Idle Time</b> field.<br>
+1 to 1440 minutes or 0 to disable.</li>
+<li>Enter a standby time period into the <b>HDD Standby Time</b> field.<br>
+1 to 1440 minutes. or 0 to disable.</li>
+<li>Enter a stopped time period into the <b>HDD Stopped Time</b> field.<br>
+1 to 1440 minutes or 0 to disable.<br><br></li>
+
+<li>Check the <b>Host Cache Flushing</b> box to enable this feature.<br>
+When enabled, the controller will immediately flush the data in its cache to the drives when the Host sends a Flush Cache command.<br><br></li>
+
+<li>Check the <b>Forced Read Ahead</b> box to enable this feature.<br>
+      When enabled, forces the controller cache to read ahead. Increases performance for video applications only. Reduces performance in all other applications.<br><br></li>
+	  
+<li>Enter a temperature value in the Physical Drive Temperature Threshold field.<br>
+The range is 50 to 60 degrees C.<br><br></li>
+
+<li>Enter a temperature value in the Physical Drive Critical Temperature Threshold field.<br>
+The range is 58 to 65 degrees C.<br><br></li>
+
+</ul>
+<li>Click the <b>Submit</b> button.<br>
+The changes take effect immediately.</li>
+</ol>
+
+<p><b>Note 1:</b> If your subsystem has two controllers and <a href="CacheMirroringHelp.html">Cache 
+  Mirroring</a> is disabled, LUN Affinity is enabled automatically.</p>
+  
+<p><b>Note 2:</b> Power saving 12345 settings for physical drives depend on which features each physical drive supports.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

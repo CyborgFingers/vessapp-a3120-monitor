@@ -1,0 +1,97 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Disk Array Problems</title>
+</head>
+
+<body>
+
+<h3>Disk Array Problems</h3>
+
+<p>Disk array problems typicaly result from a physical drive failure. The 
+  most common problem is a <a href="LDDegradedHelp.html">critical or degraded</a> 
+ logical drive. The  <script>writeModelName()</script>
+  can <a href="RebuildHelp.html">rebuild</a> a critical or degraded logical drive.</p>
+  
+<p>A more serious, but far less common, disk array problem is an <i>Incomplete 
+  Array</i>. An incomplete array result from a physical drive that <a href="PhysicalDriveProblemHelp.html">fails</a> 
+  or becomes missing during:</p>
+  <ul>
+  <li>RAID level <a href="DiskArrayMigrationHelp.html">migration</a> under NVRAM</li>
+  <li>Physical drive <a href="DiskArrayTransportHelp.html">transport</a></li>
+  </ul>
+  
+  <h4>Migration</h4>
+  <p><script>writeModelName()</script> has two methods for migrating a disk array:</p>
+  <ul>
+  <li><b>DDF</b> – The default setting. Slower but reliable</li>
+  <li><b>NVRAM</b> – An optional setting that requires special access. Faster but risks data loss</li>
+  </ul>
+  
+ <p>Normally, RAID level migration is done under the default Disk Data Format (DDF) setting. If a physical drive or the controller fails during migration, 
+ the disk array goes <a href="LDDegradedHelp.html">critical</a>, and you can <a href="RebuildHelp.html">rebuild</a> it. Migration under DDF can 
+ take up to several hours depending on the number and size of the physical drives and data input/output activity.</p>
+ 
+ <p>You can set the 
+  <script>writeModelName()</script>
+  to migrate disk arrays under Non-Volatile Random Access Memory (NVRAM), a much 
+  faster process because it writes data to the memory in the controller. However, if a physical drive or the controller fails during migration, the
+  logical drives will go <a href="LDOfflineHelp.html">offline</a> and you will lose data. See <i>Corrective Action</i>, below. Because the setting for migration 
+  under NVRAM requires special access, most users will not encounter this condition.</p>
+   
+  <h4>Transport</h4>
+  
+<p><a href="DiskArrayTransportHelp.html">Transport</a> is the action of moving the physical drives of a disk array:</p>
+<ul>
+<li>To different slots in the same <script>writeModelName()</script> enclosure</li>
+<li>From one <script>writeModelName()</script> enclosure to another</li>
+</ul>
+<p>If a physical drive fails during a transport, or you do not move all of the 
+  physical drives to their new locations, 
+  <script>writeSoftwareName()</script> will display an 
+incomplete array. See <i>Corrective Action</i>, below. </p>
+  
+ <h4>Incomplete Array</h4>
+<p>When <script>writeSoftwareName()</script> discovers an incomplete array, it displays a dialog box asking you to:</p>
+  <ul>
+  <li>Click the <b>OK</b> button to accept the incomplete array</li>
+  <li>Click the <b>Cancel</b> button to reject the incomplete array</li>
+  </ul>
+
+<p>Before you accept the incomplete array, be sure all of the physical drives are present and that their drive carriers are properly installed into 
+  the enclosure. See the <i><script>writeModelName()</script>
+  Quick Start Guide</i> or <i>Product Manual</i> for more information.</p>
+  
+  <p>If you choose to accept the incomplete array:</p>
+  <ol>
+  <li>Click <b>OK</b> in the incomplete array dialog box.</li>
+  <li>Check the operational status of the logical drives in the array.
+  <ul>
+  <li> If the logical drives are <a href="LDDegradedHelp.html">critical or degraded</a>, proceed 
+    with a <a href="RebuildHelp.html">rebuild</a>.</li>
+  <li>If the logical drives are <a href="LDOfflineHelp.html">offline</a>, contact <script>writeBrandName()</script> <a href=../contact.php>Technical
+Support</a>.</li>
+</ul>
+  </li>
+   <li>Restore your data from a backup source.</li>
+  </ol>
+
+<p>If you choose NOT to accept the incomplete array:</p>
+<ol>
+<li>Click <b>Cancel</b> in the incomplete array dialog box.</li>
+<li>Do one of the following:
+<ul>
+ <li><a href="DiskArraysDeleteHelp.html">Delete</a> the array.</li>
+ <li>Replace the missing physical drive.</li>
+</ul>
+</li>
+ 
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

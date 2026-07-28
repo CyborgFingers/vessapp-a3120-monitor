@@ -1,0 +1,89 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Physical Drive icon Information tab</title>
+</head>
+
+<body>
+
+<h3>Physical Drive</h3>
+
+<p>The Physical Drive–Information tab provides information about the selected 
+  physical disk drive.</p>
+
+<p>To view information about a physical drive:</p>
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Enclosures icon.</li>
+<li>Click on the Enclosure icon.</li>
+<li>Click on the Physical Drives icon.</li>
+<li>Click on a Physical Drive icon.</li>
+<li>From the dropdown menu on the Information tab, choose <i>Statistics</i>.</li>
+</ol>
+
+<h4>Physical Drive Information</h4>
+<p>This screen contains information about the physical drive:</p>
+<ul>
+<li><b>Physical Drive ID</b> – ID number.</li>
+<li><b>Location</b> – Enclosure number and Slot number.</li>
+<li><b>Alias</b> – If assigned.</li>
+<li><b>Physical Capacity</b> – Maximum capacity of the drive.</li>
+<li><b>Configurable Capacity</b> – Total useful capacity of the drive.</li>
+<li><b>Used Capacity</b> – Amount of the useful capacity that contains data.</li>
+<li><b>Block Size</b> – Size of the data blocks.</li>
+<li><b>Operational Status</b> – OK is normal. Can also show Rebuilding, Forced Offline, or Dead.</li>
+<li><b>Configuration Status</b> – The array to which the drive is assigned or its spare designation.</li>
+<li><b>Model</b> – Manufacturer model number.</li>
+<li><b>Drive Interface</b> – SATA, HDD or SSD.</li>
+<li><b>Serial Number</b></li>
+<li><b>Firmware Version</b></li>
+<li><b>Protocol Version</b></li>
+<li><b>Visible To</b> – The controllers that can see this physical drive:
+<ul>
+<li>Fibre Channel subsytems with dual controllers and <a href="LUNAffinityHelp.html">LUN Affinity</a> enabled, Controller 1 or 2</li>
+<li>Other configurations and subsystems, All Controllers</li>
+</ul></li>
+</ul>
+
+<h4>Advanced Physical Drive Information – SATA Drives</h4>
+<p>You can change the following items on the Physical Drives <a href="PhysicalDrivesSettingsHelp.html">Global 
+  Settings</a> tab:</p>
+<ul>
+  <li><b>Write Cache</b> – Enabled or disabled.</li>
+  <li><b>Read Look Ahead Cache</b> – Enabled or disabled.</li>
+    <li><b>Command Queuing</b> – Enabled or disabled.</li>
+   <li><b>DMA Mode</b> – Displays the mode in which the drive is running.</li>
+   <li><b>Medium Error Threshold</b> – Number of bad blocks tolerated before the controller marks the drive as Dead.</li>
+</ul>
+
+
+<h4>Advanced Physical Drive Information – All Drives</h4>
+<ul>
+<li><b>SMART Feature Set</b> – Supported or Not Supported.</li>
+<li><b>SMART Self Test</b> – Supported or Not Supported.</li>
+<li><b>SMART Error Logging</b> – Supported or Not Supported.</li>
+<li><b>Command Queuing Support</b> – NCQ or TCQ.</li>
+<li><b>Queue Depth</b> – Number of commands.</li>
+<li><b>Maximum Multiple DMA Mode Supported</b></li>
+<li><b>Maximum Ultra DMA Mode Supported</b></li>
+<li><b>Drive Temperature</b></li>
+<li><b>Drive Reference Temperature</b></li>
+<li><b>APM Support</b> – Advanced power management mode.</li>
+
+</ul>
+
+<h4>Locate a Physical Drive in the Enclosure</h4>
+
+<p>To locate a physical drive in the <script>writeModelName()</script> enclosure:</p>
+
+<p>Click on the physical drives in the Enclosure Front View graphic.<br>
+The disk status LED will flash to identify the carrier holding the drive.</p>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

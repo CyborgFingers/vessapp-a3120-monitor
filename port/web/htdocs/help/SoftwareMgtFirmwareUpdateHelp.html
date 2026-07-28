@@ -1,0 +1,98 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Software Management icon Firmware Update tab</title>
+</head>
+
+<body>
+
+<h3>Firmware Update</h3>
+
+<p>The Software Management–Firmware Update tab enables you update the firmware 
+  on the <script>writeModelName()</script>
+  RAID subsystem. </p>
+ 
+<p>Before you begin, go the the <script>writeBrandName()</script> website <script>writeCompanyLink()</script>
+  and download the latest firmware update image (.img) file to your TFTP server 
+  or to your PC. The firmware update image file includes all of the firmware components 
+  for the 
+  <script>writeModelName()</script>, including:</p>
+ <ul>
+   <li>Redboot ROM</li>
+   <li>Kernel</li>
+   <li>Firmware</li>
+   <li>Software</li>
+   <li>Ramdisk</li>
+   <li>SEP Firmware</li>
+   <li>Redboot RAM</li>
+   <li>OEM Customization</li>
+   </ul>
+
+<p>To update the firmware from a TFTP server:</p>
+<ol>
+<li>Click the Subsystem icon in Tree view.</li>
+<li>Click the Administrative Tools icon.</li>
+<li>Click the Software Management icon.</li>
+<li>Click the Firmware Update tab.</li>
+<li>Do one of the following:</li>
+<ul>
+<li>Click the Download from TFTP Server option, then click the <b>Next</b> button.</li>
+<li>From the Firmware Update tab dropdown menu, choose <i>Download from TFTP Server</i>.</li>
+</ul>
+<li>Enter the hostname or IP address of your TFTP server in the field provided.</li>
+<li>Enter the port number of your TFTP server in the field provided (69 is the default).</li>
+<li>Enter the filename of the Firmware Update file in the field provided.</li>
+<li>Click the <b>Submit</b> button.</li>
+<li>When the download is completed, click the <b>Next</b> button.<br>
+A popup message appears warning you not to reboot the <script>writeModelName()</script> during the firmware update procedure.</li>
+<li>In the popup message, click the <b>OK</b> button.<br>
+The update progress displays. Then a popup message appears to tell you to reboot the <script>writeModelName()</script></li>
+<li>In the popup message, click the <b>OK</b> button.</li>
+ <li><a href="ShutdownHelp.html">Shutdown</a> the RAID subsystem.<br></li>
+ <li>Turn on both power switches on the RAID subsystem.<br>
+When the RAID subsystem boots, it will run the new firmware.</li>
+</ol> 
+
+<p>To update the firmware from your PC:</p>
+<ol>
+  <li>Click the Subsystem icon in Tree view.</li>
+  <li>Click the Administrative Tools icon.</li>
+  <li>Click the Software Management icon.</li>
+  <li>Click the Firmware Update tab.</li>
+  <li>Do one of the following:</li>
+  <ul>
+    <li>Click the Download Flash File from Local File through HTTP option,
+      then click the <b>Next</b> button.</li>
+    <li>From the Firmware Update tab dropdown menu, choose <i>Download from Local
+      File</i>.</li>
+  </ul>
+   <li>Enter the filename of the Firmware Update file in the field provided.<br>
+    Or, click the <b>Browse...</b> button and select the Firmware Update file
+    in the Open dialog box.</li>
+  <li>Click the <b>Submit</b> button.</li>
+  <li>When the download is completed, click the <b>Next</b> button.<br>
+    A popup message appears to warn you not to reboot the <script>writeModelName()</script> during the firmware
+    update procedure.</li>
+  <li>In the popup message, click the <b>OK</b> button.<br>
+    The update progress displays. Then a popup message appears to tell you to
+    reboot the <script>writeModelName()</script>.</li>
+ <li>In the popup message, click the <b>OK</b> button.</li>
+ <li><a href="ShutdownHelp.html">Shutdown</a> the RAID subsystem.<br></li>
+ <li>Turn on both power switches on the RAID subsystem.<br>
+When the RAID subsystem boots, it will run the new firmware.</li>
+</ol> 
+
+<p><b>Note 1:</b> After you click the <b>Submit</b> button, if 
+  <script>writeSoftwareName()</script> displays this message: <b>error transferring image</b>, 
+you entered an incorrect file name or an incorrect location. Check the information and try again.</p>
+
+<p><b>Note 2:</b> You can delay restarting the <script>writeModelName()</script> and continue running the previous firmware, if necessary.</p>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

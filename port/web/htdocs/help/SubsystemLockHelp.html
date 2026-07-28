@@ -1,0 +1,68 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Subsystem icon Lock tab</title>
+</head>
+
+<body>
+
+<h3>Subsystem Lock</h3>
+
+<p>The Subsystem–Lock tab displays lock status and enables you to lock or unlock
+  a subsystem controller. The lock prevents other sessions (including by the same
+  user) from making a configuration change to the controller until the lock expires
+  or a forced unlock is done. If another user attempts to change a controller setting, that user will see a message saying that the system is locked.
+  When the user who locked the controller logs out,
+  the lock is automatically released. </p>
+
+<p>You can set the lock to last from one minute to one day. You can also release the lock before the scheduled time.</p>
+
+<p>To VIEW the lock status for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>Click on the Lock tab in Management View.<br>
+The following information is displayed:</li>
+<ul>
+<li>Lock Status –  The User who set the lock in the current session can see the lock status.</li>
+<li>Expiration Time – Amount of time left until the lock automatically releases.</li>
+<li>Expire At Time – The date and time when the lock will automatically release.</li>
+</ul>
+</ol>
+
+<p>To SET the lock for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>Click on the Lock tab in Management View.</li>
+  <li>Click on the <b>Lock</b> option button.</li>
+<li>Enter a time interval between 1 and 1440 minutes (one day) that you want the lock to stay active.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p>To RENEW an existing lock for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>Click on the Lock tab in Management View.</li>
+  <li>Click on the <b>Renew</b> option button.</li>
+<li>Enter a time interval between 1 and 1440 minutes (one day) that you want the lock to stay active.<br>
+The renew time replaces the previous Expiration Time.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p>To RELEASE the lock for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>Click on the Lock tab in Management View.</li>
+  <li>If you are the User who set the lock, click on the <b>Unlock</b> option 
+    button.<br>
+    If another User set the lock and you are a Super User, click on the <b>Unlock</b> 
+    option button and check the <b>Force Unlock</b> box.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

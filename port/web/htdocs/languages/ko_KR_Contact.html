@@ -1,0 +1,247 @@
+<?php
+$supports = array(
+	array(
+		'name' => 'North America',
+		'location' => array(
+			array(
+				'name' => 'USA',
+				'item' => array(
+					'지원부서 전화' => '+1 (408) 645-3469',
+					'기술지원' => 'support@promise.com',
+					'웹페이지' => 'http://support.promise.com',	
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'EMEA',
+		'location' => array(
+			array(
+				'name' => 'Germany',
+				'item' => array(
+					'지원부서 전화' => '+49 (0) 2 31 56 76 48 - 10',
+					'기술지원' => 'support-de@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'United Kingdom',
+				'item' => array(
+					'지원부서 전화' => '+44 (845) 1546130',
+					'기술지원' => 'support-uk@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'Europe',
+				'item' => array(
+					'지원부서 전화' => '+31 (0) 40-235-2600',
+					'기술지원' => 'support@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'MEA',
+				'item' => array(
+					'지원부서 전화' => '+97145571951',
+					'기술지원' => 'support@mea.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'Asia-Pacific',
+		'location' => array(
+			array(
+				'name' => 'Australia',
+				'item' => array(
+					'지원부서 전화' => '+61-7-56999629',
+					'기술지원' => 'support@au.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Beijing',
+				'item' => array(
+					'지원부서 전화' => '+8610-8857-8085/8095',
+					'기술지원' => 'support@cn.promise.com',
+					'영업부서 전자메일' => 'sales@cn.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'India',
+				'item' => array(
+					'지원부서 전화' => '+91-9962411666',
+					'기술지원' => 'support@in.promise.com',
+					'영업부서 전자메일' => 'sales@in.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Indonesia',
+				'item' => array(
+					'지원부서 전화' => '180011101787',
+					'기술지원' => 'support@tw.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Japan',
+				'item' => array(
+					'지원부서 전화' => '+81-3-6801-8064',
+					'기술지원' => 'support@jp.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Korea',
+				'item' => array(
+					'지원부서 전화' => '00798142030091',
+					'기술지원' => 'support@kr.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Malaysia',
+				'item' => array(
+					'지원부서 전화' => '+60-3-92127992',
+					'기술지원' => 'support@tw.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'New Zealand',
+				'item' => array(
+					'지원부서 전화' => '+64 99518714',
+					'기술지원' => 'support@au.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Philippines',
+				'item' => array(
+					'지원부서 전화' => '180011101787',
+					'기술지원' => 'support@tw.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Shanghai',
+				'item' => array(
+					'지원부서 전화' => '+8621-3214-0395',
+					'기술지원' => 'support@cn.promise.com',
+					'영업부서 전자메일' => 'sales@cn.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Singapore',
+				'item' => array(
+					'지원부서 전화' => '+65 31594529',
+					'기술지원' => 'support@tw.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Taiwan',
+				'item' => array(
+					'지원부서 전화' => '+886-3-578-0002',
+					'기술지원' => 'support@tw.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Thailand',
+				'item' => array(
+					'지원부서 전화' => '+66 600035381',
+					'기술지원' => 'support@tw.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Vietnam',
+				'item' => array(
+					'지원부서 전화' => '+84 12280429',
+					'기술지원' => 'support@tw.promise.com',
+					'웹페이지' => 'http://support.promise.com',
+				),
+			),
+		),
+	),
+);
+
+function pack_value($v) {
+	if (strpos($v, '@')) {
+		return sprintf('<a href="mailto:%s">%s</a>', $v, $v);
+	}
+	if (strpos($v, '://')) {
+		return sprintf('<a href="%s" target="_blank">%s</a>', $v, $v);
+	}
+	return $v;
+}
+?>
+<html>
+
+<head>
+	<link rel="stylesheet" href="/help/help.css" type="text/css">
+	<style>
+		.nationStyle {
+			font-family: verdana, arial, helvetica;
+			font-size: 16px;
+			color: #003399
+		}
+	</style>
+	<title>Help Page</title>
+</head>
+
+<body class=textHelp>
+
+	<h3 class="headerHelp">Promise Technology 연락처</h3>
+
+	<p>Promise Technology 제품에 관한 연락 정보가 아래에 열거되어 있습니다.</p>
+	
+	<table cellpadding="10" class=textHelp width="654" border="0">
+
+
+	<?php foreach ($supports as $continent) { ?>
+		<tr>
+			<td valign="top" class=nationStyle><b><?=$continent['name']?></b></td>
+		</tr>
+
+		<tr>
+			<td valign="top">
+				<table border="0" width="100%">
+					<?php foreach ($continent['location'] as $loca) { ?>
+					<tr style="margin-top: 5px;">
+						<td width="190" valign="top">
+							<b><?=$loca['name']?></b>
+						</td>
+						<td style="padding-top: 3px;">
+							<ul>
+								<?php foreach ($loca['item'] as $item => $val) { ?>
+								<li style="padding-bottom: 4px;"><?=$item?>: <?=pack_value($val)?></li>
+								<? } ?>
+							</ul>
+						</td>
+					</tr>
+					<tr colspan="2"><td>&nbsp;</td></tr>
+					<?php } ?>
+				</table>
+			</td>
+		</tr>
+
+	<? } ?>
+
+<?php
+if(preg_match('/index.php/',$_SERVER['HTTP_REFERER'])) {
+	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+}
+if(preg_match('/help/',$_SERVER['HTTP_REFERER'])) {
+	//	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+	echo '<table><tr><td><img src=help/helpImages/ball-back.gif></td><td><a href=javascript:history.back()>Go Back</a></td></tr></table>';
+}
+?>
+
+	</table>
+</body>
+
+</html>

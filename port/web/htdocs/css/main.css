@@ -1,0 +1,34 @@
+.header {font-size:20;color:#003399;font-weight:900}
+.subHeader {font-size:11;background-color:#D8E0EF;color:#003399;height:54}
+.text {font-size:11}
+.logFileFont {font-size:11}
+.textBold {font-family:verdana,helvetica;font-size:12;color:black}
+.yellowButton {background-color:#FFFF99;color:black;font-size:11;}
+.violetButton {background-color:#CCCCCC;width:120px;font-size:11; color: #000066}
+.grayButton {background-color:#E6E6E6;width:120px;font-size:11}
+.textFiled {width:500px}
+.alignRight {}
+.editField0 {}
+.editField {width:200;}
+.editField1 {width:60;}
+.editField2 {width:136;}
+.editField3 {width:40; text-align:right;}
+.editField4 {width:267;}
+.selectField {width:120;}
+
+.grayBGText {background-color:#E6E6E6;font-size:12}
+.whiteBGText {background-color:#000000;font-size:11}
+.blueText {font-weight:normal;}
+.message1 {background-color:#ADBEDA;font-size:30}
+.bgWhite {background-color:#FFFFFF;height:22px}
+.bgGray { background-color:#D8E0EF;height:22px}
+.warning {color:#D27272; font-weight: normal;}
+.messageFont {font-size:12}
+.colonBold {font-size:25;}
+
+.flushFrequencySize {font-size:11;size:2}
+.bgGray-1 { background-color:#DADADA;height:22px }
+.bgcolor-1 { background-color:#D8E0EF }
+
+
+

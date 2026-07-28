@@ -1,0 +1,1 @@
+../../src/hal/mmio/asm_reg_mock.c

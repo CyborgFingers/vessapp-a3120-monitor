@@ -1,0 +1,141 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Storage Services icon LUN Map tab</title>
+</head>
+
+<body>
+
+<h3>LUN Mapping and Masking</h3>
+
+<p>The Storage Services–LUN Map tab displays:</p>
+<ul>
+<li>For <a href=#iSCSI>Fiber Channel, iSCSI, and SAS</a>, a list of initiators recognized by the <script>writeModelName()</script> controller and their corresponding LUN mapping.</li>
+  <li>For <a href=#SCSI>SCSI</a>, a list of SCSI Channel IDs and the LUNs applied 
+    to them.</li>
+</ul>
+
+<p>These functions are also available under the <a href="LogicalDriveLUNMapHelp.html">Logical 
+  Drive–LUN Map tab</a>.</p>
+
+<p>To VIEW the current LUN Map:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administrative Tools icon.</li>
+<li>Click on the Storage Services icon.</li>
+<li>Click the LUN Map tab in Management View.</li>
+</ol>
+
+<a name="iSCSI"><h4>Fibre Channel, iSCSI, and SAS</h4></a>
+
+<h5>LUN Masking and Mapping </h5>
+
+<p>For Fibre Channel, iSCSI, and SAS, LUN Masking is the process of applying a LUN Map 
+  so that each initiator can only access the LUNs specified for it.</p>
+  
+  
+<p>To find initator <a href=#name>names</a> automatically, click on:</p>
+<ul>
+  <li>Fibre Channel <a href="FCMgtInitiatorHelp.html">Initiators</a> tab</li>
+  <li>SAS Management <a href="SASmgtPortInitHelp.html">Initiators</a> tab</li>
+</ul>
+
+<p>For iSCSI, obtain the initiator <a href=#name>name</a> from the initiator utility on your host system.</p>
+  
+<p>To ENABLE the LUN Masking:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administrative Tools icon.</li>
+<li>Click on the Storage Services icon.</li>
+<li>Click the LUN Map tab in Management View.</li>
+  <li>Click the Enable LUN Masking box.</li>
+<li>Click the <b>Submit</b> button.<br>
+</ol>
+
+<p>To EDIT the Fibre Channel, iSCSI, or SAS LUN Map:</p>
+<ol>
+  <li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administrative Tools icon.</li>
+  <li>Click on the Storage Services icon.</li>
+  <li>In Management View, from the LUN Map tab dropdown menu, chooset <i>Edit 
+    LUN Map</i>.</li>
+  <li>Select an initiator from the Initiator dropdown menu.<br>
+    Or enter the initiator's name in the Initiator Name field.<br>
+    Note that the initiator name you input must match exactly in order for the 
+    connection to work.</li>
+  <li>If the LUN field is empty, type a LUN into this field to map to the logical 
+    drive.</li>
+  <li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Note:</b> For iSCSI models, if iSNS is enabled, you can copy and paste the Initiator Name. Click on the iSCSI Management icon, 
+then click on the iSNS tab dropdown menu and select <i>Get Initiators</i>. When the initiators display, highlight and copy the 
+one you want and paste it into the Initiator Name field.</p>
+
+<a name="name"><h5>LUN Mapping Parameters</h5></a>
+<ul>
+  <li><b>Initiator</b> – The Fibre Channel, iSCSI, or SAS HBA card in the Host system that initiates commands to the target (<script>writeModelName()</script>).</li>
+  <li><b>Initiator Name</b> – A World Wide Name (WWN), used to identify the Initiator. 
+	<ul>
+	<li><b>Fibre Channel</b> – A Fibre Channel initiator name is the World Wide Port Name of the device and is composed of a series of eight, two-digit 
+    hexadecimal numbers.</li>
+	<li><b>iSCSI</b> – An iSCSI initiator name is the iSCSI name of the initiator device and is composed of a single text string. iSCSI 
+    WWNs are somewhat different from regular WWNs.</li>
+    <li><b>SAS</b> – A SAS initiator name is the SAS address of the HBA card in the Host PC.</li>
+	</ul></li>
+  <li><b>Logical Drive ID</b> – This is actually the disk array ID number. </li>
+  <li><b>RAID Level</b> – <a href=RAIDlevels.html>RAID Level</a> of the logical 
+    drive. </li>
+  <li><b>Capacity</b> – Capacity of the logical drive. </li>
+  <li><b>Serial Number</b> – Serial number of the logical drive. </li>
+  <li><b>LUN</b> – Logical Unit Number on this logical drive for the selected 
+    initiator.<br>
+    You must enter different LUN numbers for each logical drive. </li>
+</ul>
+
+<a name="SCSI"><h4>SCSI</h4></a>
+<h5>LUN Masking and Mapping</h5>
+
+<p>For SCSI, LUN Mapping is the process of applying a LUN Map so that each port 
+  can access the logical drive (target).</p>
+
+<p><b>Important:</b> You must <a href="SCSIMgtPortsSettingsHelp.html">enable a 
+  Target</a> before you assign a LUN to it.</p>
+
+<p>To EDIT the SCSI LUN Map:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administrative Tools icon.</li>
+<li>Click on the Storage Services icon.</li>
+<li>Click the LUN Map tab in Management View.</li>
+<li>From the LUN Map tab dropdown menu, select <i>Edit LUN Map</i>.</li>
+  <li>Select Port 1 or Port 2 from the Port ID dropdown menu.</li>
+  <li>In the LUN Mapping and Masking table, select a Logical Drive ID with empty Target ID and LUN fields.</li>
+  <li>Type a Target ID into the Target ID field.<br>
+    Target IDs range from 0 to 15.</li>
+  <li>Type a LUN into the LUN field.<br>
+    LUNs range from 0 to 63. The number of available LUNs may be less, depending on the capability of your SCSI HBA card.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+
+<h5>LUN Mapping Parameters</h5>
+<ul>
+<li><b>Logical Drive ID</b> – The disk array ID number. </li>
+<li><b>RAID Level</b> – <a href=RAIDlevels.html>RAID Level</a> of the logical drive. </li>
+<li><b>Capacity</b> – Capacity of the logical drive. </li>
+  <li><b>WWN</b> – World Wide Number of the logical drive.</li>
+<li><b>Target ID</b> – Active Target ID on this logical drive for the selected
+  port.</li>
+<li><b>LUN</b> – Logical Unit Number on this logical drive for the selected
+  port.<br>
+You must enter different LUN numbers for each logical drive. </li>
+</ul>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

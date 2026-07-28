@@ -1,0 +1,76 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Adding a Second Controller</title>
+</head>
+
+<body>
+
+<h3>Adding a Second Controller</h3>
+
+<p>If your <script>writeModelName()</script> <script>writeModel2Name()</script>
+ subsystem shipped with one controller, you can add a second controller. 
+  The second controller must have:</p>
+
+<ul>
+<li>The same Firmware version as the currently installed controller</li>
+<li>The same amount of SDRAM as the currently installed controller</li>
+</ul>
+
+<p>To obtain this information for the currently installed controller, click on the <a href="ControllerInfoHelp.html">Controller 
+  icon, Information tab</a>, and look for Firmware Version and Memory Size.</p>
+  
+  <p><b>Note:</b> Obtain your second controller though <script>writeCompanyName()</script>. 
+  <script>writeBrandName()</script> Support will prepare the new controller with Firmware and SDRAM
+  to match your current <script>writeModelName()</script> subsystem.</p>
+  
+<p><b>Note:</b> The <script>writeModelName()</script> subsystem boots its controllers sequentially. With a second controller
+installed, your subsystem will take about a minute longer to boot. This condition is normal.</p>
+
+<h4>Installing a Second Controller</h4>
+  
+<p>To install a second controller in your <script>writeModelName()</script> subsystem:</p>
+<ol>
+  <li>Be sure the new controller has the same Firmware version and amount of SDRAM.</li>
+  <li><a href="ShutdownHelp.html">Shutdown</a> the subsystem.</li>
+<li>Remove the blank cover from the right controller slot.</li>
+<li>Carefully slide the new controller into the slot until the handle locks in place.</li>
+<li>Attach your data and management cables to the new controller, as needed.<br>
+See the 
+  <i><script>writeModelName()</script>
+  Product Manual</i> for cable connection information.</li>
+<li>Power up the subsystem and launch WebPAM PROe.</li>
+<li>Click on the Controllers icon in the Tree, then look at the Information tab in Management view.</li>
+<ul>
+<li>If the controllers' Operational Status is OK, the installation was successful.</li>
+    <li>If one of the controller's Operational Status is <i>Missing</i>, one of the controllers went into <a href="ControllerProblemHelp.html">maintenance mode</a>.</li>
+</ul>
+<li>With the second controller successfully installed, make the following settings:
+<ul>
+  <li><a href="SubsystemSettingsHelp.html">Redundancy Type</a> to Active-Active or Active-Standby</li>
+  <li><a href="ControllerSettingsHelp.html">LUN Affinity</a> if you choose Active-Active redundancy</li>
+</ul> </li>
+</ol>
+
+<h4>Dual Controllers and SATA Drives</h4>
+<p>If your <script>writeModelName()</script>
+  subsystem has SATA disk drives installed, you must install an AAMUX adapter 
+  on each of the SATA drives. <br>
+  Without the AAMUX adapter, SATA drives will display <b>Not Usable</b> under Operational 
+  Status.<br>
+See the 
+  <i><script>writeModelName()</script>
+  Product Manual</i> for disk drive and AAMUX installation instructions.</p>
+
+<p>This condition does not apply to SAS disk drives.</p>
+
+<p><b>Note:</b> Obtain AAMUX adapters though <script>writeCompanyName()</script>.</p>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

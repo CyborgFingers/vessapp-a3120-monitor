@@ -1,0 +1,50 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Logical Drive icon Check Table tab</title>
+</head>
+
+<body>
+
+<h3>Logical Drive  Check Table</h3>
+
+<p>The Logical Drive–Check Table tab enables you to view error tables. Use this information to evaluate
+the integrity of the logical drive and to determine whether corrective action is needed. </p>
+
+<p>To View the tables: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+<li>Click on the Logical Drives icon.</li>
+<li>Click on the Logical Drive icon.</li>
+<li>Click the Check Table tab in Management view.</li>
+  <li>Click the option button for the table you want to see.<br>
+The default is All tables.</li>
+</ol>
+
+<ul>
+<li><b>Entry Number</b> – A number assigned to each block of entry.</li>
+<li><b>Table Type</b> –  Read Check, Write Check or Inconsistent Block (see below).</li>
+<li><b>Start Logical Block Address</b> –  LBA of the first block for this entry.</li>
+<li><b>Count</b> – Number of continuous blocks starting from this LBA.</li>
+</ul>
+
+
+<h4>Table Definitions</h4>
+<ul>
+<li><b>Read Check Table</b> – Contains a list of read errors for this logical drive.</li>
+<li><b>Write Check Table</b> – Contains a list of write errors for this logical drive.</li>
+  <li><b>Inconsistent Block Table</b> – Contains a list of inconsistent blocks 
+    for this logical drive. Mirror data for RAID Levels 1, 1E and 10 or Parity 
+    data for RAID Levels 5, 6, 50, and 60. Identified by the Redundancy Check 
+    (a <a href=SubsystemBackgroundHelp.html>background</a> function).</li>
+</ul>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

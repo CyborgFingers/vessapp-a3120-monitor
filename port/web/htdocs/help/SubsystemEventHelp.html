@@ -1,0 +1,85 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Subsystem icon Event tab</title>
+</head>
+
+<body>
+
+<h3>Subsystem Events</h3>
+
+<p>The Subsystem–Event tab provides information from the event (log) file of a specific subsystem. 
+There are two classifications of events:</p>
+<ul>
+  <li>NVRAM Events – The most important events over multiple subsystem startups.</li>
+  <li>Runtime Events – The 1023 most recent events since the last subsystem startup.</li>
+</ul>
+
+<h4>Viewing Events</h4>
+
+<p>To view the event log for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>From the dropdown menu on the Event tab, choose <i>Runtime Events</i> or <i>Subsystem Events in NVRAM</i>.<br>
+If you just click on the Event tab, the Runtime Events are displayed.</li>
+<li>Click on the headings to sort the events.</li>
+</ol>
+
+<p>The Event Frame displays events by:</p>
+<ul>
+<li>Item Number –  Sequencial number of the event</li>
+<li>Device –  The subsystem component that experienced the event</li>
+<li>Event ID –  A hexadecimal number</li>
+<li>Severity:
+<ul>
+<li>Information – Information only, no action is required</li>
+    <li>Warning – User can decide whether or not action is required</li>
+    <li>Minor – Action is needed but the condition is not a serious at this time</li>
+    <li>Major – Action is needed now</li>
+    <li>Critical – Action is needed now and the implications of the condition are serious</li>
+    <li>Fatal – Non-Recoverable error or failure has occurred</li>
+</ul></li>
+<li>Time and Date</li>
+<li>Description</li>
+</ul>
+
+<h4>Sorting Events</h4>
+
+<p>You can sort the events by Item Number, Device, Event ID, Severity, Time and Date, or Description.</p>
+<p>Click on the link at the top of the column by which you want to sort the events.<br>
+After you click on the item, a triangle icon appears.</p>
+<ul>
+<li> If the triangle points upward, the column is sorted low-to-high or old-to-new.</li>
+<li>If the triangle points downward, the column is sorted high-to-low or new-to-old.</li>
+</ul>
+<p>Click the link a second time to change to flip the triangle and reverse the sort sequence.</p>
+
+<h4>Clearing Events</h4>
+
+<p>To clear the event file for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>Click on the Event tab in Management View.</li>
+<li>Click on the <b>Clear Event Log</b> button.</li>
+<li>In the Confirmation dialog box, type the word <b>confirm</b> then click the <b>OK</b> button.</li>
+</ol>
+
+<h4>Saving Events to a File</h4>
+
+<p>To save the event file for this subsystem in a tab-delineated text file:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>From the dropdown menu on the Event tab, choose <i>Runtime Events</i> or <i>Subsystem Events in NVRAM</i>.</li>
+<li>Click on the <b>Save Event Log</b> button.<br>
+  The next dialog boxes you see will vary depending on the  browser and your browser settings.<br>
+ When the process is done, a file called "eventlog" is saved to the Host PC.</li>
+</ol>
+<p><b>Note:</b> You must save the Runtime Events log and Subsystem Events log as separate text files.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+# prevtlogd - engine event-log daemon (Phase 5 port of clitest/prevtlogd.exe):
+# events -> syslog(3), replacing the Windows EventLog writer.
+#
+# SCAFFOLD SEMANTICS: the engine poll (i2_getEvents) is an on-device calibration
+# point (docs/RE-snmp-daemons.md #3); the syslog write path is implemented and
+# exercised via `prevtlogd --event <id>`. One-shot until the poll is calibrated.
+[Unit]
+Description=Promise prevtlogd (engine event log -> syslog; one-shot scaffold until engine poll is calibrated)
+PartOf=promise-webpam.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=-/etc/promise/promise.env
+ExecStart=/opt/promise/bin/prevtlogd
+
+[Install]
+WantedBy=promise-webpam.target

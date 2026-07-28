@@ -1,0 +1,59 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Software Management icon Image Version tab</title>
+</head>
+
+<body>
+
+<h3>Firmware Image Version</h3>
+
+<p>The Software Management–Image Version tab enables you view the package of firmware 
+  components on the <script>writeModelName()</script> controller or controllers. 
+  The components are displayed by enclosure. The enclosures are listed in Tree View.</p>
+  
+<p>Enclosure image version information includes:</p>
+  <ul>
+  <li><b>Image Condition</b> – Running or Flashed.
+  <br>
+    If the Running and Flashed image version numbers do not match, the <script>writeModelName()</script> was 
+    not restarted since the firmware was last updated. <a href="ShutdownHelp.html">Restart 
+    the <script>writeModelName()</script></a> to run the Flashed firmware package.</li>
+  <li><b>Image Type</b> –  A component of the firmware package.<br>
+   RAID subsystems use:
+   <ul>
+   <li>Redboot ROM</li>
+   <li>Kernel</li>
+   <li>Firmware</li>
+   <li>Software</li>
+   <li>Ramdisk</li>
+   <li>SEP Firmware</li>
+   <li>Redboot RAM</li>
+   <li>OEM Customization</li>
+    </ul>
+  <li><b>Controller ID</b> – 1 or 2.</li>
+  <li><b>Version</b> –  Version number of the component.</li>
+  <li><b>Build Date</b> –  Build date of the component. Older versions might show N/A.</li>
+  <li><b>Flash Date</b> –  Flash or installation date of the component. Older versions might show N/A.</li>
+  </ul>
+  
+
+
+<p>To view image version information:</p>
+<ol>
+<li>Click the Subsystem icon in Tree view.</li>
+<li>Click the Administrative Tools icon.</li>
+<li>Click the Software Management icon.</li>
+<li>Click the Image Version tab.<br>
+    The image version information displays on the screen.</li>
+</ol>
+
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

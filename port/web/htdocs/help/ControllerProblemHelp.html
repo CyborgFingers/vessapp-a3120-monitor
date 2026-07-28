@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Controller Problems</title>
+</head>
+
+<body>
+
+<h3>Controller Problems</h3>
+
+<p>When a RAID controller encounters an internal problem, it can enter <i>maintenance 
+  mode</i>. When an controller enters maintenance mode, it goes offline and it 
+  displays <i>Missing</i> under <a href="ControllersInfoHelp.html">Operational Status</a>.</p>
+
+<p>Note that <script>writeModelName()</script> subsystems with only one controller will always show that the
+second controller is <i>Missing</i>.<br>
+ For <script>writeModelName()</script>s with two controllers, one of the
+controllers will display <i>Missing</i> if a controller is improperly configured or it has been 
+removed from the subsystem.<br>
+ Before proceeding, be sure that both controllers:</p>
+<ul>
+<li>Have the same Firmware version</li>
+<li>Have the same amount of SDRAM</li>
+<li>Are properly installed and connected</li>
+</ul>
+
+<p>To obtain this information for a controller, click on the <a href="ControllerInfoHelp.html">Controller 
+  icon, Information tab</a>, and look for Firmware Version and Memory Size.</p>
+
+<p>To access a controller in maintenance mode, use a serial connection. See Chapter 2 of the 
+  <i><script>writeModelName()</script>
+  Product Manual</i> for instructions.<br>
+Or, if 
+  you know the controller’s <a href="NetworkMgtMaintModeHelp.html">IP address</a>, 
+  you can access the controller using a Telnet connection.<br>
+ See Chapter 6 of the 
+  <i><script>writeModelName()</script>
+  Product Manual</i> for more information about updating the firmware using 
+  a TFTP server over a Telnet connection.</p>
+
+<p>Also see <a href="ControllerAddingHelp.html">Adding a Second Controller</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

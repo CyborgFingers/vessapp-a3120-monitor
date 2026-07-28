@@ -1,0 +1,18 @@
+# promise.reg - OpenSLP static service registration for VessApp / WebPAM PROe.
+#
+# Install as /etc/slp.reg and run OpenSLP `slpd` (the Linux replacement for the
+# Windows slpreg.exe + slp.dll path invoked by slpreg.bat's `slpreg -once`).
+# WebPAM's slp.php just start/stop/scopes the local SA; slp.dll strings confirm
+# the OpenSLP framing this uses: service:service-agent, service:directory-agent,
+# net.slp.useScopes.
+#
+# UNRESOLVED: the exact Promise vendor srvtype string registered by slp.dll on
+# the box is not in any shipped artifact. Below we register the WebPAM
+# management endpoint under a port-chosen type; confirm the real srvtype
+# on-device with `slptool findsrvtypes` and substitute it here (CALIBRATE).
+#
+# Format (OpenSLP slp.reg):  service-url,language,lifetime  then attr=value lines.
+
+service:vessapp.promise://vess-a3120.local:8443,en,65535
+model=Vess A3120
+description=Promise VessApp WebPAM PROe management

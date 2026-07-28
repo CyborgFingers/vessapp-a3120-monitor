@@ -1,0 +1,72 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Transition</title>
+
+</head>
+
+<body>
+
+<h3>Transition</h3>
+
+<p>Transition is the process of replacing a revertible spare
+drive that is currently part of a disk array with an unconfigured physical drive
+or a non-revertible spare. The revertible spare drive returns to its original
+status. In order to run the Transition function, the spare drive must be <a href=SpareDrivesCreateHelp.html>Revertible</a>.
+For more information on Transition, see Chapter 7 of the <i><script>writeModelName()</script> Product Manual</i>.</p>
+
+<p>In addition, you must specify an unconfigured physical drive
+of the same or larger capacity to replace the revertible spare drive.</p>
+
+<h4>Run a Transition</h4>
+
+<p>To run Transition, take the following actions:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, choose <i>Start Transition</i>.</li>
+<li>From the Source Physical Drive dropdown menu, choose the disk array and revertible spare drive.<br>
+The disk array is called an Array. The revertible spare drive is called a Seq No.</li>
+<li>From the Target Physical Drive dropdown menu, choose an unconfigured physical drive.</li>
+<li>Click on the <b>Submit</b> button. </li>
+</ol>
+
+<p>The revertible spare drive will be listed under the Spare Drives icon and the disk array's opertional status will show <b>OK</b>.</p>
+
+<h4>Pause, Resume, or Stop the Transition</h4>
+
+<p>To pause, resume, or stop the Transition:</p>
+  <ol>
+   <li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+  <li>Click on the Background Activities tab in Management view.</li>
+  <li>Under Background Activities, click on the <b>Transition</b> <a href="BackgroundActivityHelp.html">link</a>.</li>
+</ol>
+
+<p><b>Note:</b> You can also pause, resume, or stop the Transition from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a>
+tab.</p>
+
+
+<h4>Set Transition Priority</h4>
+
+<p>To set Transition priority, take the following actions:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, choose <i>Settings</i>.</li>
+<li>Click on the Transition Rate dropdown menu and select a rate: Low, Medium or High.</li>
+<ul>
+<li><b>Low</b> allocates fewer system resources to the Transition Rate and more to data read/write operations.</li>
+<li><b>Medium</b> allocates a balance of system resources to the Transition Rate and data read/write operations.</li>
+<li><b>High</b> allocates more system resources to the Transition Rate and fewer to data read/write operations.</li>
+</ul>
+<li>Click on the <b>Submit</b> button. </li>
+</ol>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

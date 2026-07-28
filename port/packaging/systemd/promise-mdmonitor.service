@@ -1,0 +1,21 @@
+[Unit]
+Description=Promise VessApp RAID event monitor (mdadm --monitor -> event log / email / SNMP)
+Documentation=man:mdadm(8)
+After=local-fs.target
+
+[Service]
+Type=simple
+# Monitor the md arrays that exist right now, DIRECTLY (not --scan: on a
+# name-colliding array like "md0", --scan misreports a member failure as
+# DeviceDisappeared/LD_OFFLINE - "possible data loss" - when the array is merely
+# degraded; a direct monitor reports the correct Fail/PD_MARKED_DEAD). The loop
+# re-enumerates every ~5 min so new/removed arrays are picked up; a member
+# failure is caught within --delay. promise-mdmonitor maps each event to the
+# port event log + emaild + promise_trap. Restart=always covers the no-array
+# startup (before any array exists).
+ExecStart=/bin/sh -c 'while :; do d=$(ls -d /dev/md[0-9]* 2>/dev/null); if [ -n "$d" ]; then timeout 300 /sbin/mdadm --monitor --program /opt/promise/bin/promise-mdmonitor --delay=20 $d; else sleep 30; fi; done'
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

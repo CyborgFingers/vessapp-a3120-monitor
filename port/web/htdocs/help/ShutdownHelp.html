@@ -1,0 +1,69 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Shutdown</title>
+
+</head>
+
+<body>
+
+
+<h3>Shutdown and Restart</h3>
+
+<p>The Shutdown and Restart function enables you to:</p>
+<ul>
+<li>Shut down the subsystem</li>
+<li>Shut down and restart the subsystem</li>
+</ul>
+<p>You can only do part of this function in <script>writeSoftwareName()</script>. Additional action is required, as described below. 
+If you want to monitor the shutdown or restart process, see the notes below.</p>
+
+<h4>Shutdown the Subsystem</h4>
+
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Administrative Tools icon.</li>
+<li>Click on the Shutdown link in Management View.<br>
+A Shutdown or Restart tab will appear.</li>
+<li>On the Shutdown or Restart tab, select <i>Shutdown</i> from the dropdown menu.</li>
+<li>Click the <b>Submit</b> button.</li>
+<li>In the confirmation box, type the word <b>confirm</b> in the field provided.</li>
+<li>Click the <b>OK</b> button.<br>
+ When the controller shuts down, your <script>writeSoftwareName()</script> connection will be lost.</li>
+  <li>Wait for no less than two minutes.</li>
+<li>Manually turn off the power supply switches on the back of the subsystem.</li>
+</ol>
+
+<p><b>Note:</b> To monitor a shutdown, you must use the Command Line Interface (CLI) though a serial connection to the <script>writeModelName()</script>.<br> 
+At the "administrator@CLI>" prompt, type <b>shutdown -a shutdown</b>.<br>
+When the "Shutdown complete. It is now safe to power off the subsystem." message appears, turn off the power supply switches.</p>
+
+<h4>Restart the Subsytem</h4>
+
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Administrative Tools icon.</li>
+<li>Click on the Shutdown link in Management View.<br>
+A Shutdown or Restart tab will appear.</li>
+<li>On the Shutdown or Restart tab, select <i>Restart</i> from the dropdown menu.</li>
+<li>Click the <b>Submit</b> button.</li>
+<li>In the warning box, click the <b>OK</b> button.</li>
+<li>In the confirmation box, type the word <b>confirm</b> in the field provided.</li>
+<li>Click the <b>OK</b> button.<br>
+    When the controller shuts down, your <script>writeSoftwareName()</script> connection will be lost.</li>
+  <li>Wait for two to three minutes.</li>
+  <li>In your browser, log into <script>writeSoftwareName()</script> once again.<br>
+  If you cannot log in, wait for 30 seconds and try again. Repeat until login is successful.</li>
+</ol>
+
+<p><b>Note:</b> To monitor a restart, you must use the Command Line Interface (CLI) though a serial connection to the <script>writeModelName()</script>.<br> 
+At the "administrator@CLI>" prompt, type <b>shutdown -a restart</b>.<br>
+When the "Login:" prompt appears, the restart is finished.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

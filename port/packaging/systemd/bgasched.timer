@@ -1,0 +1,13 @@
+# Monthly RAID media patrol / redundancy check (runs bgasched.service).
+# The vendor schedules background activity per power-on window; the Linux port
+# runs a fixed monthly array scrub. Persistent=true catches up after downtime.
+[Unit]
+Description=Monthly RAID media patrol (bgasched)
+PartOf=promise-webpam.target
+
+[Timer]
+OnCalendar=*-*-01 02:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

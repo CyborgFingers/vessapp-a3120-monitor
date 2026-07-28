@@ -1,0 +1,37 @@
+body{background:url(/images/libodybg2.gif); font-family: Verdana,Arial,Helvetica; line-height: 19pt;}
+
+
+a:link,a:active,a:visited{color:#006696; font:bold; font-family:Verdana,Arial, Helvetica} 
+
+a:hover{color:#00a9cd;font:bold}
+
+.mainHeaderHelp {font-family:arial;font-size:25;color:#005089;font-weight:900}
+.headerHelp {font-family:arial;font-size:20;color:#005089;font-weight:900}
+.subHeaderHelp {font-family:arial;font-size:16;color:#003399;font-weight:900}
+.linkToHelp {color:#005089;background-color:#C0C0C0;font-family:verdana,helvetica;font-size:16}
+.link {font-family:verdana,helvetica;font-size:12}
+.toc {}
+.helpText{font-family:verdana,helvetica;font-size:12}
+.helpHeader{}
+.helpSpecialWord {}
+.helpLine {font-family:verdana,helvetica;font-size:16;font-weight:bold;color:#005089;text-decoration:none}
+/*A:link {color:#000000} 
+A:active {color:#000000} 
+A:visited {color:#000000} */
+
+.noUnderline {text-decoration:none;line-height:150%}
+.text {font-family:arial;font-size:11}
+.textBold {font-family:verdana,helvetica;font-size:12;font-weight:bold;color:black}
+.yellowButton {font-family:arial;background-color:#FFFF99;color:black;font-size:11}
+.violetButton {font-family:arial;background-color:#CCCCFF;width:120px}
+.alignRight {}
+.grayButton {font-family:arial;background-color:#E6E6E6;width:120px}
+.grayBGText {background-color:#E6E6E6;font-family:arial;font-size:12}
+.whiteBGText {background-color:#FFFFFF;font-family:arial;font-size:12}
+.blueText {color:#003399;font-family:arial;font-size:12;font-weight:bolder}
+.message {background-color:green;font-family:verdana,helvetica; font-size:15}.title-text {  font-family: "Arial"; font-size: 13px; font-weight: bold; color: #FFFF00}
+.helptable
+  {
+  border-collapse:collapse;
+  border:1px solid  #333;
+  }

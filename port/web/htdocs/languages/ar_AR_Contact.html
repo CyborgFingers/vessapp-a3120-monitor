@@ -1,0 +1,247 @@
+<?php
+$supports = array(
+	array(
+		'name' => 'أمريكا الشمالية',
+		'location' => array(
+			array(
+				'name' => 'أمريكا',
+				'item' => array(
+					'هاتف' => '+1 (408) 645-3469',
+					'الدعم' => 'support@promise.com',
+					'URL' => 'http://support.promise.com',	
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'أوروبا ، الشرق الأوسط وأفريقيا',
+		'location' => array(
+			array(
+				'name' => 'ألمانيا',
+				'item' => array(
+					'هاتف' => '+49 (0) 2 31 56 76 48 - 10',
+					'الدعم' => 'support-de@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'المملكة المتحدة',
+				'item' => array(
+					'هاتف' => '+44 (845) 1546130',
+					'الدعم' => 'support-uk@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'أوروبا',
+				'item' => array(
+					'هاتف' => '+31 (0) 40-235-2600',
+					'الدعم' => 'support@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'منطقة الشرق الأوسط',
+				'item' => array(
+					'هاتف' => '+97145571951',
+					'الدعم' => 'support@mea.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'آسيا والمحيط الهادئ',
+		'location' => array(
+			array(
+				'name' => 'أستراليا',
+				'item' => array(
+					'هاتف' => '+61-7-56999629',
+					'الدعم' => 'support@au.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'بكين',
+				'item' => array(
+					'هاتف' => '+8610-8857-8085/8095',
+					'الدعم' => 'support@cn.promise.com',
+					'Sales' => 'sales@cn.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'الهند',
+				'item' => array(
+					'هاتف' => '+91-9962411666',
+					'الدعم' => 'support@in.promise.com',
+					'Sales' => 'sales@in.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'إندونيسيا',
+				'item' => array(
+					'هاتف' => '180011101787',
+					'الدعم' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'اليابان',
+				'item' => array(
+					'هاتف' => '+81-3-6801-8064',
+					'الدعم' => 'support@jp.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'كوريا',
+				'item' => array(
+					'هاتف' => '00798142030091',
+					'الدعم' => 'support@kr.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'ماليزيا',
+				'item' => array(
+					'هاتف' => '+60-3-92127992',
+					'الدعم' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'نيوزيلاندا',
+				'item' => array(
+					'هاتف' => '+64 99518714',
+					'الدعم' => 'support@au.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'فيلبيني',
+				'item' => array(
+					'هاتف' => '180011101787',
+					'الدعم' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'شنغهاي',
+				'item' => array(
+					'هاتف' => '+8621-3214-0395',
+					'الدعم' => 'support@cn.promise.com',
+					'Sales' => 'sales@cn.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'سنغافورة',
+				'item' => array(
+					'هاتف' => '+65 31594529',
+					'الدعم' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'تايوان',
+				'item' => array(
+					'هاتف' => '+886-3-578-0002',
+					'الدعم' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'تايلاند',
+				'item' => array(
+					'هاتف' => '+66 600035381',
+					'الدعم' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'فيتنام',
+				'item' => array(
+					'هاتف' => '+84 12280429',
+					'الدعم' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+		),
+	),
+);
+
+function pack_value($v) {
+	if (strpos($v, '@')) {
+		return sprintf('<a href="mailto:%s">%s</a>', $v, $v);
+	}
+	if (strpos($v, '://')) {
+		return sprintf('<a href="%s" target="_blank">%s</a>', $v, $v);
+	}
+	return $v;
+}
+?>
+<html>
+
+<head>
+	<link rel="stylesheet" href="/help/help.css" type="text/css">
+	<style>
+		.nationStyle {
+			font-family: verdana, arial, helvetica;
+			font-size: 16px;
+			color: #003399
+		}
+	</style>
+	<title>Help Page</title>
+</head>
+
+<body class=textHelp dir='rtl'>
+
+	<h3 class="headerHelp">بروميس تكنولوجي معلومات الاتصال</h3>
+
+	<p>المدرجة أدناه هي معلومات الاتصال لمنتجات تقنية الوعد.</p>
+
+	<table cellpadding="10" class=textHelp width="654" border="0">
+
+
+	<?php foreach ($supports as $continent) { ?>
+		<tr>
+			<td valign="top" class=nationStyle><b><?=$continent['name']?></b></td>
+		</tr>
+
+		<tr>
+			<td valign="top">
+				<table border="0" width="100%">
+					<?php foreach ($continent['location'] as $loca) { ?>
+					<tr style="margin-top: 5px;">
+						<td width="190" valign="top">
+							<b><?=$loca['name']?></b>
+						</td>
+						<td style="padding-top: 3px;">
+							<ul>
+								<?php foreach ($loca['item'] as $item => $val) { ?>
+								<li style="padding-bottom: 4px;"><?=$item?>: <?=pack_value($val)?></li>
+								<? } ?>
+							</ul>
+						</td>
+					</tr>
+					<tr colspan="2"><td>&nbsp;</td></tr>
+					<?php } ?>
+				</table>
+			</td>
+		</tr>
+
+	<? } ?>
+
+<?php
+if(preg_match('/index.php/',$_SERVER['HTTP_REFERER'])) {
+	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+}
+if(preg_match('/help/',$_SERVER['HTTP_REFERER'])) {
+	//	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+	echo '<table><tr><td><img src=help/helpImages/ball-back.gif></td><td><a href=javascript:history.back()>Go Back</a></td></tr></table>';
+}
+?>
+
+	</table>
+</body>
+
+</html>

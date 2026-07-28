@@ -1,0 +1,101 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Background Activity Progress</title>
+</head>
+
+<body>
+
+<h3>Background Activity Progress</h3>
+
+<p>The Background Activities tab provides information about background activities 
+  running and queued on your subsystem, disk array, or logical drive. For most 
+  background activities, you can pause, resume, or cancel the activity from this 
+  screen.</p>
+ 
+ <table width="550" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><p>Subsystem Background Activity:</p>
+<ul>
+<li><a href="MediaPatrolHelp.html">Media Patrol</a></li>
+</ul>
+<p>Logical Drive Background Activities:</p>
+<ul>
+  <li><a href="InitializationHelp.html">Initialization</a></li>
+  <li><a href="RCHelp.html">Redundancy Check</a></li>
+</ul>
+</td>
+    <td valign=top><p>Disk Array Background Activities:</p>
+<ul>
+<li>Disk array <a href=DiskArrayMigrationHelp.html>Migration</a></li>
+<li>Disk array <a href=RebuildHelp.html>Rebuild</a></li> 
+<li>Predictive Data Migration (<a href=PDMHelp.html>PDM</a>)</li>
+<li>Spare drive <a href=TransitionHelp.html>Transition</a></li>
+</ul>
+</td>
+  </tr>
+</table>
+
+<h4>Monitoring Activity</h4>
+
+<p>Each background activity has its own set of parameters. The most important parameters are:</p>
+<ul>
+<li>Status
+<ul>
+<li>Running –  Now in progress.</li>
+<li>Paused – Waiting for a higher priority activity to finish OR waiting for you to click the <b>Resume</b> button.</li>
+</ul></li>
+<li>Progress</li>
+</ul>
+
+
+<h4>Pause, Resume, Stop</h4>
+
+<p>To pause a background activity, click the <b>Pause</b> button.<br>
+To resume again, click the <b>Resume</b> button.</p>
+
+<p>To stop (cancel) a background activity, click the <b>Stop</b> button.<br>
+If a confirmation box displays, type the word <b>confirm</b> in the field provided, then click the <b>OK</b> button.</p>
+
+<p><b>Note:</b> Disk array <a href="DiskArrayMigrationHelp.html">migration</a> 
+  does not allow you to pause, resume, or stop the activity once it begins. </p>
+
+<h4>Viewing Background Activity Progress</h4>
+
+<p>To view the progress of the current background activity and a list of all activities 
+  queued within the subsystem: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click the Background Activities tab in Management view.</li>
+<li>Under the Background Activities list, click on the link for the activity you want to monitor.</li>
+</ol>
+
+<p>To view the progress of the current Disk Array background activity and a list of activities 
+  in the Disk Array queue: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+<li>Click the Background Activities tab in Management view.</li>
+<li>Under the Background Activities list, click on the link for the activity you want to monitor.</li>
+</ol>
+
+<p>To view the progress of the current Logical Drive background activity and a list of activities 
+  in the Logical Drive queue: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+<li>Click on the Logical Drives icon.</li>
+  <li>Click on the Logical Drive icon.</li>
+<li>Click the Background Activities tab in Management view.</li>
+<li>Under the Background Activities list, click on the link for the activity you want to monitor.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

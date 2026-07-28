@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>User Management icon Create tab</title>
+</head>
+
+<body>
+
+<h3>Create a User</h3>
+
+<p>The User Management–Create tab enables the Administrator or a Super User to 
+  create other users. To create a user:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View.</li>
+<li>Click the Administrative Tools icon.</li>
+<li>Click on the User Management icon.</li>
+<li>Click on the Create tab in Management View.</li>
+<li>Enter a user name in the User Name field.</li>
+<li>Enter a password in the New Password field. See note below.</li>
+<li>Enter the password in the Retype Password field.</li>
+<li>Enter a display name in the Display Name field. See note below.</li>
+<li>Enter the user's email address in the Email field. See note below.</li>
+<li>Select a privilege level from the Privilege dropdown menu.<br>
+For definitions of each privilege level, see the list below.</li>
+<li>Check the Enable box to enable this user on this subsystem.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Note:</b> A password is optional. If you do not specify a password, log 
+  into 
+  <script>writeSoftwareName()</script> with the User Name
+and leave the password field blank.</p>
+
+<p><b>Note:</b> A display name is optional.</p>
+
+<p><b>Note:</b> An email address is optional. However, you must specify an email 
+  address in order to receive email <a href="UserMgtEventSubscriptionHelp.html">event 
+  notification</a>.</p>
+
+<h4>List of Privileges</h4>
+<ul>
+<li><b>View</b> – Allows the user to see all status and settings but not to make any changes</li>
+<li><b>Maintenance</b> – Allows the user to perform
+maintenance tasks including Rebuilding, PDM, Media Patrol and Redundancy Check</li>
+  <li><b>Power</b> – Allows the user to create (but not delete) disk arrays and 
+    logical drives, change RAID levels, change stripe size; change settings of 
+    components such as disk arrays, logical drives, physical drives and the controller.</li>
+  <li><b>Super</b> – Allows the user full access to all functions including create 
+    and delete users and changing the settings of other users, and delete disk 
+    arrays and logical drives. The default "administrator" account is a Super 
+    User.</li>
+</ul>
+
+<p><b>Note:</b> Each user can select his/her password under the User Management–<a href=UserMgtPasswordHelp.html>Password</a> 
+  tab.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

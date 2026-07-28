@@ -1,0 +1,247 @@
+<?php
+$supports = array(
+	array(
+		'name' => 'North America',
+		'location' => array(
+			array(
+				'name' => 'USA',
+				'item' => array(
+					'Support Telefon' => '+1 (408) 645-3469',
+					'Support' => 'support@promise.com',
+					'URL' => 'http://support.promise.com',	
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'EMEA',
+		'location' => array(
+			array(
+				'name' => 'Germany',
+				'item' => array(
+					'Support Telefon' => '+49 (0) 2 31 56 76 48 - 10',
+					'Support' => 'support-de@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'United Kingdom',
+				'item' => array(
+					'Support Telefon' => '+44 (845) 1546130',
+					'Support' => 'support-uk@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'Europe',
+				'item' => array(
+					'Support Telefon' => '+31 (0) 40-235-2600',
+					'Support' => 'support@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'MEA',
+				'item' => array(
+					'Support Telefon' => '+97145571951',
+					'Support' => 'support@mea.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'Asia-Pacific',
+		'location' => array(
+			array(
+				'name' => 'Australia',
+				'item' => array(
+					'Support Telefon' => '+61-7-56999629',
+					'Support' => 'support@au.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Beijing',
+				'item' => array(
+					'Support Telefon' => '+8610-8857-8085/8095',
+					'Support' => 'support@cn.promise.com',
+					'Vertrieb' => 'sales@cn.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'India',
+				'item' => array(
+					'Support Telefon' => '+91-9962411666',
+					'Support' => 'support@in.promise.com',
+					'Vertrieb' => 'sales@in.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Indonesia',
+				'item' => array(
+					'Support Telefon' => '180011101787',
+					'Support' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Japan',
+				'item' => array(
+					'Support Telefon' => '+81-3-6801-8064',
+					'Support' => 'support@jp.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Korea',
+				'item' => array(
+					'Support Telefon' => '00798142030091',
+					'Support' => 'support@kr.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Malaysia',
+				'item' => array(
+					'Support Telefon' => '+60-3-92127992',
+					'Support' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'New Zealand',
+				'item' => array(
+					'Support Telefon' => '+64 99518714',
+					'Support' => 'support@au.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Philippines',
+				'item' => array(
+					'Support Telefon' => '180011101787',
+					'Support' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Shanghai',
+				'item' => array(
+					'Support Telefon' => '+8621-3214-0395',
+					'Support' => 'support@cn.promise.com',
+					'Vertrieb' => 'sales@cn.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Singapore',
+				'item' => array(
+					'Support Telefon' => '+65 31594529',
+					'Support' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Taiwan',
+				'item' => array(
+					'Support Telefon' => '+886-3-578-0002',
+					'Support' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Thailand',
+				'item' => array(
+					'Support Telefon' => '+66 600035381',
+					'Support' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Vietnam',
+				'item' => array(
+					'Support Telefon' => '+84 12280429',
+					'Support' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+		),
+	),
+);
+
+function pack_value($v) {
+	if (strpos($v, '@')) {
+		return sprintf('<a href="mailto:%s">%s</a>', $v, $v);
+	}
+	if (strpos($v, '://')) {
+		return sprintf('<a href="%s" target="_blank">%s</a>', $v, $v);
+	}
+	return $v;
+}
+?>
+<html>
+
+<head>
+	<link rel="stylesheet" href="/help/help.css" type="text/css">
+	<style>
+		.nationStyle {
+			font-family: verdana, arial, helvetica;
+			font-size: 16px;
+			color: #003399
+		}
+	</style>
+	<title>Help Page</title>
+</head>
+
+<body class=textHelp>
+
+	<h3 class="headerHelp">Kontaktinformationen für Promise Technology</h3>
+
+	<p>Im Folgenden sind die Kontaktinformationen zu den Produkten von Promise Technology aufgeführt.</p>
+	
+	<table cellpadding="10" class=textHelp width="654" border="0">
+
+
+	<?php foreach ($supports as $continent) { ?>
+		<tr>
+			<td valign="top" class=nationStyle><b><?=$continent['name']?></b></td>
+		</tr>
+
+		<tr>
+			<td valign="top">
+				<table border="0" width="100%">
+					<?php foreach ($continent['location'] as $loca) { ?>
+					<tr style="margin-top: 5px;">
+						<td width="190" valign="top">
+							<b><?=$loca['name']?></b>
+						</td>
+						<td style="padding-top: 3px;">
+							<ul>
+								<?php foreach ($loca['item'] as $item => $val) { ?>
+								<li style="padding-bottom: 4px;"><?=$item?>: <?=pack_value($val)?></li>
+								<? } ?>
+							</ul>
+						</td>
+					</tr>
+					<tr colspan="2"><td>&nbsp;</td></tr>
+					<?php } ?>
+				</table>
+			</td>
+		</tr>
+
+	<? } ?>
+
+<?php
+if(preg_match('/index.php/',$_SERVER['HTTP_REFERER'])) {
+	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+}
+if(preg_match('/help/',$_SERVER['HTTP_REFERER'])) {
+	//	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+	echo '<table><tr><td><img src=help/helpImages/ball-back.gif></td><td><a href=javascript:history.back()>Go Back</a></td></tr></table>';
+}
+?>
+
+	</table>
+</body>
+
+</html>

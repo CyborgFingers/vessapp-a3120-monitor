@@ -1,0 +1,217 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Frequently Asked Questions</title>
+</head>
+
+<body>
+
+<h3>Frequently Asked Questions</h3>
+
+<h4>Logging In</h4>
+
+<p><b>Why am I not able to log in?</b></p>
+<p>Check the spelling and case (user names and passwords are case sensitive).
+<p><b> I have entered correct user name and password, but still I am not able to log in.</b></p>
+<p>The Administrator may have deleted or disabled your user name. </p>
+<p><b>The login screen says "Login failed: the requested service is busy."</b></p>
+<p>The <script>writeModelName()</script> subsystem might still be booting or rebooting. Dual controller subsytems take 
+longer because the controllers boot individually, then they synch to each other. Wait a few moments, then try again.</p>
+
+<h4>Connection</h4>
+
+<p><b>Why can't I connect to my <script>writeModelName()</script>?</b></p>
+<p>Be sure you are using the correct IP address for the <script>writeModelName()</script> subsystem.
+<p>In your browser address field, type <b>http://</b>,
+the <script>writeModelName()</script>'s IP address (for example <b>192.168.1.123</b>) and press
+Enter. For more information, see the log-in instructions in the <i><script>writeModelName()</script> Quick
+Start Guide</i> (printed) or the <i>Product Manual</i> (on the software CD).</p>
+
+<p><b>I have entered the correct IP address string, but I still cannot connect.</b></p>
+<p>Check the physical network connections on your PC and the
+<script>writeModelName()</script>. If these are OK, report the problem to you network administrator.</p>
+
+<p><b>I can access the <script>writeModelName()</script> over my company’s intranet.
+But I can’t access it from an outside Internet connection. How do I make the
+Internet connection work?</b></p>
+<p>This condition is not related to the <script>writeModelName()</script> or <script>writeSoftwareName()</script>, but is due to your firewall and network connection protocol.
+Contact your Network Administrator.</p>
+
+<p><b>I tried to log into <script>writeSoftwareName()</script> but my browser showed the message "cannot be displayed." What is the problem?</b></p>
+<p>The browser decided prematurely that <script>writeSoftwareName()</script> was not responding.
+Click the Refresh button. This action usually brings up the login screen.</p>
+
+<h4>Timeouts</h4>
+
+<p><b>Why does <script>writeSoftwareName()</script> timeout frequently?</b></p>
+<p><script>writeSoftwareName()</script>
+  times out when 24 minutes have passed with no user activity. User activity means 
+  any action you do in 
+  <script>writeSoftwareName()</script> to view or manage the 
+  <script>writeModelName()</script>. This feature is included for security purposes. You can change the timeout 
+  setting under <a href="WebServerHelp.html">Web Server</a>. </p>
+
+<p>To prevent <script>writeSoftwareName()</script> from timing out, periodically click on an icon for folder in the interface.</p>
+<p>To login in after a timeout, type your user name and password into the fields 
+  provided, then click the <b>Login</b> button.</p>
+
+<h4>Administrative Tools </h4>
+
+<p><b>Are the links under Administrative Tools different
+than the icons like User Management?</b></p>
+<p>No. These are links to the same functions, added to make those
+functions more easily accessable. </p>
+
+<h4>Email Messages</h4>
+
+<p><b>Why don't I receive email messages from the <script>writeModelName()</script> subsystem?</b></p>
+<p>Check your <a href="UserMgtEventSubscriptionHelp.html">Event Subscription</a> 
+  and <a href="EmailHelp.html">Email</a> settings. If these are correct, see your Network Administrator for assistance with 
+the mail server setup, email accounts, and other issues.</p>
+
+<h4>User Management </h4>
+
+<p><b>Why can't I delete the Administrator user?</b></p>
+<p>The Administrator user cannot be deleted. This restriction
+exists to avoid losing access and having to reinstall the <script>writeModelName()</script>'s firmware package.</p>
+
+<p><b>Why can't I create a create a new User?</b></p>
+<p>Only the Administrator or a Super User can create a User.</p>
+<p>If you are the Administrator or a Super User and cannot create
+a User, be sure the user name is not already in use.</p>
+<p>If you still cannot create a User, contact <a href=../contact.php><script>writeBrandName()</script>
+Tech Support</a>. </p>
+
+<p><b>When I click on the Administrator user in User Management
+page, why am I transferred to the Settings page?</b></p>
+<p>This is the correct behavior.</p>
+
+<h4>Subsystem Management </h4>
+
+<p><b>Can I change my access rights?</b></p>
+<p>Only the Administrator or a Super User can change their own or another user's 
+  access rights. </p>
+
+<h4>View Log file </h4>
+
+<p><b>Why can't I see the Clear Event Log button?</b></p>
+<p>Only the Administrator has the right to clear the Event Log.</p>
+
+<h4>User Management for Subsystem </h4>
+
+<p><b>Why can't I change my access rights?</b></p>
+<p>Only the Administrator or a Super User has authority to change
+User access rights.</p>
+
+<h4>Locking Mechanism </h4>
+<p><b>Person "xyz" set the lock and is not available. How do I unlock it? </b></p>
+<p>Ask your Administrator to release the lock.<br>
+<b>Note:</b> The lock will automatically release after the set amount of time has passed. </p>
+
+<h4>Disk Array or Logical Drive</h4>
+
+<p><b>What is the difference between a "Disk Array" and
+a "Logical Drive" and why do they both appear in <script>writeSoftwareName()</script>?</b></p>
+<p>A disk array is a collection of physical (disk) drives working together
+in a RAID. A logical drive is an entity that the computer's operating system
+recognizes as single drive. This single drive is called a "logical" drive, to
+distinguish it from the multiple physical drives in the the disk array that
+supports it. Another reason for the name is because the "logical" drive is the
+creation of the RAID management software's "logic". Depending on how you have
+managed its capacity, you can create multiple logical drives from a single disk
+array.</li>
+
+<h4>Create Disk Array/Logical Drive</h4>
+
+<p><b>Why can't I see all RAID Levels in RAID Level dropdown menu?</b></p>
+<p>The selection of RAID Levels shown depends on number of free physical drives 
+  available to the controller. For example, if there are only two physical drives 
+  free, then you cannot see RAID 10, which requires four physical drives or RAID 
+  50 that requires at least six. See <a href=RAIDlevels.html>RAID Levels</a>.</p>
+
+<p><b>When I try to click the Submit button, why is it disabled?</b></p>
+<p>The Submit button only enables when you make a change. After you click
+it once, it disables again, confirming that your selection was submitted. </p>
+
+<p><b>Why can't I create more than one logical drive on my disk array?</b></p>
+<p>Your logical drive takes up the entire configurable capacity
+of your disk array, leaving no room for another logical drive. Backup your important
+data, then <a href=DiskArrayDeleteLDHelp.html>delete</a> the existing logical
+drive and <a href=DiskArrayCreateLDHelp.html>create</a> multiple smaller logical
+drives on the disk array.</p>
+
+<h4>Disk Array Degraded</h4>
+
+<p><b>According to <script>writeSoftwareName()</script>, my disk array is degraded. What
+am I supposed to do?</b></p>
+<p>If the Auto Rebuild option is enabled and a hot spare drive
+is available, your disk array will begin rebuilding automatically. See <a href=LDDegradedHelp.html>Logical
+Drive Degraded</a>.</p>
+
+<p><b>When an disk array becomes degraded, can I still access
+the data on it?</b></p>
+<p>Yes, but reads and writes will take longer while rebuilding is in
+progress. </p>
+
+<h4>Delete Disk Array/Logical Drive </h4>
+
+<p><b>Why can't I select Delete Disk Array or Delete Logical
+Drive?</b></p>
+<p>You must have Power or Super User Rights to delete a Logical
+Drive. See your Administrator about upgrading your access rights.<br>
+If there is no Disk Array or Logical Drive under the controller, the Delete
+does not function. </p>
+
+<p><b>Can I delete a Logical Drive without deleting the Disk Array?</b></p>
+<p>Yes. Click on a disk array in Tree View then click on the
+<a href=DiskArrayDeleteLDHelp.html>Delete LD</a> tab.<br>
+<b>Important:</b> Remember to backup any
+important data before you delete the logical drive.</p>
+
+<h4>Rebuild Disk Array</h4>
+
+<p><b>I replaced a failed physical drive with a used but
+known-good disk drive. <script>writeModelName()</script> will not rebuild to it. Why not?</b></p>
+<p>The replacement drive was previously used in a different disk
+array/logical drive. You must wipe (erase) the Reserve Sector of the replacement
+disk drive before <script>writeModelName()</script> will accept it and rebuild to it. See Chapter 5 of the
+<i><script>writeModelName()</script> Product Manual </i>for instructions.</p>
+
+
+<h4>Synchronize Disk Array</h4>
+
+<p><b>When I try to Synchronize the Disk Array, I receive
+an error message.</b></p>
+<p>If another operation, such as Initializing or Rebuilding is
+in progress, you cannot perform a Synchronization at the same time. Rather than
+doing a manual Synchronization, consider automating. See the Subsystem <a href=SubsystemSchedulerHelp.html>Schedule</a>r</a>
+tab. </p>
+
+<h4>Migrate Disk Array</h4>
+
+<p><b>When I try to migrate a disk array from one RAID level to another,
+why doesn't the controller let me do it?</b></p>
+<p>Most RAID levels have a minimum and maximum number of disk drives. Be sure 
+  you have the correct number of drives available for the target disk array. See 
+  <a href=RAIDconvert.html>RAID Conversion</a> and <a href="RAIDlevels.html">RAID 
+  Levels</a>.</p>
+<p>Only a single-drive RAID 0 can migrate to a RAID 1 disk array.</p>
+
+<p><b>I want to add two more drives to my RAID 1 disk array. Why won't
+the controller let me migrate it?</b></p>
+<p>A RAID 1 disk array uses only two disk drives. In this case, you can add two physical drives, then convert to a RAID 10 disk array. Most RAID levels
+have a minimum and maximum number of disk drives. See <a href=RAIDlevels.html>RAID
+Levels</a>.</p>
+
+<h4>Media Patrol and PDM </h4>
+
+<p><b>Media Patrol and PDM are enabled on my system. But they never report anything.</b></p>
+<p>This is a good sign. Media Patrol and PDM operate transparently until problems are found on a physical drive. </p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

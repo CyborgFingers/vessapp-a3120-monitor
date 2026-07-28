@@ -1,0 +1,47 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>SCSI Channels Settings</title>
+</head>
+
+<body>
+
+<h3>SCSI Channel Settings</h3>
+
+<p>The SCSI Management–Channels tab enables you to make Data Channel settings,
+including:</p>
+<ul>
+  <li><b>Channel ID</b> – 1 or 2</li>
+  <li><b>Target ID List</b> – Target ID scope is from 0 to 15</li>
+  <li><b>Termination</b> –  Automatic, On or Off</li>
+</ul>
+<p>To make SCSI channel settings:</p>
+<ol>
+  <li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administration Tools icon.</li>
+  <li>Click on the SCSI Management icon.</li>
+  <li>Click the <b>Channel</b> tab in Management View.</li>
+  <li>Click the <b>Channel 1</b> or <b>Channel 2</b> link.</li>
+  <li>In the Target ID list, check a TID box to enable the Target ID. Uncheck 
+    the box to disable it.</li>
+  <li>From the Termination dropdown menu, select the one of the following:</li>
+  <ul>
+  <li>Automatic –  Termination is managed automatically (default)</li>
+ <li>On – Termination is on</li>
+ <li>Off – Termination is off </li>
+ </ul>
+ <li>Click the <b>Submit</b> button.<br>
+ Termination settings take effect immediately.</li>
+ <li>If you changed the Target ID enable/disable settings, <a href="ShutdownHelp.html">restart</a> the <script>writeModelName()</script>.
+</ol>
+
+<p><b>Caution:</b> Turn off termination only when the <script>writeModelName()</script> is NOT the last device in the SCSI chain.</p>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

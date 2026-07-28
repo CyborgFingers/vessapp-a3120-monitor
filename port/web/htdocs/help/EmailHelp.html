@@ -1,0 +1,75 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Email</title>
+</head>
+
+<body>
+
+<h3>Email</h3>
+
+<p><script>writeModelName()</script>'s Email service sends notifications to the specified Users
+according to settings under their <a href=UserMgtEventSubscriptionHelp.html>Event
+Subscription</a>.</p>
+
+<p>To change the Email settings:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administrative Tools icon.</li>
+  <li>Click on the <b>Email Setting</b> link in Management view.</li>
+<li>Enter the IP address for your SMTP server.</li>
+<li>Enter server port number for your SMTP server.<br>
+25 is the default.</li>
+  <li>Choose <i>Yes</i> to enable SMTP authentication or <i>No</i> to disable.</li>
+  <li>If you selected Yes for SMTP authentication, enter a Username and Password 
+    in the fields provided.</li>
+<li>Enter an Email sender address (example: RAIDmaster@mycompany.com).</li>
+<li>Enter an Email subject (example: <script>writeModelName()</script> Status).</li>
+<li>When you are done, click on the <b>Submit</b> button.</li>
+</ol>
+
+<p>To send one test message to the User currently logged into <script>writeSoftwareName()</script>:</p>
+<ol>
+<li>Make the Email settings as described above.</li>
+<li>Under Test Email, check the Send A Test Email box.</li>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Note:</b> If you do not receive the Test Email message, see your Network Administrator for assistance with 
+the mail server setup, email accounts, and other issues.</p>
+
+<p>To change the Email Automatic/Manual start setting:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+  <li>Click on the <b>Email Setting</b> link in Management view.</li>
+<li>Under Startup Type:
+<ul>
+      <li>Click on the Automatic option to start the service automatically during 
+        system startup.</li>
+      <li>Click on the Manual option to start the service manually (the service 
+        does not start during system startup).</li>
+</ul>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<p>To manually start, restart or stop the Email service:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+  <li>Click on the <b>Email Setting</b> link in Management view.</li>
+<li>Under Running Status:
+<ul>
+<li>If the service is stopped, click the <b>Start</b> button to start the service.</li>
+<li>If the service is started, click the <b>Stop</b> button to stop the service.<br>
+Or click on the <b>Restart</b> button to restart the service.</li>
+</ul>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

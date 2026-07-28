@@ -1,0 +1,55 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>View Event Frame</title>
+</head>
+
+<body>
+
+<h3>View Event Frame</h3>
+
+<p><script>writeSoftwareName()</script> can currently display in Event Frame along with the Tree View and Management View. </p>
+<p>The Event Frame displays the current Runtime Events for this subsystem. To view the Event Frame:</p>
+<ol>
+<li>Click on the <b>View</b> in the <a href=UiHelp.html>Header</a>.</li>
+<li>Click on the Show Event Frame popup option.<br>
+<script>writeSoftwareName()</script> will display the Event Frame in Management view.</li>
+<li>Click <b>View</b> again to hide the Event Frame. </li>
+</ol>
+
+<p>The Event Frame displays events by:</p>
+<ul>
+<li>Item Number –  Sequencial number of the event</li>
+<li>Device –  The subsystem component that experienced the event</li>
+<li>Event ID –  A hexadecimal number</li>
+<li>Severity:
+<ul>
+<li>Information – Information only, no action is required</li>
+    <li>Warning – User can decide whether or not action is required</li>
+    <li>Minor – Action is needed but the condition is not a serious at this time</li>
+    <li>Major – Action is needed now</li>
+    <li>Critical – Action is needed now and the implications of the condition are serious</li>
+    <li>Fatal – Non-Recoverable error or failure has occurred</li>
+</ul></li>
+<li>Time and Date</li>
+<li>Description</li>
+</ul>
+
+<h4>Sorting Events</h4>
+
+<p>You can sort the events by Item Number, Device, Event ID, Severity, Time and Date, or Description.</p>
+<p>Click on the link at the top of the column by which you want to sort the events.<br>
+After you click on the item, a triangle icon appears.</p>
+<ul>
+<li> If the triangle points upward, the column is sorted low-to-high or old-to-new.</li>
+<li>If the triangle points downward, the column is sorted high-to-low or new-to-old.</li>
+</ul>
+<p>Click the link a second time to change to flip the triangle and reverse the sort sequence.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Subsystem icon Background tab</title>
+</head>
+
+<body>
+
+<h3>Subsystem Background Activities</h3>
+
+<p>The Subsystem–Background Activities tab provides information about functions that runs in the background on your subsystem. 
+Click on the link below for information about the settings and options available for each feature.</p>
+<ul>
+<li>Disk array <a href=RebuildHelp.html>Rebuilding</a></li>
+<li>Disk array <a href=SynchronizationHelp.html>Synchronization</a></li>
+<li>Logical Drive <a href=InitializationHelp.html>Initialization</a></li>
+<li>Disk array <a href=DiskArrayMigrationHelp.html>Migration</a></li>
+<li>Disk array <a href=TransitionHelp.html>Transition</a></li>
+<li>Logical Drive <a href=RCHelp.html>Redundancy Check</a></li>
+<li>Predictive Data Migration (<a href=PDMHelp.html>PDM</a>)</li>
+<li>Error and Reassigned Block Thresholds (to trigger PDM. See Block Threshold Definitions, below)</li>
+<li><a href=MediaPatrolHelp.html>Media Patrol</a></li>
+</ul>
+
+<p>Also see <a href="RebuildHelp.html">Auto Rebuild</a>.</p>
+
+<p>To START a background activity: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, choose the function you want to start.</li>
+</ol>
+
+<p>To VIEW the background activities currently running or queued on your subsystem: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click the Background Activities tab in Management View.<br>
+Any currently running activities are listed under Background Activities.</li>
+  <li>Click on the <a href="BackgroundActivityHelp.html">link</a> for the activity 
+    you want to monitor, pause, resume, or stop.</li>
+</ol>
+
+<p>To VIEW the current settings: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click the Background Activities tab in Management View.</li>
+</ol>
+
+<p>To CHANGE the current settings: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, choose <i>Settings</i>.</li>
+</ol>
+<p>For more information about individual settings, click on the individual activity links above.</p>
+
+<p>Block Threshold Definitions:</p>
+<ul>
+<li><b>Reassigned Block</b> – When an error occurs
+in a physical drive, the directions to the block containing error are reassigned.
+When the number of reassigned blocks exceeds the threshold, PDM is triggered.</li>
+  <li><b>Error Block</b> – When an error occurs in the data or the physical media 
+    in a disk drive, the block is marked and added to the block error count. When 
+    the number of error blocks exceeds the threshold, <a href="PDMHelp.html">PDM</a> 
+    is triggered.</li>
+</ul>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

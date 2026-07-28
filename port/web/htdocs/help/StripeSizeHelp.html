@@ -1,0 +1,43 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Stripe Size</title>
+</head>
+
+<body>
+
+<p><a name=disk></a>
+<h3>Stripe Size</h3>
+
+<p>Stripe Size, also called "Stripe Block Size", refers
+to the size of the data blocks written to, and read from, the physical drives.
+Stripe Size is specified when you create
+a disk array. In order to change the Stripe Size of an existing disk array,
+you must delete the disk array and create a new one. You can select Stripe Size directly when you use the Advanced
+function to create a disk array. If you use the Express
+function to create a disk array, <script>writeSoftwareName()</script> selects the Stripe Size when you
+choose an Application Type. </p>
+
+<p>The available Stripe Sizes are 64 KB, 128 KB, 256 KB, 512 KB, and 1 MB. 64 KB is the 
+  default. There are two issues to consider when selecting the Stripe Size. </p>
+
+<p>First, you should choose a Stripe Size equal to, or smaller
+than, the smallest cache buffer found on any physical drive in the disk array.
+Selecting a larger value slows read/write performance because physical drives with
+smaller cache buffers need more time for multiple accesses to fill their buffers.
+<p>Second, if your data retrieval consists of fixed data blocks,
+such as with some database or video applications, then you should choose that
+size as your Stripe Size.</p>
+
+<p>If you do not know the cache buffer or fixed data block sizes,
+<script>writeBrandName()</script> suggests you select 64 KB as your Stripe Size. Generally speaking, email,
+POS and webservers prefer smaller stripe sizes. Video and database applications
+prefer larger stripe sizes.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

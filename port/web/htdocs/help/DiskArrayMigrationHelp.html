@@ -1,0 +1,77 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Disk Array Migration</title>
+</head>
+
+<body>
+
+<h3>Disk Array Migration</h3>
+
+<p>For <script>writeModelName()</script>, the term "Disk Array Migration" means either or both of the following:</p>
+<ul>
+<li>Change the <a href=RAIDlevels.html>RAID Level</a> of a logical drive</li>
+<li>Expand the storage capacity of a logical drive</li>
+</ul>
+<p>Before you begin a migration, examine your current disk array to determine whether:</p>
+<ul>
+<li>The physical drives in your array can support the target <a href=RAIDlevels.html>RAID Level</a></li>
+<li>There is sufficient capacity to accommodate the target logical drive size</li>
+</ul>
+<p>If you need to add physical drives to your array, be sure there are unassigned physical drives are installed in 
+your <script>writeModelName()</script> subsystem before you begin migration.</p>
+
+<p>To Migrate an existing disk array: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+<li>From the dropdown menu on the Background Activities tab, select <i>Start Migration</i>.</li>
+<li>Highlight physical drives you want in the disk array from
+the Available list and press the <b>>></b> button to move them to
+the Selected list.<br>
+You can also double-click them to move them.</li>
+<li>When you are done, click the <b>Next</b> button.</li>
+<li>Select a <a href=RAIDconvert.html>new RAID Level</a>, if desired.</li>
+<li>To expand the capacity of one or more logical drives, check the Expand Capacity box.</li>
+<li>If you checked the Expand Capacity box, enter a number into the Capacity field and select the appropriate unit of measure (MB, GB, TB).</li>
+<li>Under Capacity Usage, highlight the logical drive whose RAID level you want to change or whose capacity you want to expand.</li>
+<li>Click on the <b>Update</b> button.<br>
+The logical drive changes to reflect your choices.</li>
+<li>Update other logical drives using the same method.</li>
+<li>When you are done making the changes, click on the <b>Next</b> button.</li>
+<li>Click on the <b>Submit</b> button to begin Migration.</li>
+</ol>
+
+<p>The Disk Array Background Activities tab displays the progress of the Migration.<br>
+  Click on the <b>Migration</b> <a href="BackgroundActivityHelp.html">link</a> 
+  under Background Activities for more information.</p>
+
+
+<p><b>Note:</b> If you add an odd number of physical drives to a <a href="RAIDlevels.html">RAID 10</a> array,  it will become 
+a <a href="RAIDlevels.html">RAID 1E</a> array by default.</p>
+
+<h4>Set Migration Priority</h4>
+
+<p>You can specify the Migration priority setting, which affect
+how quickly the <script>writeModelName()</script> migrates your Disk Array and how it responds to data read/write
+operations. To view or change the Migration priority setting: </p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, choose <i>Settings</i>.</li>
+<li>Click on the Migration Rate dropdown menu and select a rate: Low, Medium or High.</li>
+<ul>
+<li><b>Low</b> allocates fewer system resources to the Migration and more to data read/write operations.</li>
+<li><b>Medium</b> allocates a balance of system resources to the Migration and data read/write operations.</li>
+<li><b>High</b> allocates more system resources to the Migration and fewer to data read/write operations.</li>
+</ul>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

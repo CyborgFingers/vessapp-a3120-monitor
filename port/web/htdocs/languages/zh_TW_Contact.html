@@ -1,0 +1,247 @@
+<?php
+$supports = array(
+	array(
+		'name' => '美洲地區',
+		'location' => array(
+			array(
+				'name' => '美國',
+				'item' => array(
+					'電話' => '+1 (408) 645-3469',
+					'技術支持' => 'support@promise.com',
+					'網址' => 'http://support.promise.com',	
+				),
+			),
+		)
+	),
+	array(
+		'name' => '歐洲、中東和非洲',
+		'location' => array(
+			array(
+				'name' => '德國',
+				'item' => array(
+					'電話' => '+49 (0) 2 31 56 76 48 - 10',
+					'技術支持' => 'support-de@eu.promise.com',
+				),
+			),
+			array(
+				'name' => '英國',
+				'item' => array(
+					'電話' => '+44 (845) 1546130',
+					'技術支持' => 'support-uk@eu.promise.com',
+				),
+			),
+			array(
+				'name' => '歐洲',
+				'item' => array(
+					'電話' => '+31 (0) 40-235-2600',
+					'技術支持' => 'support@eu.promise.com',
+				),
+			),
+			array(
+				'name' => '中東地區',
+				'item' => array(
+					'電話' => '+97145571951',
+					'技術支持' => 'support@mea.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+		)
+	),
+	array(
+		'name' => '亞太地區',
+		'location' => array(
+			array(
+				'name' => '澳大利亞',
+				'item' => array(
+					'電話' => '+61-7-56999629',
+					'技術支持' => 'support@au.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '北京',
+				'item' => array(
+					'電話' => '+8610-8857-8085/8095',
+					'技術支持' => 'support@cn.promise.com',
+					'銷售' => 'sales@cn.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '印度',
+				'item' => array(
+					'電話' => '+91-9962411666',
+					'技術支持' => 'support@in.promise.com',
+					'銷售' => 'sales@in.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '印度尼西亞',
+				'item' => array(
+					'電話' => '180011101787',
+					'技術支持' => 'support@tw.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '日本',
+				'item' => array(
+					'電話' => '+81-3-6801-8064',
+					'技術支持' => 'support@jp.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '韓國',
+				'item' => array(
+					'電話' => '00798142030091',
+					'技術支持' => 'support@kr.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '馬來西亞',
+				'item' => array(
+					'電話' => '+60-3-92127992',
+					'技術支持' => 'support@tw.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '新西蘭',
+				'item' => array(
+					'電話' => '+64 99518714',
+					'技術支持' => 'support@au.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '菲律賓',
+				'item' => array(
+					'電話' => '180011101787',
+					'技術支持' => 'support@tw.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '上海',
+				'item' => array(
+					'電話' => '+8621-3214-0395',
+					'技術支持' => 'support@cn.promise.com',
+					'銷售' => 'sales@cn.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '新加坡',
+				'item' => array(
+					'電話' => '+65 31594529',
+					'技術支持' => 'support@tw.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '台灣',
+				'item' => array(
+					'電話' => '+886-3-578-0002',
+					'技術支持' => 'support@tw.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '泰國',
+				'item' => array(
+					'電話' => '+66 600035381',
+					'技術支持' => 'support@tw.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => '越南',
+				'item' => array(
+					'電話' => '+84 12280429',
+					'技術支持' => 'support@tw.promise.com',
+					'網址' => 'http://support.promise.com',
+				),
+			),
+		),
+	),
+);
+
+function pack_value($v) {
+	if (strpos($v, '@')) {
+		return sprintf('<a href="mailto:%s">%s</a>', $v, $v);
+	}
+	if (strpos($v, '://')) {
+		return sprintf('<a href="%s" target="_blank">%s</a>', $v, $v);
+	}
+	return $v;
+}
+?>
+<html>
+
+<head>
+	<link rel="stylesheet" href="/help/help.css" type="text/css">
+	<style>
+		.nationStyle {
+			font-family: verdana, arial, helvetica;
+			font-size: 16px;
+			color: #003399
+		}
+	</style>
+	<title>Help Page</title>
+</head>
+
+<body class=textHelp>
+
+	<h3 class="headerHelp">Promise Technology 聯絡信息</h3>
+
+	<p>下面列出的是 Promise Technology 產品的聯絡信息。</p>
+
+	<table cellpadding="10" class=textHelp width="654" border="0">
+
+
+	<?php foreach ($supports as $continent) { ?>
+		<tr>
+			<td valign="top" class=nationStyle><b><?=$continent['name']?></b></td>
+		</tr>
+
+		<tr>
+			<td valign="top">
+				<table border="0" width="100%">
+					<?php foreach ($continent['location'] as $loca) { ?>
+					<tr style="margin-top: 5px;">
+						<td width="190" valign="top">
+							<b><?=$loca['name']?></b>
+						</td>
+						<td style="padding-top: 3px;">
+							<ul>
+								<?php foreach ($loca['item'] as $item => $val) { ?>
+								<li style="padding-bottom: 4px;"><?=$item?>: <?=pack_value($val)?></li>
+								<? } ?>
+							</ul>
+						</td>
+					</tr>
+					<tr colspan="2"><td>&nbsp;</td></tr>
+					<?php } ?>
+				</table>
+			</td>
+		</tr>
+
+	<? } ?>
+
+<?php
+if(preg_match('/index.php/',$_SERVER['HTTP_REFERER'])) {
+	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+}
+if(preg_match('/help/',$_SERVER['HTTP_REFERER'])) {
+	//	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+	echo '<table><tr><td><img src=help/helpImages/ball-back.gif></td><td><a href=javascript:history.back()>Go Back</a></td></tr></table>';
+}
+?>
+
+	</table>
+</body>
+
+</html>

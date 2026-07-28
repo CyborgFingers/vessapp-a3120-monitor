@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>SNMP</title>
+</head>
+
+<body>
+
+<h3>SNMP</h3>
+
+<p><script>writeModelName()</script>'s SNMP service enables the SNMP browser to obtain information from the <script>writeModelName()</script>. The Trap Sink is where SNMP events are sent and can be viewed.</p>
+
+<p>To change the SNMP settings:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+  <li>Click on the <b>SNMP Management</b> link in Management view.</li>
+<li>Enter the SNMP Port number.<br>161 is the default.</li><li>Enter a System Name.<br>There is no default name.</li>
+<li>Enter a System Location.<br>USA is the default.</li>
+<li>Enter a System Contact (the email address of the administrator or other individual).</li>
+<li>Enter the Read Community<br>Public is the default.</li>
+<li>Enter the Write Community<br>Private is the default.</li>
+<li>Enter a Trap Sink IP address.</li>
+  <li>Select a Trap Filter and click on its option button.<br>
+    Tap sinks of the selected Severity level and above will be sent.</li>
+<li>Click on the <b>Update</b> button and review your Trap Sinks.</li>
+<li>When you are done, click on the <b>Submit</b> button.</li>
+<li>Click <b>OK</b> in the confirmation box to restart the SNMP service with your changes.</li>
+</ol>
+
+<p>To change the SNMP Automatic/Manual start setting:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the <b>SNMP Management</b> link in Management view.</li>
+<li>Under Startup Type:
+<ul>
+<li>Click on the Automatic option to start the service automatically during system startup.</li>
+<li>Click on the Manual radio option to start the service manually (the service does not start during system startup).</li>
+</ul>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<p>To manually start, restart or stop the SNMP service:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the <b>SNMP Management</b> link in Management view.</li>
+<li>Under Running Status:
+<ul>
+<li>If the service is stopped, click the <b>Start</b> button to start the service.</li>
+<li>If the service is started, click the <b>Stop</b> button to stop the service.<br>
+Or click on the <b>Restart</b> button to restart the service.</li>
+</ul>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

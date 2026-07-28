@@ -1,0 +1,43 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Network Management icon VLAN tab Create</title>
+</head>
+
+<body>
+
+<h3>Create a VLAN</h3>
+
+<p>The Network Management–VLAN tab enables you to create a virtual local area network (VLAN) using the iSCSI 
+data ports on your subsystem.</p>
+
+<p><b>Note:</b> If you plan to aggregate the iSCSI ports, create a link aggregation before you create the VLAN.</p>
+
+<p>To create a VLAN entry:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View. </li>
+<li>Click the Administrative Tools icon. </li>
+<li>Click the Network Management icon. </li>
+<li>In Management View, from the dropdown menu on the VLAN tab, choose <i>Create VLAN Entry</i>.</li>
+<li>Enter a name into the VLAN Name field.<br>
+     Maximum of 15 characters. Use letters, numbers, space between words and underscore.</li>
+<li>Enter the following information the respective boxes:</li>
+<ul>
+<li>VLAN Tag number. (2 to 4094)</li>
+<li>IP Address of the VLAN</li>
+<li>Subnet Mask of the VLAN. (255.255.255.0 is the default)</li>
+<li>TCP Port number. (3260 is the default)</li>
+</ul>
+<li>To enable jumbo frames on the VLAN, check the Jumbo Frame box.</li>
+<li>From the dropdown menu, choose a Member Interface. <br>
+If you have link aggregation, choose the Trunk number.<br>
+If you do NOT have a link aggregation, choose an iSCSI port number.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+<script>writeGoBack()</script>
+</body>
+
+</html>

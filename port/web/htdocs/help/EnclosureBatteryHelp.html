@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Enclosure icon Battery tab</title>
+</head>
+
+<body>
+
+<h3>Enclosure Battery</h3>
+
+<p>The Enclosure–Battery tab displays information about the cache backup battery (or batteries) in the <script>writeModelName()</script> subsystem 
+enclosure, including:</p>
+<ul>
+<li>Device ID</li>
+<li>Operational Status – Fully Charged is normal</li>
+  <li>Battery Chemistry – Type of battery, such as Li-Ion (lithium ion)</li>
+<li>Manufacturing Date – Date the battery was manufactured </li>
+<li>Remaining Capacity in percent</li>
+<li>Battery Cell Type – 2-cell or 4-cell depending on the subsystem model</li>
+<li>Estimated Hold Time – Estimated time the battery can power the cache</li>
+<li>Temperature Theshold Discharge – Maximum temperature permitted during discharge</li>
+<li>Temperature Theshold Charge – Maximum temperature permitted during charge</li>
+<li>Temperature – 40&deg;C or lower is normal. Temperature rises while charging or discharging</li>
+<li>Cycle Count – Number of times the battery was reconditioned</li>
+<li>Voltage – 3900 mV or higher is normal</li>
+<li>Current – A flow of a few mA is normal</li>
+</ul>
+
+<h4>Battery Notes</h4>
+
+<p>Each battery works with a controller. If the battery is present in the subsystem but the corresponding
+contoller is not present, the battery will not appear in the interface.</p>
+
+<p>If a battery does not reflect normal conditions and it is not 
+  currently under reconditioning, run the Recondition function before you replace 
+  the battery. </p>
+  
+<p>Reconditioning fully discharges, then fully recharges the battery. During reconditioning, 
+  if the <a href="AdaptiveWritebackCacheHelp.html">Adaptive Writeback Cache</a> 
+  function is enabled, the <a href="CachePolicyHelp.html">controller cache</a> 
+  is set to <i>Write Thru</i>. After reconditioning, the cache is reset to <i>Write 
+  Back</i>.</p>
+  
+  
+<p>If a battery reaches the threshold temperature while charging or discharging, 
+  the charge or discharge pauses and the blower runs at high speed until the battery 
+  temperature falls below the threshold.</p>
+  
+  <p>If the battery does not maintain normal values 
+  after a Recondition, replace the battery. See Chapter 6 of the <i>
+  <script>writeModelName()</script>
+  Product Manual</i> for more information.</p>
+  
+<p><script>writeModelName()</script> automatically reconditions the battery every two months. 
+  To set the schedule, go to the <a href="SubsystemSchedulerHelp.html">Subsystem 
+  Scheduler</a>.</p>
+  
+  <p>When you install a new battery, the cycle count shows 0. <script>writeModelName()</script> automatically 
+  runs a recondition on the battery to verify it. If you restart the subsystem or controller before reconditioning is 
+  finished, the battery is charged to 100%, then reconditioning starts again.</p>
+
+<h4>Battery Reconditioning</h4>
+
+<p>To recondition the battery:</p>
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Enclosures icon.</li>
+<li>Click on the Enclosure icon.</li>
+<li>Click on the Battery tab in Management View.</li>
+<li>From the Battery tab dropdown menu, select <i>Recondition</i>.</li>
+<li>From the Device ID dropdown menu, choose the ID of the battery you want to recondition.</li>
+<li>Click the <b>Submit</b> button.<br>
+During reconditioning, Battery status can show "discharging" and "recharging",
+and a value will display next to Current. Reconditioning runs in the background
+and stops automatically upon completion.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+# pwrmon - power monitor (Phase 5 port of pwrmon.exe): on power loss, issue the
+# graceful RAID-controller shutdown (ShutdownHBA) before the UPS battery dies.
+#
+# TRIGGER UNIT - not started at boot and not part of promise-webpam.target.
+# Wire your UPS notifier to start it, e.g. NUT upsmon.conf:
+#   NOTIFYCMD "/usr/bin/systemctl start pwrmon.service"
+#   NOTIFYFLAG ONBATT SYSCMD+EXEC
+#
+# SCAFFOLD SEMANTICS: the i2 ShutdownHBA MicOpCode is an on-device calibration
+# point (docs/RE-snmp-daemons.md #4); the notify + syslog path is implemented.
+[Unit]
+Description=Promise pwrmon (graceful controller shutdown on power loss - started by the UPS notifier)
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/promise/promise.env
+ExecStart=/opt/promise/bin/pwrmon --power-fail

@@ -1,0 +1,123 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Fibre Channel Help</title>
+</head>
+
+<body>
+
+<h3>Fibre Channel Information</h3>
+
+<p><script>writeBrandName()</script> products use Fibre Channel interfaces to transfer data between the storage subsystem and the Host PC.
+The primary use of Fibre Channel today is to interconnect storage devices to for a Storage Area Network (SAN), and
+<script>writeModelName()</script> is designed for this purpose. <script>writeModelName()</script>
+  uses 4 Gb/s Fibre Channel technology, the latest generation. Not included is 
+  a Fibre Channel Host Bus Adapter (HBA) or Fibre Channel card.</p>
+
+<p>Channels, like networks, are used to move data between a host, such as your PC and a peripheral device, such as your
+<script>writeModelName()</script> subsystem. There are significant differences between channels and networks, however, as described in the table below.</p>
+
+<table width=80% border=1 cellspacing=0 cellpadding=5>
+<tr>
+<td colspan=3 align=center><b>Key Differences, Networks & Channels</b></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td align=center><b>Network</b></td>
+<td align=center><b>Channel</b></td>
+</tr>
+<tr>
+<td><b>Environment</b></td>
+<td align=center>open, unstructured, unpredictable</td>
+<td align=center>closed, structured, predictable</td>
+</tr>
+<tr>
+<td><b>Relationship</b></td>
+<td align=center>peer-to-peer</td>
+<td align=center>master-slave</td>
+</tr>
+<tr>
+<td><b>Nodes</b></td>
+<td align=center>discovered</td>
+<td align=center>known in advance</td>
+</tr>
+<tr>
+<td><b>Entity Transported</b></td>
+<td align=center>data, voice, video</td>
+<td align=center>data</td>
+</tr>
+<tr>
+<td><b>Principal Requirement</b></td>
+<td align=center>On-time delivery</td>
+<td align=center>Error-free delivery</td>
+</tr>
+<tr>
+<td><b>Overhead</b></td>
+<td align=center>High</td>
+<td align=center>Low</td>
+</tr>
+</table>
+
+
+<p>Data movement is prompted by the Host PC's operating system. The Logical Drives on the <script>writeBrandName()</script> product appear as a single drive
+in the OS's user interface, usually with an icon of some kind and a drive letter designation such as C:, D: or E: for Windows; SDA or
+SDB for Linux. Neither <script>writeSoftwareName()</script> nor the CLU is able to move data to or from the Host PC.</p>
+
+<h4>Terminology</h4>
+
+<p>Data is moved over Fibre Channel in the form of frames. A frame is data unit of up to 2048 bytes, encapsulated with a header that
+contains routing information and a trailer that contains control and error detection data.</p>
+
+<p>A Fibre Channel device is called a node. The device may be a PC with a Fibre Channel HBA card, a <script>writeModelName()</script> subsystem, or some other
+device. The node communicates through a port, a pair of fibers, either optical cable or elecrical wires. One of the fibers carries information
+into the port, the other carries information out. The fiber pair is called a link. The link connects the node with other devices on the topology.</p>
+
+<p>There are three common types of topology in the Fibre Channel world, point-to-point, 
+  arbitrated loop, and fabric.</p>
+
+<p>Point-to-point is the simplest topology. It consists of a single, duplex connection between two nodes. An example of this arrangement
+is Direct Attached Storage (DAS), where a PC with a Fibre Channel HBA card connects directly to the data ports on a <script>writeModelName()</script> subsystem.</p>
+
+<p>Arbitrated loop is a system of three to 127 nodes connected in a loop, similar to a token-ring networking protocol. Each port sees all the
+frames (messages) travelling on the loop but only pays attention to those frames addressed that port. Aribitrated loop is an inexpensive way to
+connect multiple nodes. However, bandwidth of the loop is shared, only two ports are active at one time, with the other ports acting as repeaters.</p>
+
+<p>Fabric is a system using dynamic interconnection between nodes, achieved by means of a switch or a router. Any node can communicate
+with any other node at any time. The switch or router handles frame routing, so only the target port sees the frames. A fabric supports both
+peer-to-peer (network) and master-slave (channel) communication. A fabric can be easily expanded by adding more switches or nodes, up to
+a total of 16 million ports logged in at the same time.</p>
+
+<p>A device that makes a request of another is called the initiator. The device responding to the request is called the target. For example, you
+are working at your PC and want to access files on your <script>writeModelName()</script> subsystem. When you go to open the logical drive directory, your PC sends the
+request to the <script>writeModelName()</script> and the <script>writeModelName()</script> responds. In this case, the PC is the initiator and the <script>writeModelName()</script> is the target. Initiators and targets are identified
+by a double 64-bit World Wide Name (WWN). This WWN includes a unique manufacturer identifier and a unique port identifier.</p>
+
+<p>As note in the chart, when a Fibre Channel host comes on line, all of the nodes are detected and identified. In the case of <script>writeModelName()</script>, all of the
+initiators are identified. If a PC is activated or connected later, the <script>writeModelName()</script> may not recognize it. Conversely, there may be PCs on the loop or fabric
+that you do not want to access the <script>writeModelName()</script>. <script>writeSoftwareName()</script> includes a feature for adding and deleting initiators manually. You simply type in the initiator's
+WWN. Note that the WWN must be typed exactly or the connection will fail.</p>
+
+<h4>Troubleshooting</h4>
+
+<p>Fibre Channel is a well-proven and reliable method of data communication. As with any system, however, problems can arise. When there is a connection failure, use <script>writeSoftwareName()</script> to verify that <script>writeModelName()</script> sees the initiator(s).
+If <script>writeModelName()</script> sees some initiators but not the one you want, the problem is most likely elsewhere in the loop or fabric.
+If <script>writeModelName()</script> does not see any initiators:</p>
+<ul>
+<li>Check all of the Fibre Channel connections </li>
+<li>Verify that all nodes are properly connected and powered </li>
+<li>Verify that the fabric router or switch is properly connected powered </li>
+</ul>
+<p>The Fibre Channel ports, transceivers, and controller on 
+  <script>writeModelName()</script> function the same as comparable components on other nodes. Note that
+<script>writeModelName()</script>'s management functions take place over a separate IP network connection. Therefore it is possible to have access to the <script>writeModelName()</script> via CLU
+over Telnet or <script>writeSoftwareName()</script> even though the Fibre Channel connection is offline.</p>
+
+<p>See also <a href=TroubleShootingHelp.html>Troubleshooting</a> and <a href=StorageServicesLUNMapHelp.html>LUN Mapping & Masking</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

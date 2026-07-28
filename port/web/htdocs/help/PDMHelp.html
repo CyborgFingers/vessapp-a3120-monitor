@@ -1,0 +1,99 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>PDM</title>
+
+</head>
+
+<body>
+
+
+<h3>PDM</h3>
+
+<p>Predictive Data Migration (PDM) is the migration of data from
+the suspect disk drive to a spare disk drive, similar to Rebuilding a Logical
+Drive. But unlike Rebuilding, PDM constantly monitors your disk drives and automatically
+copies your data to a spare disk drive BEFORE the disk drive fails and your
+Logical Drive goes Critical. </p>
+
+<p>The following actions trigger PDM:</p>
+<ul>
+<li>A disk drive with unhealthy status (see below)</li>
+<li>Media Patrol finds a disk critical error*</li>
+<li>You initiate PDM manually</li>
+</ul>
+<p>*PDM also counts the number of media errors reported by <a href=MediaPatrolHelp.html>Media Patrol</a>.
+<p>A disk drive becomes unhealthy when:
+<ul>
+<li>
+<p>A SMART error is reported </li>
+<li>
+<p>The bad sector remapping table fills to the specified level.</p>
+</li>
+</ul>
+
+<p>Because data would be lost if written to a bad sector, when a bad sector is detected,
+the disk drive creates a map around it. These maps are saved in the bad sector
+remapping table, which has a capacity of 512 reassigned blocks and 1024 error blocks.</p>
+
+<p>You can specify a percentage level for the reassigned and error blocks in <a href="SubsystemBackgroundHelp.html">Background 
+  Activities</a>.</p>
+
+<p>When the table fills to a specified percentage of its capacity,
+PDM triggers a migration of data from the suspect drive (the disk drive with
+the bad sectors) to a spare disk drive. </p>
+
+
+<p>During data migration, you will have access to the Logical
+Drive but it will respond more slowly to read/write tasks because of the additional
+operation. The time required for data migration depends on the size of the disk
+drive.</p>
+<p>To run PDM, take the following actions:</p>
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+  <li>From the dropdown menu on the Background Activities tab, select <i>Start PDM</i>.</li>
+  <li>From the Source Physical Drive dropdown menu, select a Source disk array 
+    and physical drive.<br>
+Arrays have a number. Physical drives have Seq. No. and a number.</li>
+<li>From the Target Physical Drive dropdown menu, select a Target physical drive.</li>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+<p>A PDM link appears on the Disk Array <a href=DiskArrayBackgroundHelp.html>
+  Background Activities</a> tab and the percent completed displays.</p>
+
+<h4>Pause, Resume, or Stop PDM</h4>
+
+<p>To pause, resume, or stop the Reuild:</p>
+  <ol>
+   <li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+  <li>Click on the Background Activities tab in Management view.</li>
+  <li>Under Background Activities, click on the <b>PDM</b> <a href=BackgroundActivityHelp.html>link</a>.</li>
+</ol>
+
+<p><b>Note:</b> You can also pause, resume, or stop PDM from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a>
+tab.</p>
+
+
+<h4>Set PDM Priority</h4>
+
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, select <i>Settings</i>.</li>
+<li>Click on the PDM Rate dropdown menu and select a rate: Low, Medium or High.</li>
+<ul>
+<li><b>Low</b> allocates fewer system resources to the PDM and more to data read/write operations.</li>
+<li><b>Medium</b> allocates a balance of system resources to the PDM and data read/write operations.</li>
+<li><b>High</b> allocates more system resources to the PDM and fewer to data read/write operations.</li>
+</ul>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+[Unit]
+Description=Promise WebPAM read-only drive/pool health snapshot
+Documentation=man:zpool(8) man:smartctl(8)
+# zfs.target is absent on non-ZFS hosts; After= on a missing unit is a harmless no-op.
+After=zfs.target zfs-import.target
+
+[Service]
+Type=oneshot
+# Read-only probe (zpool status / smartctl / lsblk - never a write). Runs as root
+# so smartctl can read SMART; the web tier (www-data) only READS the snapshot file.
+# Atomic publish: write a temp then rename, so the C reader never sees a partial file.
+ExecStart=/bin/sh -c '/usr/bin/python3 /opt/promise/bin/promise-health-probe > /run/promise/health.dat.tmp 2>/dev/null && chmod 0644 /run/promise/health.dat.tmp && mv -f /run/promise/health.dat.tmp /run/promise/health.dat'
+Nice=10
+IOSchedulingClass=idle

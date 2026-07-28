@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Logical Drive Offline</title>
+</head>
+
+<body>
+
+<h3>Logical Drive Offline</h3>
+
+<p>When a logical drive goes <b>Offline</b>, the data
+stored in the logical drive is no longer accessible.<br>
+Logical drives based on fault-tolerant disk arrays—RAID 1, 1E, 5, 6, and 10—go
+Offline when <b>two</b> physical drives are removed or fail.<br>
+Logical drives based on non-fault tolerant disk arrays—RAID 0—go Offline when
+a <b>one</b> physical drive is removed or fails.</p>
+
+<h4>RAID 1, 1E, 5, 6, and 10 Logical Drives</h4>
+<p>If a fault-tolerant logical drive—RAID 1, 1E, 5, 6, and 10—goes
+offline, it may be possible to recover your data.</p>
+
+
+<p><b>Warning: Take no further corrective action until you
+have consulted with <script>writeBrandName()</script> <a href=../contact.php>Technical
+Support</a>!</b> </p>
+
+<h4>RAID 0 Logical Drives</h4>
+<p>If a logical drive based on a non-fault-tolerant disk array—RAID 0—goes offline, all
+of the data on the logical drive is lost.<br>
+Do the following to recreate your logical drive:
+<ol>
+<li>Identify the failed physical drive.</li>
+<li>Replace the failed drive. </li>
+<li>If the disk array had more than one physical drive, delete the disk array and re-create it.</li>
+<li>Restore the data from your backup source.</li>
+</ol>
+
+<p><b> Important: </b>If your replacement disk drive was formerly part of a different
+disk array or logical drive, you must wipe the reserve sector on the replacement
+disk drive before you use it. Use the Command Line Interface (CLI). See Chapter
+5 of the <i><script>writeModelName()</script> Product Manual</i> for instructions.</p>
+
+<p>For further information, see <a href=TroubleShootingHelp.html>Troubleshooting</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

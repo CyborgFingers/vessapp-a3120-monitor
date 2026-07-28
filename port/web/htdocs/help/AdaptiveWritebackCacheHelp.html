@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Adaptive Writeback Cache</title>
+</head>
+
+<body>
+
+<h3>Adaptive Writeback Cache</h3>
+
+<p>On the 
+  <script>writeModelName()</script>
+  subsystem, you can set the logical drive <a href="CachePolicyHelp.html">write cache 
+  policy</a> to <i>Write Thru</i> or <i>Write Back</i>.</p>
+  
+  
+<p> If you <a href="LogicalDriveSettingsHelp.html">set</a> the write cache policy 
+  to <i>Write Back</i>, your data is first written to the controller cache, and 
+  later to the logical drive. This action improves performance. To preserve the 
+  data in the cache in the event of a power failure, the subsystem has a <a href="EnclosureBatteryHelp.html">backup 
+  battery</a> that powers the cache. To see an estimate of how long the battery 
+  will power the cache, click on the Enclosure icon, then the <a href="EnclosureBatteryHelp.html">Battery</a> 
+  tab, and check the value beside "Estimated Hold Time."</p>
+  
+  <p>The Adaptive Writeback Cache feature protects your data by changing the write cache settings while the cache backup battery is offline. When all of the following conditions occur:</p>
+<ul>
+<li>The logical drive write policy is set to <i>Write Back</i></li>
+<li>The Adaptive Writeback Cache feature is enabled</li>
+<li>The cache backup battery goes offline</li>
+<p>The write policy automatically changes to <i>Write Thru</i>.<br>
+When the battery comes back online, the write policy automatically changes back to <i>Write Back</i>.
+</ul>
+
+<p>To enable or disable the Adaptive Writeback Cache option, click on the Controller <a href="ControllerSettingsHelp.html">Settings</a> 
+  tab.</p> 
+
+<p> For more information, see <a href="CachePolicyHelp.html">Cache Policy</a>, 
+  <a href="EnclosureBatteryHelp.html">Enclosure Battery</a>, and Chapter 6 of 
+  the 
+  <i><script>writeModelName()</script>
+  Product Manual</i>.</p>
+  
+<script>writeGoBack()</script>
+</body>
+
+</html>

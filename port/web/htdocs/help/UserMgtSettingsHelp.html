@@ -1,0 +1,67 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>User Management icon Settings tab</title>
+</head>
+
+<body>
+
+<h3>User Settings</h3>
+
+<p>The User Management–Settings tab enables you to view and change your display 
+  name and email address. The Administrator or a Super User can 
+change another user's settings.</p>
+
+ <p>To change your own settings:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View.</li>
+<li>Click the Administrative Tools icon.</li>
+<li>Click on the User Management icon.</li>
+<li>Click on the Settings tab in Management View.</li>
+<li>Enter a display name in the Display Name field.</li>
+<li>Enter an email address in the Email field.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p>To change another user's settings:</p>
+<ol>
+<li>Log in as the Administrator or a Super User.</li>
+<li>Click the Subsystem icon in Tree View.</li>
+<li>Click the Administrative Tools icon.</li>
+<li>Click on the User Management icon.</li>
+<li>On the Information tab, click the User Name link of the user whose settings you want to change.</li>
+<li>Make the following settings as needed:
+<ul>
+<li>Check the Enable box to enable this user.<br>
+Uncheck the box to disable this user.</li>
+<li>Enter or change the display name.</li>
+<li>Enter or change the email address.</li>
+<li>From the Privilege dropdown menu, choose a new level.<br>
+See the List of Privileges, below.</li>
+</ul>
+</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<h4>List of Privileges</h4>
+<ul>
+<li><b>View</b> – Allows the user to see all status and settings but not to make any changes</li>
+<li><b>Maintenance</b> – Allows the user to perform
+maintenance tasks including Rebuilding, PDM, Media Patrol and Redundancy Check</li>
+  <li><b>Power</b> – Allows the user to create (but not delete) disk arrays and 
+    logical drives, change RAID levels, change stripe size; change settings of 
+    components such as disk arrays, logical drives, physical drives and the controller.</li>
+  <li><b>Super</b> – Allows the user full access to all functions including create 
+    and delete users and changing the settings of other users, and delete disk 
+    arrays and logical drives. The default "administrator" account is a Super 
+    User.</li>
+</ul>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

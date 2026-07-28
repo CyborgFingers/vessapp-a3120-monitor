@@ -1,0 +1,31 @@
+# promise-encld - the A3120 enclosure runtime: drives the NCT7802Y blower and
+# the nct6776 CPU fan from the Python driver's fanconfig.json/FanCalibration
+# curves (PWM floor 20 - fans are never stopped) and keeps the Power/Fan/System
+# panel LEDs live. Replaces the Python promise-hwmon fan/LED control.
+#
+# Cutover + rollback runbook: docs/DEPLOY-ONDEVICE.md. Validate FIRST with
+#   promise-encld --dry-run --once   (computes + prints, writes nothing)
+#
+# Runs as root: /dev/i2c-0 (PCA9555 LEDs + NCT7802Y) and hwmon pwm writes.
+# On stop, the daemon leaves the blower on a conservative hold PWM and returns
+# the CPU fan to hardware-auto (pwm2_enable=2) so cooling continues undaemoned.
+[Unit]
+Description=Promise A3120 enclosure fan + status-LED daemon
+After=network.target
+# Never run alongside the Python driver's container - both would write PWM.
+Conflicts=promise-hwmon.service
+
+[Service]
+Type=simple
+# PROMISE_FANCONFIG / PROMISE_CALIBRATION / PROMISE_ENCLD_* / VESSAPP_I2C_BUS
+EnvironmentFile=-/etc/promise/promise.env
+ExecStartPre=-/sbin/modprobe i2c-dev
+ExecStartPre=-/sbin/modprobe i2c-i801
+ExecStart=/opt/promise/bin/promise-encld
+Restart=on-failure
+RestartSec=5
+# SIGTERM triggers the safe-exit fan handoff; give it time to finish.
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target

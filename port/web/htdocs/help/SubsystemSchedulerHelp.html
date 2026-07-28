@@ -1,0 +1,78 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Subsystem icon Scheduler tab</title>
+</head>
+
+<body>
+
+<h3>Subsystem Scheduler</h3>
+
+<p>The Subsystem–Scheduler tab enables you to view and assign scheduled
+background activities on a specific subsystem.</p>
+
+<p>Scheduled activities include:</p>
+<ul>
+<li><a href=MediaPatrolHelp.html>Media Patrol</a></li>
+<li><a href=RCHelp.html>Redundancy Check</a></li>  
+<li><a href=SpareDrivesSpareCheckHelp.html>Spare Drive Check</a></li>
+</ul>
+
+<p>To VIEW scheduled activities for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>Click on the Scheduler tab in Management View.</li>
+</ol>
+
+<p>To SET a scheduled activity for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>From the dropdown tab on the Scheduler tab, choose an item (see the list above).</li>
+<li>In the Scheduler dialog box, check the Enable This Schedule box.</li>
+<li>Select a start time (24-hour clock).</li>
+<li>Select a Recurrence Pattern.</li>
+<ul>
+<li>Daily – Enter the number of days between events.</li>
+<li>Weekly – Enter the number of weeks between events and select which days of the week.</li>
+<li>Monthly – Select a calendar day of the month (1 – 31).
+<br>
+Note: If you select a higher number than there are days in the current month,
+the actual start date will occur at the beginning of the following month.<br>
+Or, select a day of the week and select the first, second, third, fourth
+or last occurrence of that day in the month.<br>
+Then, select the months in which you want the activity to occur. </li>
+</ul>
+<li>Select a Range of Occurrence.</li>
+<ul>
+<li>Start-from date. The default is today's date.</li>
+<li>End-on date.<br>
+Select No End Date (perpetual).<br>
+Or, select a number of occurrences for this activity.<br>
+Or, select a specific end date. The default is today's date.</li>
+</ul>
+<li>For Redundancy Check only.
+<ul>
+<li>Choose the Auto Fix option. This feature attempts to repair the problem when it finds an error.</li>
+<li>Choose the Pause on Error option. This feature stops the process when it finds an error</li>
+      <li>Check the boxes beside the logical drives (all except RAID 0) to which this activity will apply.<br>
+Note: Each logical drive can have only one scheduled Redundancy Check.</li>
+</ul>
+</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p>To DELETE a scheduled activity for this subsystem:</p>
+<ol>
+<li>Click on the Subsystem in Tree View.</li>
+<li>From the dropdown menu on the Scheduler tab, choose <i>Delete Schedules</i>.</li>
+<li>Check the box to the left of the schedule you want to delete.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

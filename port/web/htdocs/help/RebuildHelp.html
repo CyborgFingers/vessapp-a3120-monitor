@@ -1,0 +1,104 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Rebuild</title>
+
+</head>
+
+<body>
+
+<h3>Rebuild Disk Array</h3>
+
+<p>When you rebuild a disk array, you are actually rebuilding the data on one physical drive.</p>
+<ul>
+  <li>When a physical drive in a disk array fails and a <a href="SpareDrivesInfoHelp.html">
+    spare drive</a> of adequate capacity is available, the disk array will begin 
+    to rebuild automatically using the spare drive.</li>
+
+  <li>If there is no spare drive of adequate capacity, but the Auto Rebuild function 
+    is ENABLED, the disk array will begin to rebuild automatically as soon as 
+    you remove the failed physical drive and install an unconfigured physical 
+    drive in the same slot.</li>
+
+<li>If there is no spare drive of adequate capacity and the Auto Rebuild function is DISABLED, you must replace the 
+failed drive with an unconfigured physical drive, then perform a Manual Rebuild.</li>
+
+</ul>
+
+<p>Also see <a href="LDDegradedHelp.html">Logical Drive Degraded</a>.</p>
+
+<p><b> Important:</b> If your replacement disk drive was formerly part of a different 
+  disk array or logical drive, you must <a href="PhysicalDriveClearHelp.html">clear</a> 
+  the configuration data on the replacement drive before you use it.</p>
+
+
+<h4>Enable Auto Rebuild</h4>
+
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Background Activities tab in Management View.</li>
+<li>From the <a href=SubsystemBackgroundHelp.html>Background Activities</a> dropdown menu, select <i>Settings</i>.</li>
+<li>Check the Auto Rebuild Enabled box.</li>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+
+<h4>Manual Rebuild</h4>
+
+<p>To perform a disk array manual rebuild:</p>
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.<br>
+If there are multiple disk arrays, choose the icon with the yellow !.</li>
+<li>From the dropdown menu on the Backgound Activities tab, select <i>Start Rebuild</i>.</li>
+<li>Select the Source physical drive.<br>
+This is a remaining functional physical drive in the disk array.</li>
+<li>Select the Target physical drive.<br>
+This is the replacement physical drive.</li>
+<li>Click the <b>Submit </b>button.</li>
+</ol>
+<p>Click on the Disk Array Background Activities tab displays the progress of the rebuild.<br>
+Depending on the size of the physical disk 
+  involved, this process will take some time.</p>
+
+<p><b>Note:</b> You can also start a Manual Rebuild from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a> tab.
+
+<h4>Pause, Resume, or Stop the Rebuild</h4>
+
+<p>To pause, resume, or stop the Rebuild:</p>
+  <ol>
+   <li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+  <li>Click on the Background Activities tab in Management view.</li>
+  <li>Under Background Activities, click on the <b>Rebuild</b> <a href="BackgroundActivityHelp.html">link</a>.</li>
+</ol>
+
+<p><b>Note:</b> You can also pause, resume, or stop the Rebuild from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a>
+tab.</p>
+
+
+<h4>Set Rebuild Priority</h4>
+<p>Rebuild priority applies to all disk array rebuilds whether they use a spare drive, the Auto Rebuild function or a manual rebuild procedure.</p>
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, select <i>Settings</i>.</li>
+<li>Click on the Rebuild Rate dropdown menu and select a rate: Low, Medium or High.</li>
+<ul>
+<li><b>Low</b> allocates fewer system resources to the Rebuild Rate and more to data read/write operations.</li>
+<li><b>Medium</b> allocates a balance of system resources to the Rebuild Rate and data read/write operations.</li>
+<li><b>High</b> allocates more system resources to the Rebuild Rate and fewer to data read/write operations.</li>
+</ul>
+<li>Click on the Auto Rebuild Enabled box to enable Auto Rebuild.</li>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

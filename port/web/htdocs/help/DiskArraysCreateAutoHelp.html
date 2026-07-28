@@ -1,0 +1,48 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Disk Arrays icon Create tab</title>
+</head>
+
+<body>
+
+<h3>Create a Disk Array–Automatic</h3>
+
+<p>The Disk Array Automatic Creation option enables you to create a new disk array following a default set of
+parameters. The Automatic option proposes a disk array and logical drive arrangement. You can accept or reject 
+the proposed arrangement but you cannot modify it.</p>
+
+<p>To create a Disk Array using the Automatic option:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>From the dropdown menu on the Create tab, select <i>Automatic</i>.<br>
+The following parameters display:</li>
+<ul>
+
+<li><b>Disk Arrays</b> – The number of physical drives
+in the disk array, their slot numbers, configurable capacity and the number
+of logical drives to be created</li>
+<li><b>Logical Drives</b> – The ID number of the logical drives, their RAID level, capacity and stripe size</li>
+
+    <li><b>Spare Drives</b> – The physical drive slot number of the dedicated 
+      hot spare assigned to this disk array. A <a href="LDDegradedHelp.html">hot 
+      spare drive</a> is created for all <a href="RAIDlevels.html">RAID levels</a> 
+      except RAID 0, when five or more unconfigured physical drives are available</li>
+</ul>
+<li> If you accept these parameters, click the <b>Submit</b> button.<br>
+The new disk array appears in the Disk Array List on the <a href=DiskArraysInfoHelp.html>Information</a>
+tab.</li>
+
+<p>If you do NOT accept these parameters, use the <a href=DiskArraysCreateAdvHelp.html>Advanced</a>
+option to create your disk array.</p>
+
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

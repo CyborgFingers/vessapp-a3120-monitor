@@ -1,0 +1,285 @@
+# Promise A3120 CLU verbose dump 
+==== subsys ====
+Alias: 
+Vendor: Promise Technology,Inc.        Model: Vess A3120
+PartNo:                                SerialNo: WR0093003581
+Rev: A1                                WWN: 2000-0001-555f-9316
+==== ctrl ====
+ 
+-------------------------------------------------------------------------------
+CtrlId: 1
+Alias: 
+OperationalStatus: OK                  PowerOnTime: 22 minutes
+CacheUsagePercentage: 0%               DirtyCachePercentage: 0%
+ 
+PartNo:                                SerialNo: B53L18426200176
+HWRev: A1                              WWN: 2000-0001-555f-9316
+CmdProtocol: SCSI-3
+MemType: DDR4 SDRAM                    MemSize: 16GB
+FlashType: Flash Memory                FlashSize: 128GB
+NVRAMType: FRAM                        NVRAMSize: 128KB
+BootLoaderVersion: P3.50               BootLoaderBuildDate: 10/29/2020
+FirmwareVersion: 0.00.0040.18          FirmwareBuildDate: Mar 28, 2022
+SoftwareVersion: 0.00.0359.68          SoftwareBuildDate: Mar 28, 2022
+InstallPkgVersion: 5.00.0000.05        InstallPkgBldDate: Mar 28, 2022
+ 
+DiskArrayPresent: 1                    OverallRAIDStatus: OK
+LogDrvPresent: 1                       LogDrvOnline: 1
+LogDrvOffline: 0                       LogDrvCritical: 0
+PhyDrvPresent: 4                       PhyDrvOnline: 4
+PhyDrvOffline: 0                       PhyDrvPFA: 0
+PhyDrvTempThreshold: 55                PhyDrvCriticalTempThreshold: 65
+GlobalSparePresent: 0                  DedicatedSparePresent: 0
+RevertibleGlobalSparePresent: 0        RevertibleDedicatedSparePresent: 0
+RevertibleGlobalSpareUsed: 0           RevertibleDedicatedSpareUsed: 0
+ 
+WriteThroughMode: No                   MaxSectorSize: 4KB
+PreferredCacheLineSize: 64 KB          CacheLineSize: 64 KB
+Coercion: Enabled                      CoercionMethod: GBTruncate
+MigrationStorage: DDF                  CacheFlushInterval: 3 second(s)
+HostCacheFlushing: Disabled            ForcedReadAhead: Disabled
+DiskTimeOutValue: 45                   DiskSlowResponseValue: 15 second(s)
+ 
+PowerLevel: 0                          SpindownType: All drives
+HDDIdleTime: 5 minutes                 HDDStandbyTime: 15 minutes
+HDDStoppedTime: 20 minutes             OTP Shutdown: Enabled
+Current Operation Mode: Normal         LD Unsynchronized Creation: Enabled
+==== enclosure ====
+ 
+ 
+-------------------------------------------------------------------------------
+Enclosure Setting:
+ 
+EnclosureId: 1
+CtrlWarningTempThreshold: 90C/194F     CtrlCriticalTempThreshold: 100C/212F
+PowerSwitch: Enabled
+ 
+ 
+-------------------------------------------------------------------------------
+Enclosure Info and Status:
+ 
+EnclosureId: 1
+EnclosureType: ENC_TYPE_VESS_1U4BAY
+OperationalStatus: OK
+MaxNumOfControllers: 1                 MaxNumOfPhyDrvSlots: 4
+MaxNumOfFans: 0                        MaxNumOfBlowers: 3
+MaxNumOfTempSensors: 2                 MaxNumOfPSUs: 1
+MaxNumOfBatteries: 0                   MaxNumOfVoltageSensors: 4
+ 
+===============================================================================
+PSU       Status                        
+===============================================================================
+1         Powered On and Functional     
+ 
+===============================================================================
+CoolingFan Location             Status      HealthyThreshold  CurrentSpeed    
+===============================================================================
+1          Cooling Unit 1       Functional  > 600 RPM         3013 RPM        
+2          Cooling Unit 2       Functional  > 600 RPM         5625 RPM        
+3          Cooling Unit 3       Functional  > 600 RPM         5625 RPM        
+ 
+===============================================================================
+TemperatureSensor   Location       HealthThreshold   CurrentTemperature    
+===============================================================================
+1                   CPU            < 90C/194F        39C/102F              
+2                   Controller     < 90C/194F        24C/75F               
+ 
+===============================================================================
+VoltageSensor  Location       Type    HealthyThreshold         CurrentVoltage  
+===============================================================================
+1              Controller     1.0V    (0.0 - 1.3) V            0.2V            
+2              Controller     5.0V    (4.7 - 5.3) V            5.0V            
+3              Controller     12.0V   (11.4 - 12.6) V          12.3V           
+4              Controller     3.3V    (3.1 - 3.5) V            3.3V            
+ 
+ 
+-------------------------------------------------------------------------------
+FRU VPD Info:
+ 
+EnclosureId: 1                         FRUType: Backplane
+FRU#: 1                                SerialNo: B53L18426200176
+PartNo:                                Rev: A1
+WWN: 2000-0001-555f-9316
+PDSN: WR0093003581
+ 
+==== phydrv ====
+ 
+-------------------------------------------------------------------------------
+PdId: 1
+OperationalStatus: OK
+Alias: 
+PhysicalCapacity: 3.64TB               ConfigurableCapacity: 3.64TB
+UsedCapacity: 3.64TB                   BlockSize: 512Bytes
+ConfigStatus: Array0 SeqNo0            Location: Encl1 Slot1
+ModelNo: HGST HUS726T4TALE6L4          VisibleTo: Controller 1
+SerialNo: VBJ0LVMF                     FirmwareVersion: VKGNW9U0
+SerialNo(Hashed): 0x6cbef87d           PowerSavingMode: 0
+DriveInterface: SATA 6Gb/s             Protocol: ATA/ATAPI-9
+WriteCacheSupport: Yes                 WriteCache: Enabled
+RLACacheSupport: Yes                   RLACache: Enabled
+SMARTFeatureSetSupport: Yes
+SMARTSelfTestSetSupport: Yes           SMARTErrorLoggingSupport: Yes
+CmdQueuingSupport: NCQ                 CmdQueuing: Enabled
+CmdQueueDepth: 32                      MediumErrorThreshold: 0
+Errors: 0                              NonRWErrors: 0
+ReadErrors: 0                          WriteErrors: 0
+DriveTemperature: 31C/87F              ReferenceDriveTemperature: N/A
+ 
+-------------------------------------------------------------------------------
+PdId: 2
+OperationalStatus: OK
+Alias: 
+PhysicalCapacity: 3.64TB               ConfigurableCapacity: 3.64TB
+UsedCapacity: 3.64TB                   BlockSize: 512Bytes
+ConfigStatus: Array0 SeqNo1            Location: Encl1 Slot2
+ModelNo: TOSHIBA MG04ACA400E           VisibleTo: Controller 1
+SerialNo: 80TUKAA0FJKA                 FirmwareVersion: FP4B
+SerialNo(Hashed): 0x4f53e1bc           PowerSavingMode: 0
+DriveInterface: SATA 6Gb/s             Protocol: ATA/ATAPI-8
+WriteCacheSupport: Yes                 WriteCache: Enabled
+RLACacheSupport: Yes                   RLACache: Enabled
+SMARTFeatureSetSupport: Yes
+SMARTSelfTestSetSupport: Yes           SMARTErrorLoggingSupport: Yes
+CmdQueuingSupport: NCQ                 CmdQueuing: Enabled
+CmdQueueDepth: 32                      MediumErrorThreshold: 0
+Errors: 0                              NonRWErrors: 0
+ReadErrors: 0                          WriteErrors: 0
+DriveTemperature: 27C/80F              ReferenceDriveTemperature: N/A
+ 
+-------------------------------------------------------------------------------
+PdId: 3
+OperationalStatus: OK
+Alias: 
+PhysicalCapacity: 3.64TB               ConfigurableCapacity: 3.64TB
+UsedCapacity: 3.64TB                   BlockSize: 512Bytes
+ConfigStatus: Array0 SeqNo2            Location: Encl1 Slot3
+ModelNo: TOSHIBA MG04ACA400E           VisibleTo: Controller 1
+SerialNo: 80TUKAA4FJKA                 FirmwareVersion: FP4B
+SerialNo(Hashed): 0x53b529bd           PowerSavingMode: 0
+DriveInterface: SATA 6Gb/s             Protocol: ATA/ATAPI-8
+WriteCacheSupport: Yes                 WriteCache: Enabled
+RLACacheSupport: Yes                   RLACache: Enabled
+SMARTFeatureSetSupport: Yes
+SMARTSelfTestSetSupport: Yes           SMARTErrorLoggingSupport: Yes
+CmdQueuingSupport: NCQ                 CmdQueuing: Enabled
+CmdQueueDepth: 32                      MediumErrorThreshold: 0
+Errors: 0                              NonRWErrors: 0
+ReadErrors: 0                          WriteErrors: 0
+DriveTemperature: 29C/84F              ReferenceDriveTemperature: N/A
+ 
+-------------------------------------------------------------------------------
+PdId: 4
+OperationalStatus: OK
+Alias: 
+PhysicalCapacity: 3.64TB               ConfigurableCapacity: 3.64TB
+UsedCapacity: 3.64TB                   BlockSize: 512Bytes
+ConfigStatus: Array0 SeqNo3            Location: Encl1 Slot4
+ModelNo: TOSHIBA MG04ACA400E           VisibleTo: Controller 1
+SerialNo: 90DOK6JJFJKA                 FirmwareVersion: FP4B
+SerialNo(Hashed): 0x124755ba           PowerSavingMode: 0
+DriveInterface: SATA 6Gb/s             Protocol: ATA/ATAPI-8
+WriteCacheSupport: Yes                 WriteCache: Enabled
+RLACacheSupport: Yes                   RLACache: Enabled
+SMARTFeatureSetSupport: Yes
+SMARTSelfTestSetSupport: Yes           SMARTErrorLoggingSupport: Yes
+CmdQueuingSupport: NCQ                 CmdQueuing: Enabled
+CmdQueueDepth: 32                      MediumErrorThreshold: 0
+Errors: 0                              NonRWErrors: 0
+ReadErrors: 0                          WriteErrors: 0
+DriveTemperature: 28C/82F              ReferenceDriveTemperature: N/A
+==== array ====
+ 
+-------------------------------------------------------------------------------
+DaId: 0
+OperationalStatus: OK
+Alias: DA0
+PhysicalCapacity: 14.55TB              ConfigurableCapacity: 14.55TB
+FreeCapacity: 0Byte                    MaxContiguousCapacity: 0Byte
+AvailableRAIDLevels: 0 3 5 6 10 1E
+DriveHealthPolling: Enabled            MediaPatrol: Enabled
+NumberOfPhysicalDrives: 4              NumberOfLogicalDrives: 1
+NumberOfDedicatedSpares: 0
+PowerMgmt: Disabled
+ 
+Physical Drives in the Array:  
+===============================================================================
+SeqNo PdId CfgCapacity FreeCapacity OpStatus                                   
+===============================================================================
+0     1    3.64TB      3.27MB       OK                                         
+1     2    3.64TB      3.27MB       OK                                         
+2     3    3.64TB      3.27MB       OK                                         
+3     4    3.64TB      3.27MB       OK                                         
+ 
+Logical Drives in the Array:  
+===============================================================================
+LdId Alias          RAIDLevel Capacity  OpStatus                               
+===============================================================================
+0    LA0            RAID5     10.91TB   OK                                     
+ 
+Available Spares to the Array:  
+===============================================================================
+Id  OpStatus  PdId CfgCapacity Revertible Type      DedicatedToArray          
+===============================================================================
+No spare drive available in the array
+==== logdrv ====
+ 
+-------------------------------------------------------------------------------
+LdId: 0
+ArrayId: 0                             SYNCed: Yes
+OperationalStatus: OK
+Alias: LA0
+SerialNo: 4953452000000000000000006CBACB44012B8244
+WWN: 2298-0001-556e-85ed               PreferredCtrlId: N/A
+RAIDLevel: RAID5                       StripeSize: 1MB
+Capacity: 10.91TB                      PhysicalCapacity: 14.55TB
+ReadPolicy: ReadAhead                  WritePolicy: WriteBack
+CurrentWritePolicy: WriteBack
+NumOfUsedPD: 4                         NumOfAxles: 1
+SectorSize: 512Bytes                   RAID5&6Algorithm: right asymmetric (4)
+TolerableNumOfDeadDrivesPerAxle: 1     ParityPace: N/A
+CodecScheme: N/A
+AssociationState: no association on this logical drive
+StorageServiceStatus: no storage service running
+==== spare ====
+No configured spare drive in the subsystem
+==== bga ====
+-------------------------------------------------------------------------------
+BGA Summary
+-------------------------------------------------------------------------------
+NumberOfRebuild: 0                     NumberOfMigration: 0
+NumberOfPDM: 0                         NumberOfTransition: 0
+NumberOfSync: 0                        NumberOfInit: 0
+NumberOfRC: 0                          NumberOfMP: 0
+LastMPStart: Not Started               LastMPStop: Not Stopped
+ 
+-------------------------------------------------------------------------------
+BGA Settings
+-------------------------------------------------------------------------------
+AutoRebuild: Enabled                   MediaPatrol: Enabled
+ 
+RebuildRate: High                      MigrationRate: High
+PDMRate: High                          TransitionRate: Medium
+SyncRate: Low                          InitRate: Medium
+RCRate: Medium
+ReAssignedBlock: 32                    ErrorBlock: 32
+ 
+-------------------------------------------------------------------------------
+BGA Progress
+-------------------------------------------------------------------------------
+==== buzzer ====
+Error (0x401): invalid command or request
+==== net ====
+ 
+-------------------------------------------------------------------------------
+CtrlId: 1                              Port: 1
+PortStatus: Enabled                    LinkStatus: Up
+IP: 192.0.2.211                     IPMask: 255.255.255.0
+MAC: 00:00:5E:00:53:21                 DHCP: Enabled
+MaxSupportedSpeed: 1000 Mbps
+ 
+-------------------------------------------------------------------------------
+CtrlId: 1                              Port: 2
+PortStatus: Enabled                    LinkStatus: Down
+IP: 0.0.0.0                            IPMask: 0.0.0.0
+MAC: 00:00:5E:00:53:22                 DHCP: Enabled
+MaxSupportedSpeed: 0 Mbps

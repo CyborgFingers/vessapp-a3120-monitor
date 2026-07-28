@@ -1,0 +1,64 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Cache Policy</title>
+</head>
+
+<body>
+
+<h3>Cache Policy</h3>
+
+<p>As it is used with <script>writeModelName()</script>, the term <b>cache</b> refers to any of several kinds 
+  of high-speed, volatile memory that holds data moving from your computer to 
+  the physical drives or vice-versa. Cache is important because it can read and 
+  write data much faster than a physical drive. There are read caches, which hold 
+  data as it is read from a physical drive; and write caches, which hold data 
+  as it is written to a physical drive.</p>
+
+<p>In order to tune the cache for best performance in different
+applications, user-adjustable settings are provided. Cache settings are made
+in conjunction with logical drives:</p>
+<ul>
+<li> When you <a href=DiskArrayCreateLDHelp.html>create a
+logical drive</a></li>
+<li>On an <a href=LogicalDriveSettingsHelp.html>existing
+logical drive</a></li>
+</ul>
+
+<h4>Read Policy</h4>
+<ul>
+<li><b>Read Cache</b> – The read cache is enabled.</li>
+<li><b>Read Ahead</b> – The read cache and the read-ahead feature are enabled. Read-ahead anticipates the next read and performs it before the request is made. Can increase read performance.</li>
+  <li><b>No Cache</b> – The read cache is disabled. This choice also changes the Write 
+    Policy to Write Thru</li>
+</ul>
+
+<h4>Write Policy</h4>
+<ul>
+  <li><b>Write Back</b> – Data is written first to the cache, then to the logical 
+    drive. Better performance. 
+    <script>writeModelName()</script> has a cache backup
+battery to protect data in the cache from a sudden power failure. </li>
+  <li><b>Write Thru</b> – Also "Write Through." Data is written to the cache and 
+    the logical drive at the same time. Safer.</li>
+</ul>
+
+<p><b>Note:</b> If all of the following conditions occur:</p>
+<ul>
+<li>The logical drive write policy is set to <i>Write Back</i></li>
+<li>The <a href="AdaptiveWritebackCacheHelp.html">Adaptive Writeback Cache</a> feature is enabled</li>
+<li>The cache backup <a href="EnclosureBatteryHelp.html">battery</a> goes offline</li>
+<p>The write policy automatically changes to <i>Write Thru</i>.<br>
+When the battery comes back online, the write policy automatically changes back to <i>Write Back</i>.
+</ul></p>
+
+<p>Also see <a href="CacheMirroringHelp.html">Cache Mirroring</a>.</p>
+
+  <script>writeGoBack()</script>
+</p>
+</body>
+
+</html>

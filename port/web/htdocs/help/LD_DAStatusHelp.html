@@ -1,0 +1,64 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Logical Drive / Disk Array Status</title>
+</head>
+
+<body>
+
+<h3>Logical Drive / Disk Array Status</h3>
+
+<p>Status refers to the operating condition of a <a href=LogicalDriveInfoHelp.html>logical
+drive</a> or <a href=DiskArrayInfoHelp.html>disk array</a>. You should be
+familiar with these various conditions so you can understand what is happening
+to your logical drive or disk array and whether you need to take action.</p>
+<ul>
+<li><b>OK</b> – This is the normal state of a logical
+drive or disk array. When a logical drive or disk array is OK, it is ready
+for immediate use. For RAID Levels other than RAID 0 (Striping), the logical
+drive has full redundancy.</li>
+<li><b>Synchronizing</b> – This condition is temporary. Synchronizing is a maintenance function that
+verifies the integrity of data and redundancy in the logical drive or disk array. When an logical drive or disk array is Synchronizing, it will function and your data
+is available. However, access will be slower due to the synchronizing operation.</li>
+<li><b>Rebuilding</b> – This condition is temporary. When a physical drive has been replaced, the logical drive or disk array
+automatically begins rebuilding in order to restore redundancy (fault tolerance). When a logical drive or disk array is rebuilding, it will
+function and your data is available. However, access will be slower due to the rebuilding operation. </li>
+<li><b>Incomplete</b> – A physical drive missing from the disk array. You can accept the disk array as is or replace the missing 
+physical drive. If you accept the disk array as is, your logical drives might be offline.</li>
+<li><b>Degraded</b> – This condition arises as the
+result of a physical drive failure. A Degraded logical drive or disk array
+will still function and your data is still available. However, the logical
+drive or disk array has lost redundancy (fault tolerance). You must determine
+the cause of the problem and correct it.</li>
+<li><b>Offline</b> – This condition arises as the result of a second physical drive failure. An Offline logical drive or disk array is
+not accessable but some or all of your data may remain intact. You must determine the cause of the problem and correct it.</li>
+  <li><b>Transport Ready</b> – After you perform a successful Prepare for Transport 
+    operation, this condition means you can remove the physical drives of this 
+    disk array and move them to another enclosure or different drive slots. After 
+    you relocate the physical drives, the disk array operational status will show 
+    OK.</li>
+</ul>
+
+<p>To check the status of your <b>Logical Drives</b>:</p>
+<ol>
+<li>Click on the Subsystem  icon in Tree View.</li>
+<li>Click on the Logical Drives Summary icon.</li>
+  <li>Look in the <b>Operational Status</b> column in the Management Window.</li>
+</ol>
+<p>To check the status of your <b>Disk Arrays</b>:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Look in the <b>Operational Status</b> column Management Window.</li>
+</ol>
+
+<p>Also see <a href=LDDegradedHelp.html>Logical Drive Degraded</a>
+and <a href=LDOfflineHelp.html>Logical Drive Offline</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

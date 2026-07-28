@@ -1,0 +1,21 @@
+# promise-webpam.target - groups the whole Promise VessApp / WebPAM stack.
+#
+#   systemctl start promise-webpam.target   -> brings up everything
+#   systemctl enable promise-webpam.target  -> at boot
+#
+# Wants both the port's own units (opasd + the helper daemons) and the stock
+# distro services the stack rides on (nginx, php-fpm, snmpd, slpd). The Promise
+# SNMP subagent has no unit of its own: it is a net-snmp pass_persist child that
+# snmpd spawns per /etc/snmp/snmpd.conf. A missing optional unit (slpd) is
+# ignored by systemd. pwrmon.service is deliberately NOT here - it is a trigger
+# unit started by the UPS notifier on power loss (see pwrmon.service).
+#
+# install.sh rewrites php7.4-fpm to the detected phpX.Y-fpm unit name.
+[Unit]
+Description=Promise VessApp / WebPAM management stack (Vess A3120)
+Wants=opasd.service emaild.service prevtlogd.service bgasched.service
+Wants=nginx.service php7.4-fpm.service snmpd.service slpd.service
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target

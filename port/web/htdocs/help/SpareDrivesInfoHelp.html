@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Spare Drives icon Information tab</title>
+</head>
+
+<body>
+
+<h3>Spare Drives</h3>
+
+
+<p>The Spare Drives–Information tab displays a list of Spare Drives
+along with their status, capacity, disk array assignment and Spare Check results.
+You must assign an unconfigured physical drive in order for it to function as a spare drive.</p>
+
+<p>When a physical drive in a disk array fails and a spare drive of adequate capacity 
+  is available, the disk array will begin to <a href="RebuildHelp.html">rebuild</a> 
+  automatically using the spare drive.</p>
+
+<p>To access the Spare Drives–Information tab:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Spare Drives icon.</li>
+</ol>
+
+<ul>
+<li><b>Spare ID</b> – Consecutive number assigned when the spare drive was created.</li>
+<li><b>Operational Status</b> – OK is normal. Can also show Rebuilding or Offline.</li>
+<li><b>Physical Drive ID</b> – The ID number of this physical drive in the subsystem enclosure.</li>
+  <li><b>Capacity</b> – Data capacity of the drive.</li>
+  <li><b>Revertible</b> – Yes or No. A revertible spare drive automatically returns 
+    to its spare drive assignment after the failed physical drive in the disk 
+    array is replaced. See <a href="TransitionHelp.html">Transition</a>.</li>
+<li><b>Type</b> – Global, can be used by any disk array. Dedicated, can only be used by the assigned disk arrays.</li>
+<li><b>Dedicated to Array</b> – For Dedicated spares, the disk arrays to which they are dedicated.</li>
+</ul>
+
+
+<p>To create a new spare drive, click the <a href=SpareDrivesCreateHelp.html>Create</a> tab.<br>
+To delete an existing spare drive, click the <a href=SpareDrivesDeleteHelp.html>Delete</a> tab.<br>
+To see more information about a specific spare drive, click on its <a href=SpareDriveSettingsHelp.html>Spare ID</a> link.<br>
+To identify unconfigured physical drives that you can assign to be spare drives,
+click the <a href=PhysicalDrivesInfoHelp.html>Physical Drives</a> icon and look under Configuration Status.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

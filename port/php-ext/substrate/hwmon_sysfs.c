@@ -1,0 +1,1 @@
+../../src/hal/smbus/hwmon_sysfs.c

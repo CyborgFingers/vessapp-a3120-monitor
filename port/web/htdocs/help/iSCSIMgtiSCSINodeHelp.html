@@ -1,0 +1,65 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>iSCSI Management icon iSCSI Node tab</title>
+</head>
+
+<body>
+
+<h3>iSCSI Node</h3>
+
+<p>The iSCSI Management–iSCSI Node tab enables you to see the current Data Port settings on the Controller, including:
+<ul>
+<li><b>Maximum number of nodes supported</b></li>
+<li><b>Number of nodes present</b></li>
+<li><b>Number of failed nodes</b></li>
+<li><b>Node ID</b></li>
+<li><b>Node Name</b> – An iSCSI node is identified by its name.</li>
+<li><b>Node Alias</b> – A user-friendly string associated with an iSCSI Node. Not a substitute for the iSCSI Name.</li>
+<li><b>Max outstanding R2T</b> – Sets the maximum number of outstanding ready to transfer PDUs (a number).</li>
+<li><b>Maximum burst length</b> – Maximum length of a solicited data sequence.</li>
+<li><b>Maximum number of connections</b> – Maximum number of connections supported.</li>
+<li><b>Default time to wait</b> – After a dropped connection, the number of seconds to wait before attempting to reconnect.</li>
+<li><b>Default time to retain</b> – Number of seconds after time to wait (above) before reassigning outstanding commands.</li>
+<li><b>Error recovery level</b> – Error recovery level supported.</li>
+<li><b>Initial R2T</b> – Allows initiator to begin sending data to a target without receiving a ready to transfer command.</li>
+<li><b>Header Digest</b> – Enables the use of Header Digest (CRC). See note below.</li>
+<li><b>Data Digest</b> – Enables the use of a Data Digest (CRC). See note below.</li>
+<li><b>Data PDU in order</b> – Enables placement of data in PDU order.</li>
+<li><b>Data sequence in order</b> – Enables placement of data in sequence order.</li>
+<li><b>Uni-directional CHAP Authentication</b> – Enables Challenge Handshake Authentication Protocol.</li>
+<li><b>Bi-directional CHAP Authentication</b> – Enables bi-directional and uni-directional CHAP authentication.</li>
+<li><b>Enable NOP-IN</b> – Enables the data port to respond to the iSCSI initiator and verify that the connection is still active.</li>
+</ul>
+<p>A detailed explanation of these iSCSI functions, how and when they are used,
+  and their relationship to one another is beyond the scope of this document.
+  For more information, contact the Internet Engineering Task Force at <a target=_blank href=http://www.ietf.org/>http://www.ietf.org/</a>.
+</p>
+
+
+<p>To make changes to the Data Port settings:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the iSCSI Management icon.</li>
+<li>Click the <b>iSCSI Node 1</b> link in Management View.</li>
+<li>Enter the values in the fields as required.</li>
+<li>Enter a name into the Node Alias field.<br>
+     Maximum of 31 characters. Use letters, numbers, space between words and underscore.</li>
+<li>Check the boxes to enable features as requried.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Note:</b> Header Digest and Data Digest work best with initiators equipped with a TCP
+Offload Engine (TOE). Refer to your iSCSI HBA user manual for more information.</p>
+
+<p><b>Note:</b> For iSCSI network settings on the Data Ports, click on the <a href="NetworkMgtISCSIHelp.html">Network 
+  Management icon, iSCSI Ports</a> tab.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

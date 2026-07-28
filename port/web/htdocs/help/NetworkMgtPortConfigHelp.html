@@ -1,0 +1,46 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Network Management icon, Information tab, Config link</title>
+</head>
+
+<body>
+
+<h3>Network Management Port Configuration</h3>
+
+<p><script>writeModelName()</script> subsystems have a virtual management port. When you log into the
+<script>writeModelName()</script> over your network, you use the virtual management port.  This arrangement enables
+you to log into a <script>writeModelName()</script> with two controllers using one IP address.</p>
+
+<p><script>writeModel4Name()</script> subsystems have a physical management port on a single controller using one IP address.</p>
+
+<p>To make Subsystem Management Port settings:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View.</li>
+<li>Click the Administrative Tools icon.</li>
+<li>Click the Network Management icon.</li>
+  <li>On the Management Port tab, click the <b>Port Configuration</b> link.</li>
+<li>To enable DHCP, check the DHCP box.<br>
+When DHCP is not enabled, enter:</li>
+<ul>
+<li>Primary IP address</li>
+<li>Primary subnet mask</li>
+<li>Default gateway IP address</li>
+<li>Enter a primary DNS server IP address</li>
+</ul>
+<li><script>writeModel4Name()</script> subsystems only: To enable Wake on LAN, check the Wake on LAN box.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Important:</b> If you choose to enable DHCP, have your Network Administrator dedicate an IP 
+address for the <script>writeModelName()</script>, linked to the <script>writeModelName()</script>’s 
+MAC address. See Chapter 3 of the <i><script>writeModelName()</script> Product Manual</i> for 
+more information.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Physical Drive Problems</title>
+</head>
+
+<body>
+
+<h3>Physical Drive Problems</h3>
+
+<p>When a yellow exclamation point (!) or a red X appears over an Physical Drive icon in Tree View, click on the icon.<br>
+ The Enclosure screen will display in Management View. Look under Operational Status for the condition of the physical drive.</p>
+<ul>
+ 	<li>Offline – Check the drive for:
+<ul>
+ <li>PFA Condition – Caused by a bad block or sector. See Note 1 below</li>
+	<li>Stale Configuration – Caused by obsolete array information on the physical drive. See Note 2 below</li>
+</ul></li>
+  <li>Drive Failed – The physical drive cannot be repaired. You must replace the 
+    failed drive.</li>
+</ul>
+
+<p><b>Note 1:</b> <a href="PhysicalDriveClearHelp.html">Clear</a> the 
+  error condition. The physical drive will then be available.</p>
+	
+<p><b>Note 2:</b> Identify the disk array to which the physical drive belongs. 
+  Then <a href="DiskArraysDeleteHelp.html">delete</a> the disk array.<br>
+  If the error condition remains on the physical drive, <a href="PhysicalDriveClearHelp.html">clear</a> 
+  the error condition.</p>
+
+<p>See also: <a href="MediaPatrolHelp.html">Media Patrol</a>, <a href="PDMHelp.html">PDM</a>, 
+and <a href="LDDegradedHelp.html">Logical Drive Degraded</a>. </p>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

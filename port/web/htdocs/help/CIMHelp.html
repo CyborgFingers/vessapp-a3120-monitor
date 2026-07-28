@@ -1,0 +1,82 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>CIM</title>
+</head>
+
+<body>
+
+<h3>CIM</h3>
+
+<p><script>writeModelName()</script>'s CIM service provides a database for information about
+computer systems and network devices. This service is normally Stopped and set
+to Manual start.</p>
+
+<p>To change the CIM startup settings:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the <b>CIM Setting</b> link in Management view.</li>
+<li>Under Startup Type:
+<ul>
+<li>Click on the Automatic option to start the service automatically during system startup.</li>
+<li>Click on the Manual option to start the service manually (the service does not start during system startup).</li>
+</ul>
+</li>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<p>To change the CIM service settings:</p>
+<ol>
+  <li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administration Tools icon.</li>
+<li>Click on the <b>CIM Setting</b> link in Management view.</li>
+  <li>To use HTTP: 
+    <ul>
+      <li>Click on the CIM HTTP Enabled option.</li>
+      <li>Enter the CIM HTTP Port number in the field provided.<br>
+        5988 is the default.</li>
+    </ul>
+  </li>
+  <li>To use HTTPS: 
+    <ul>
+      <li>Click on the CIM HTTPS Enabled option.</li>
+      <li>Enter the CIM HTTP Port number in the field provided.<br>
+        5989 is the default.</li>
+    </ul>
+  </li>
+  <li>To use CIM Authentication, click on the CIM Authentication Yes option.<br>
+Note: You cannot change the CIM User name.</li>
+  <li>To change the CIM password, click on the Change Password Yes option.
+    <ul>
+  <li>Type the old password in the CIM User Old Password field.</li>
+  <li>Type the new password in the User New Password field.</li>
+   <li>Retype the new password in the Retype Password field.</li>
+ </ul></li>
+ <li>Click on the <b>Submit</b> button.</li>
+  <li>Click the <b>OK</b> button in confirmation box to restart the CIM service.</li>
+</ol>
+
+<p>To manually start, restart, or stop the CIM service:</p>
+<ol>
+  <li>Click on the Subsystem icon in Tree view.</li>
+  <li>Click on the Administration Tools icon.</li>
+ <li>Click on the <b>CIM Setting</b> link in Management view.</li>
+  <li>Click the button for the function you want:
+<ul>
+      <li><b>Start</b> – If the Running Status shows Stopped</li>
+<li><b>Restart</b> – If the Running Status shows Started</li>
+<li><b>Stop</b> – If the Running Status shows Started</li>
+</ul>
+</li>
+<li>If you clicked Stop, click the <b>OK</b> button in the confirmation box.</li>
+</ol>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

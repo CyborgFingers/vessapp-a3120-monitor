@@ -1,0 +1,76 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Disk Arrays icon Create tab</title>
+</head>
+
+<body>
+
+<h3>Create a Disk Array–Express</h3>
+
+<p>The Disk Array Express Creation option enables you to choose
+the parameters for a new disk array by specifiying the characteristics you want.
+With this method, you can create multiple logical drives at the same time you
+create your disk array. However, all of the logical drives will be the same.</p>
+
+<p>If you prefer to specifiy the parameters directly, use the <a href=DiskArraysCreateAdvHelp.html>Advanced</a>
+option to create your disk array.<br>
+If you are uncertain about choosing parameters for your disk array, use the
+<a href=DiskArraysCreateAutoHelp.html>Automatic</a> option. </p>
+
+<p>To create a new disk array:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>From the dropdown menu on the Create tab, select <i>Express</i>.</li>
+<li>Check the boxes to select any one or combination of the following:
+<ul>
+<li><b>Redundancy</b> – The array will remain available if a physical drive fails</li>
+<li><b>Capacity</b> – The greatest possible amount of data capacity</li>
+<li><b>Performance</b> – The highest possible read/write speed</li>
+      <li><b>Spare Drive</b> – A <a href=LDDegradedHelp.html>hot spare drive</a> 
+        is created when you select Redundancy, Spare Drive and five or more unconfigured 
+        physical drives are available</li>
+		
+    <!--  <li><b>Mixing SATA/SAS Drive</b> – Check this box if you want to use both 
+        SATA and SAS drives in the same disk array.<br>
+        If the box is unchecked, and you have both SATA and SAS drives, different 
+        arrays will be created for each type of drive.</li>  -->
+</ul>
+</li>
+<li>In the Number of Logical Drives field, enter the number of logical drives you want to make from this disk array.</li>
+<li>From the Application Type menu, select an application that best describes your intended use for this disk array:
+<ul>
+<li><b>File Server</b></li>
+<li><b>Video Stream</b></li>
+<li><b>Transaction Data</b></li>
+<li><b>Transaction Log</b></li>
+<li><b>Other</b></li>
+</ul>
+</li>
+<li>Click the <b>Update</b> button.<br>
+Or check the Automatic Update box and updates will occur automatically.<br>
+The following parameters display:</li>
+<ul>
+<li><b>Disk Arrays</b> – The number of physical drives
+in the disk array, their slot numbers, configurable capacity and the number
+of logical drives to be created</li>
+<li><b>Logical Drives</b> – The slot number of the logical drive(s), their RAID level, capacity and stripe size</li>
+<li><b>Spare Drives</b> – The physical drive slot
+number of the dedicated hot spare assigned to this disk array (all <a href=RAIDlevels.html>RAID
+levels</a> except RAID 0)</li>
+</ul>
+If you accept these parameters, proceed to the next step.<br>
+If you do NOT accept these parameters, review and modify your selections in
+the previous steps.
+<li>When you are done, click the <b>Submit</b> button.</li>
+</ol>
+<p>The new disk array appears in the Disk Array List on the <a href=DiskArraysInfoHelp.html>Information</a> tab.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

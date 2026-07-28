@@ -1,0 +1,74 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>iSCSI Management icon CHAP tab</title>
+</head>
+
+<body>
+
+<h3>iSCSI CHAP</h3>
+
+<p>The iSCSI Management–CHAP tab displays the current CHAP settings.
+Challenge Handshake Authentication Protocol (CHAP) is an authentication agent
+(typically a network server) sends the client program a random value and an
+ID value. Both the sender and peer share a predefined secret. The peer concatenates
+the random value, the ID and the secret and calculates a one-way hash value.
+The hash value is sent to the authenticator, which in turn builds that same
+string on its side, calculates the sum and compares the result with the value
+received from the peer. If the values match, the peer is authenticated.
+<p>To VIEW the current CHAPs:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the iSCSI Management icon.</li>
+<li>Click on the CHAP tab in Management View.</li>
+</ol>
+
+<p>To ADD a new CHAP:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the iSCSI Management icon.</li>
+<li>Click on the CHAP tab in Management View.</li>
+<li>Click on the CHAP tab dropdown menu and select <i>Add CHAP</i>.</li>
+<li>Enter a name in the Name field.</li>
+<li>Enter a secret of 12 to 16 characters in the Secret field.</li>
+<li>Enter the secret again in the Retype Secret field.</li>
+<li>Select the CHAP type.<br>
+Peer to peer is one-way authentication. Local is bi-directional authentication.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p>To EDIT a CHAP:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the iSCSI Management icon.</li>
+<li>Click on the CHAP tab in Management View.</li>
+<li>Click on the CHAP name link.</li>
+<li>Enter a name in the Name field.</li>
+<li>Enter a secret of 12 to 16 characters in the Secret field.</li>
+<li>Enter the secret again in the Retype Secret field.</li>
+<li>Select the CHAP type.<br>
+Peer to peer is one-way authentication. Local is bi-directional authentication.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p>To DELETE a CHAP:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the iSCSI Management icon.</li>
+<li>Click on the CHAP tab in Management View.</li>
+<li>Click on the CHAP tab dropdown menu and select <i>Delete CHAP</i>.</li>
+<li>Check the box to the left of the CHAP you want to delete.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Redundancy Check</title>
+
+</head>
+
+<body>
+
+
+<h3>Redundancy Check</h3>
+
+<p>Redundancy Check is a routine maintenance procedure for fault-tolerant
+disk arrays (those with redundancy) that ensures all the data matches exactly.
+Redundancy Check can also correct inconsistencies.</p>
+
+
+<h4>Redundancy Check a Logical Drive</h4>
+
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>Click on the Logical Drive Summary icon.</li>
+<li>Click on the icon of the logical drive you want to Redundancy Check.</li>
+  <li>From the dropdown menu on the Background Activities tab, select <i>Redundancy 
+    Check</i>.</li>
+<li>To select Auto Fix, check the box.<br>
+This feature attempts to repair the problem when it finds an error.</li>
+<li>To select Pause On Error, check the box.<br>
+This feature stops the process when it finds an error.<br>
+If Auto Fix is also checked, the process stops only when it finds a non-repairable error.</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p>The Background Activities tab displays the progress of the Redundancy Check.</p>
+
+<p><b>Note:</b> You can also start Redundancy Check
+from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a> tab.</p>
+
+<h4>Pause, Resume, or Stop a Redundancy Check</h4>
+
+<p>To pause, resume, or stop the Redundancy Check:</p>
+  <ol>
+   <li>Click on the Subsytem icon in Tree View.</li>
+  <li>Click on the Logical Drive Summary icon.</li>
+  <li>Click on the icon of the logical drive under Redundancy Check.</li>
+  <li>Click on the Background Activities tab in Management view.</li>
+  <li>Under Background Activities, click on the <b>Redundancy Check</b> <a href="BackgroundActivityHelp.html">link</a>.</li>
+</ol>
+
+<p><b>Note:</b> You can also pause, resume, or stop the Initialization from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a>
+tab.</p>
+
+<h4>Set Redundancy Check Priority</h4>
+
+<ol>
+<li>Click on the Subsytem icon in Tree View.</li>
+<li>From the dropdown menu on the Background Activities tab, select <i>Settings</i>.</li>
+<li>Click on the Redundancy Check Rate dropdown menu and select a rate: Low, Medium or High.</li>
+<ul>
+<li><b>Low</b> allocates fewer system resources to the Redundancy Check and more to data read/write operations.</li>
+<li><b>Medium</b> allocates a balance of system resources to the Redundancy Check and data read/write operations.</li>
+<li><b>High</b> allocates more system resources to the Redundancy Check and fewer to data read/write operations.</li>
+</ul>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

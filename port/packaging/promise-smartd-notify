@@ -1,0 +1,39 @@
+#!/bin/sh
+# promise-smartd-notify - smartd '-M exec' handler for the VessApp Linux port.
+# smartd runs this on a monitored SMART condition (failed health self-assessment,
+# a failing pre-fail attribute, a new pending/uncorrectable sector, or a self-test
+# error), passing details in the environment. It maps the condition to the Promise
+# SMART_ERROR_RECEIVED event (event_EN.xml: 0x00100000, Minor, buzzer), appends it
+# to the port's RAID event log (read back by getEvents -> events.php), and fires
+# the same SMTP alert (emaild) + SNMP trap (promise_trap) + audible buzzer path as
+# the array monitor (promise-mdmonitor). Log is always written; delivery depends on
+# the configured endpoints.
+set -u
+BIN=/opt/promise/bin
+LOG=/var/log/promise-raid/events.log
+ID=0x00100000                       # SMART_ERROR_RECEIVED
+SEV=4                               # Minor (event_EN.xml)
+
+DEV=$(basename "${SMARTD_DEVICE:-${1:-disk}}")       # /dev/sda -> sda
+FAIL=${SMARTD_FAILTYPE:-SMART}                       # Health | CurrentPendingSector | ...
+
+mkdir -p "$(dirname "$LOG")" 2>/dev/null
+# tab-delimited: <unix_ts> <event> <id_hex> <sev> <dev> <failtype>  (getEvents parses this)
+printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$(date +%s)" "SMART" "$ID" "$SEV" "$DEV" "$FAIL" >> "$LOG"
+
+# SMTP alert (only when a mail config exists) + SNMP trap. Both best-effort, detached.
+CFG=/etc/promise/emailsetting.xml
+[ -x "$BIN/emaild" ] && [ -f "$CFG" ] && "$BIN/emaild" -f "$CFG" --event "$ID" >/dev/null 2>&1 &
+if [ -x "$BIN/promise_trap" ]; then
+  # trap destination: /etc/promise/snmptrap.conf may set SNMP_TRAP_HOST/COMMUNITY.
+  [ -f /etc/promise/snmptrap.conf ] && . /etc/promise/snmptrap.conf
+  "$BIN/promise_trap" -e "$ID" -s "$DEV $FAIL" \
+    ${SNMP_TRAP_HOST:+-h $SNMP_TRAP_HOST} ${SNMP_TRAP_COMMUNITY:+-c $SNMP_TRAP_COMMUNITY} \
+    >/dev/null 2>&1 &
+fi
+
+# SMART_ERROR_RECEIVED carries <log>buzzer</log> in the vendor event table, so
+# sound the alarm (silence from WebPAM buzzer.php -> promise-buzzer mute, or
+# disable via /var/lib/promise-buzzer/disabled).
+[ -x "$BIN/promise-buzzer" ] && "$BIN/promise-buzzer" alarm >/dev/null 2>&1 &
+exit 0

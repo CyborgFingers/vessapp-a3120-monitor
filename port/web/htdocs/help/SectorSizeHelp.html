@@ -1,0 +1,78 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Sector Size</title>
+</head>
+
+<body>
+
+<p><a name=disk></a>
+<h3>Sector Size</h3>
+
+<p>A sector is the smallest addressable area on a physical disk drive. Sector Size
+refers to the size of sector measured by the number of bytes of data it can hold.
+The most common sector size is 512 bytes (512 B). A smaller sector size results
+in a more efficient use of a disk drive’s capacity. In <script>writeSoftwareName()</script>, 512 B is the default sector size.</p>
+
+<p>The number of usable sectors is limited by the addressing method of the
+Host computer's operating system:</p>
+
+<ul>
+<li>Windows 2000 and Windows XP (32-bit) support 10-bit logical bit addressing
+(LBA), so with 512 B sectors, they can only support up to 2 terabytes (TB) of
+data storage capacity. To increase the capacity, you must use larger sectors.</li>
+<li>Windows XP (64-bit), Windows 2003 Server, and Windows Vista support 64-
+bit LBA, so they are not affected by this limitation. For these OSes, always
+choose the default 512 B sector size.</li>
+<li>Linux operating systems with the 2.4 kernel do not support variable sector
+sizes. For these OSes, always choose the default 512 B sector size.</li>
+<li>Linux operating systems with the 2.6 kernel support 64-bit LBA. For these
+OSes, always choose the default 512 B sector size.</li>
+</ul>
+
+<p>To make use of logical drives greater than 2 TB in size on Windows 2000 and 
+  Windows XP (32-bit) systems, a larger sector size is required. The table below 
+  correlates sector size with logical drive capacity.</p>
+
+<table width=330 border=1 cellspacing=0 cellpadding=4>
+<tr>
+<td align=center><b>Logical Drive Size</b></td>
+<td align=center><b>Sector Size</b></td>
+</tr>
+<tr>
+<td align=center>8 to 16 TB</td>
+<td align=center>4096 bytes (4 KB)</td>
+</tr>
+<tr>
+<td align=center>4 to 8 TB</td>
+<td align=center>2048 bytes (2 KB)</td>
+</tr>
+<tr>
+<td align=center>2 to 4 TB</td>
+<td align=center><p>1024 bytes (1 KB)</p>
+</td>
+</tr>
+<tr>
+<td align=center>0 to 2 TB</td>
+<td align=center>512 bytes (512 B)</td>
+</tr>
+</table>
+<p>When you create a Disk Array using the <a href="DiskArraysCreateAdvHelp.html">Advanced</a> 
+  method, and when you create a disk array. </p>
+<p>In most cases, you should select the smallest sector size
+that will allow full use of the physical disk drives in your disk array.</p>
+<p>Because logical drives can be expanded, you may encounter a situation where 
+  the usable capacity of your expanded logical drive is reduced by the addressing 
+  issue described above. For more information, see <a href="RAIDconvert.html#expansion">Ranges 
+  of Disk Array Expansion</a>.</p>
+
+<p>Also see <a href=DiskArraysCreateAdvHelp.html>Create Disk
+Array Advanced</a> and <a href=DiskArrayCreateLDHelp.html>Create Logical Drive</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>UPS icon Information tab</title>
+</head>
+
+<body>
+
+<h3>UPS List</h3>
+
+<p>The UPS–Information tab provides a list of uninterruptible power supply (UPS) units supporting the <script>writeModelName()</script> or <script>writeModel4Name()</script> subsystem and basic information about them.</p>
+
+<p>To view a list of UPS units:</p>
+<ol>
+<li>Click the Subsystem icon in Tree view.</li>
+<li>Click the UPS icon.</li>
+<li>Click the Information tab in Management View.</li>
+</ol>
+
+<p>Information in the UPS List includes:</p>
+<ul>
+<li>UPS ID –  Click the ID number to view the <a href="UPSUPSHelp.html">UPS Tab</a>.</li>
+<li>Operational Status –  OK means Normal. 
+<ul>
+<li>On AC means the UPS is connected to a viable external AC power source.</li>
+<li>On Battery means the external AC power source is offline and the UPS is running on battery power.</li>
+</ul></li>
+<li>Model Name or Number</li>
+<li>Battery Capacity –  Backup capacity expressed as a percentage.</li>
+<li>Loading Ratio –  Actual output of UPS as a percentage of the rated output. See the <b>Note</b> below.</li>
+<li>Remaining Backup Time –  Number of minutes the UPS is expected to power your system in the event of a power failure.</li>
+</ul>
+
+<p><b>Note:</b> The maximum recommended Loading Ratio varies among models of UPS units. The general range is 60% to 80%.
+If the reported Loading Ratio exceeds the recommended value for your UPS unit:
+<ul>
+<li>Have fewer subsystems or peripherals connected to this UPS unit.</li>
+<li>Add more UPS units, or use a higher-capacity UPS unit, to protect your RAID systems.</li>
+</ul></p>
+
+<p>See also <a href="UPSSettingsHelp.html">UPS Settings</a> and <a href="UPSUPSHelp.html">UPS Tab</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

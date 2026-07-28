@@ -1,0 +1,20 @@
+# opasd - the OPAS API daemon (Phase 3): UNIX-socket engine API used by CLI /
+# non-web clients (the web tier links the same substrate in-process via php_i2).
+# Runs as root: on-device it opens the Promise controller's /dev/sg* node.
+[Unit]
+Description=Promise OPAS API daemon (engine API over UNIX socket)
+After=network.target
+PartOf=promise-webpam.target
+
+[Service]
+Type=simple
+# I2BDG_SG_DEV (on-device) comes from the one knob file.
+EnvironmentFile=-/etc/promise/promise.env
+Environment=OPASD_SOCK=/run/promise/opasd.sock
+RuntimeDirectory=promise
+ExecStart=/opt/promise/bin/opasd
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=promise-webpam.target

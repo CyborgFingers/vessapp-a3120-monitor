@@ -1,0 +1,547 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>RAID Level Migration</title>
+</head>
+
+<body>
+
+
+<h3>RAID Level Migration</h3>
+
+<p>To <a href=DiskArrayMigrationHelp.html>migrate</a> a disk array is to do one or both:</p>
+<ul>
+<li>Change its <a href=RAIDlevels.html>RAID
+level</a></li>
+<li>Increase the number of disk drives (sometimes called Expansion)</li>
+</ul>
+
+<p>On <script>writeBrandName()</script>, RAID level <a href=DiskArrayMigrationHelp.html>migration</a> is performed on the disk 
+array but it applies to the logical drives. Migration takes place on an existing Functional disk 
+array without disturbing the existing data. While the disk array is migrating, you can access 
+the data as before. When migration is complete, your disk array will have a different <a href=RAIDlevels.html>RAID level</a> 
+and/or a larger capacity.</p>
+
+<p>In most cases, you must add one or more physical drives during the migration process. 
+You can never reduce the number of physical drives.</p>
+  
+<p>The tables below show the migration options for a <b>source</b> logical drive according to its 
+<a href=RAIDlevels.html>RAID level</a>.<br>
+ The available <b>target</b> RAID levels are shown with their requirements.</p>
+
+<table width=500 border=0 cellspacing=0 cellpadding=0>
+<tr>
+<td valign=top><ul>
+<li><a href=#RAID0>RAID 0</a></li>
+<li><a href=#RAID1>RAID 1</a></li>
+<li><a href=#RAID1E>RAID 1E</a></li><li><a href=#RAID3>RAID 3</a></li>
+<li><a href=#RAID5>RAID 5</a></li>
+</ul>
+</td>
+<td valign=top>
+<ul>
+<li><a href=#RAID6>RAID 6</a></li>
+<li><a href=#RAID10>RAID 10</a></li><li><a href=#RAID30>RAID 30</a></li>
+<li><a href=#RAID50>RAID 50</a></li>
+<li><a href=#RAID60>RAID 60</a></li>
+</ul></td>
+<td valign=top>
+<ul>
+<li><a href=#Range>Ranges of Disk Array Expansion</a></li>
+</ul></td>
+</tr>
+</table>
+
+  
+<a name=RAID0></a><h4>RAID 0</h4>
+<p>A RAID 0 source logical drive can migrate to the following target logical drives:</p>
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+       <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>Add physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 1</td>
+    <td>2 physical drives only.<br>
+Only a single-drive RAID 0 can migrate to RAID 1 by adding 1 physical drive.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>3 or more physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 3</td>
+    <td>3 physical drives minimum, 16 maximum.<br>
+RAID 0 must have less than 16 physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+<tr>
+    <td>RAID 5</td>
+    <td>3 physical drives minimum, 16 maximum.<br>
+RAID 0 must have less than 16 physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 6</td>
+    <td>4 physical drives minimum, 16 maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>4 physical drives minimum.<br>
+Even number of physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 30</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+<tr>
+    <td>RAID 50</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 60</td>
+    <td>8 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+</table>
+
+<a name=RAID1></a><h4>RAID 1</h4>
+<p>A RAID 1 source logical drive can migrate to the following target logical drives:</p>
+
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>3 or more physical drives.<br>
+Add 1 or more physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 3</td>
+    <td>3 physical drives minimum, 16 maximum.<br>
+      Add 1 or more physical drives.</td>
+  </tr>
+ <tr>
+    <td>RAID 5</td>
+    <td>3 physical drives minimum, 16 maximum.<br>
+RAID 1 must have less than 16 physical drives.<br>
+      Add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>4 physical drives minimum.<br>
+Even number of physical drives.<br>
+Add 2 or more physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 30</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+Add 4 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 50</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+Add 4 or more physical drives.</td>
+  </tr>
+</table>
+
+<a name=RAID1E></a><h4>RAID 1E</h4>
+<p>A RAID 1E source logical drive can migrate to the following target logical drives:</p>
+
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+   <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>Add physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 3</td>
+    <td>3 physical drives minimum, 16 maximum.<br>
+RAID 1E must have less than 16 physical drives.<br>
+     If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+ <tr>
+    <td>RAID 5</td>
+    <td>3 physical drives minimum, 16 maximum.<br>
+RAID 1E must have less than 16 physical drives.<br>
+     If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>4 physical drives minimum.<br>
+Even number of physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 30</td>
+    <td>6 physical drives minimum, 16 per axle maximum.</td>
+  </tr>
+ <tr>
+    <td>RAID 50</td>
+    <td>6 physical drives minimum, 16 per axle maximum.</td>
+  </tr>
+</table>
+<a name=RAID3></a><h4>RAID 3</h4>
+<p>A RAID 1 source logical drive can migrate to the following target logical drives:</p>
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>None.</td>
+  </tr>
+   <tr>
+    <td>RAID 3</td>
+    <td>Add physical drives, 16 maximum.</td>
+  </tr>
+ <tr>
+    <td>RAID 5</td>
+    <td>3 physical drives minimum, 16 maximum.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>4 physical drives minimum.<br>
+Even number of physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 30</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+ <tr>
+    <td>RAID 50</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+</table>
+
+<a name=RAID5></a><h4>RAID 5</h4>
+<p>A RAID 5 source logical drive can migrate to the following target logical drives:</p>
+
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>None.</td>
+  </tr>
+   <tr>    <td>RAID 3</td>
+    <td>16 physical drives maximum.</td>    
+  </tr>
+  <tr>
+    <td>RAID 5</td>
+    <td>Add physical drives. 16 maximum.</td>
+  </tr>
+  <tr>
+    <td>RAID 6</td>
+    <td>4 physical drives minimum, 16 maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>4 physical drives minimum.<br>
+Even number of physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 30</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+ <tr>
+    <td>RAID 50</td>
+    <td>6 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 60</td>
+    <td>8 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+</table>
+
+<a name=RAID6></a><h4>RAID 6</h4>
+<p>A RAID 6 source logical drive can migrate to the following target logical drives:</p>
+
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+    <tr>
+    <td>RAID 6</td>
+    <td>Add physical drives. 16 maximum.</td>
+  </tr>
+   <tr>
+    <td>RAID 60</td>
+    <td>8 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+</table>
+
+<a name=RAID10></a><h4>RAID 10</h4>
+<p>A RAID 10 source logical drive can migrate to the following target logical drives:</p>
+
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>None.</td>
+  </tr>
+   <tr>    <td>RAID 3</td>
+    <td>16 physical drives maximum.<br>
+RAID 10 must have less than 16 physical drives.</td>
+  </tr>
+<tr>
+    <td>RAID 5</td>    <td>16 physical drives maximum.<br>
+RAID 10 must have less than 16 physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 6</td>
+    <td>4 physical drives minimum, 16 maximum.<br>
+RAID 10 must have less than 16 physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>Add physical drives.<br>
+Even number of physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 30</td>
+    <td>6 physical drives minimum, 16 per axle maximum.</td>
+  </tr>
+ <tr>
+    <td>RAID 50</td>
+    <td>6 physical drives minimum, 16 per axle maximum.</td>
+  </tr>
+  <tr>
+    <td>RAID 60</td>
+    <td>8 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+</table>
+<a name=RAID30></a><h4>RAID 30</h4>
+<p>A RAID 1 source logical drive can migrate to the following target logical drives:</p>
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>None.</td>
+  </tr>
+   <tr>
+    <td>RAID 3</td>
+    <td>16 physical drives maximum.</td>
+  </tr>
+ <tr>
+    <td>RAID 5</td>
+    <td>16 physical drives maximum.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>Even number of physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 30</td>
+    <td>Add physical drives, 16 per axle maximum.</td>
+  </tr>
+ <tr>
+    <td>RAID 50</td>
+    <td>16 physical drives per axle maximum.</td>
+  </tr>
+</table>
+
+<a name=RAID50></a><h4>RAID 50</h4>
+<p>A RAID 50 source logical drive can migrate to the following target logical drives:</p>
+
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+  <tr>
+    <td>RAID 0</td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>RAID 1E</td>
+    <td>None.</td>
+  </tr>
+   <tr>    <td>RAID 3</td>
+    <td>16 physical drives maximum.<br>
+RAID 50 must have less than 16 physical drives.</td>
+  </tr>
+   <tr>
+    <td>RAID 5</td>    <td>16 physical drives maximum.<br>
+RAID 50 must have less than 16 physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 6</td>
+    <td>16 physical drives maximum.<br>
+RAID 50 must have less than 16 physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+  <tr>
+    <td>RAID 10</td>
+    <td>Even number of physical drives.</td>
+  </tr>
+  <tr>    <td>RAID 30</td>
+    <td>16 physical drives per axle maximum.</td>
+  </tr>
+ <tr>
+    <td>RAID 50</td>
+    <td>Add physical drives. 16 per axle maximum.</td>
+  </tr>
+  <tr>
+    <td>RAID 60</td>
+    <td>8 physical drives minimum, 16 per axle maximum.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+</table>
+
+<a name=RAID60></a><h4>RAID 60</h4>
+<p>A RAID 60 source logical drive can migrate to the following target logical drives:</p>
+
+<table width=520 border=1 cellspacing=0 cellpadding=7>
+  <tr>
+    <td align=center width=60><b>Target</b></td>
+    <td align=center><b>Requirements</b></td>
+  </tr>
+    <tr>
+    <td>RAID 6</td>
+    <td>16 physical drives maximum.<br>
+RAID 60 must have less than 16 physical drives.<br>
+If existing physical drives have no unused space, add 1 or more physical drives.</td>
+  </tr>
+   <tr>
+    <td>RAID 60</td>
+    <td>Add physical drives. 16 per axle maximum.</td>
+  </tr>
+</table>
+
+<p><b>Important:</b>
+<ul>
+  <li>The Target disk array may require more disk drives than the Source disk 
+    array.</li>
+  <li>If the Target disk arrays requires an EVEN number of disk drives but the 
+    Source disk arrays has an ODD number, ADD a physical drive as part of the 
+    migration process.</li>
+<li>You cannot reduce the number of physical drives in your disk array,
+even if the Target disk array requires fewer physical drives than
+the Source disk array.</li>
+<li>RAID 1 (mirroring) works with two drives only. Only a
+single-drive RAID 0 disk array can migrate to RAID 1. Other RAID Levels
+use too many drives to migrate.</li>
+<li>You cannot migrate a disk array when it is <a href=LDDegradedHelp.html>Degraded</a>
+or performing activities such as Synchronizing, Rebuilding and <a href=PDMHelp.html>PDM</a>.</li>
+  <li>For RAID 6 or RAID 60, you can only migrate between these two RAID levels. 
+    Destination RAID 60 <a href="RAID60Axles.html">axles</a> can have up 
+    to 16 physical drives. Other limitations might apply.</li>
+</ul>
+<p>
+
+<a name=Range></a><h4>Ranges of Disk Array Expansion</h4>
+<p>The Windows 2000 and Windows XP (32-bit) operating systems support a 10-byte 
+  LBA format. As a result, these OSes can only recognize 4 billion addresses. 
+  If you create a logical drive using the default 512 B sector size, the logical drive will 
+  be limited to 2 TB of data, even if there is more space available on your disk 
+  drives.</p>
+  
+<p>This limitation does not apply to Windows XP (64-bit), 2003 Server, Vista, and Linux OSes with the 2.6 kernel. Linux OSes with the 2.4 kernel do not support variable sector sizes, therefore you cannot apply the solution described here to those OSes.</p>
+
+<p>Note that once you create your logical drive, you cannot change the size of 
+  the sectors. Nor can you increase the number of address blocks that the OS recognizes.</p>
+
+<p>You can direct <script>writeSoftwareName()</script> to expand a disk array beyond the
+maximum expansion size. <br>
+However, when expansion is finished:</p>
+<ul>
+<li><script>writeSoftwareName()</script> will display the disk array in the target size</li>
+<li>Your Operating System might display logical
+drive at maximum size listed in the table below.</li>
+  <li>Additional capacity might appear as unpartitioned and unformatted.</li>
+</ul>
+
+<table border=1 cellspacing=0 cellpadding=7 p>
+<tr align=center>
+<td width=100><b>Current LD Size</b></td>
+<td width=100><b>Maximum LD Expansion Size</b></td>
+<td width=100><b>LD Sector Size</b></td>
+</tr>
+<tr align=center>
+<td>8 to 16 TB</td>
+<td>16 TB</td>
+<td>4096 bytes</td>
+</tr>
+<tr align=center>
+<td>4 to 8 TB</td>
+<td>8 TB</td>
+<td>2048 bytes</td>
+</tr>
+<tr align=center>
+<td>2 to 4 TB</td>
+<td>4 TB</td>
+<td>1024 bytes</td>
+</tr>
+<tr align=center>
+<td>0 to 2 TB</td>
+<td>2 TB</td>
+<td>512 bytes</td>
+</tr>
+</table>
+
+<p>At this point, you have the choice of:</p>
+<ul>
+<li>Format the unpartitioned/unformatted capacity as a <i>second</i> logical drive</li>
+<li>Delete the existing disk array and create a new one in the desired size</li>
+</ul>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

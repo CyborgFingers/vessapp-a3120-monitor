@@ -1,0 +1,83 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Fibre Channel Management icon Port tab</title>
+</head>
+
+<body>
+
+<h3>Fibre Channel Port</h3>
+
+<p>The Fibre Channel Management–Port tab enables you to see the current Data Port settings on the Controller, including:
+<ul>
+<li><b>State</b> – Online, Offline, Unknown</li>
+<li><b>Port Identifier</b> –  A hexadecimal name for this port</li>
+  <li><b>Topology Attached</b> – See the table, below</li>
+<li><b>WWNN</b> –  World Wide Node Name (<script>writeModelName()</script>)</li>
+<li><b>WWPN</b> –  World Wide Port Name (<script>writeModelName()</script>)</li>
+  <li><b>Fabric WWNN</b> – World Wide Node Name (appears when connected to a switch)</li>
+<li><b>Fabric WWPN</b> –  World Wide Port Name (appears when connected to a switch)</li>
+  <li><b>Current Speed</b> – 4 Gb/s, 2 Gb/s, or 1 Gb/s</li>
+<li><b>Link Type</b> –  Laser Long Wave or Laser Short Wave</li>
+<li><b>Symbolic Name</b> – A text name for this port</li>
+<li><b>Link Speed</b>* – 4 Gb/s, 2 Gb/s, 1 Gb/s, or Auto</li>
+<li><b>Topology</b>* –  NL-Port, N-Port, or Auto</li>
+<li><b>Hard ALPA</b>* –  Address can be 0 to 254. 255 means this feature is disabled</li>
+<li><b>Alias WWPN</b></li>
+</ul>
+
+<p>* Denotes items that you can change under <a href=FCMgtPortSettingsHelp.html>Port Settings</a>.</p>
+
+<p>The table below shows the type of attached topology you will achieve based on your connection type and the configured topology you select:</p>
+
+<table width="350" border="1" cellspacing="0" cellpadding="4">
+<tr>
+<td colspan=3 align=center><b>Fibre Channel Attached Topology</b></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td colspan=2 align=center><b>Configured Topology</b></td>
+</tr>
+<tr>
+<td><b>Connection Type</b></td>
+<td>N-Port</td>
+<td>NL-Port</td>
+</tr>
+<tr>
+<td>Switch</td>
+<td>Fabric Direct</td>
+<td>Public Loop</td>
+</tr>
+<tr>
+<td>Direct</td>
+<td>Point to Point</td>
+<td>Private Loop</td>
+</tr>
+</table>
+
+<p>Example 1: If you connect the <script>writeModelName()</script> to a Fibre Channel switch and select NL-Port topology, you will create a Public Loop attached topology.</p>
+<p>Example 2: If you have a Point to Point attached topology, you made a direct connection (no switch) and selected N-port topology.</p>
+
+
+<p>There are no user settings on this screen. Click on <a href=FCMgtPortSettingsHelp.html>Port1</a> or <a href=FCMgtPortSettingsHelp.html>Port2</a> to access settings for this port.</p>
+
+<p>From this point, you can link to<a href=FCMgtNodeHelp.html> Node Status</a>,
+<a href=FCMgtStatisticHelp.html>Port Statistics</a>, <a href=FCMgtSFPHelp.html>SFP
+(transceiver) Status</a>, a list of <a href=FCMgtLoggedInDeviceHelp.html>Logged-in
+Devices</a> and a list of <a href=FCMgtInitiatorHelp.html>Initiators</a>.</p>
+
+<p>To access this tab:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the Fibre Channel Management icon.</li>
+<li>Click the <b>Port</b> tab in Management View.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

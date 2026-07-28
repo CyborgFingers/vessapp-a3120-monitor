@@ -1,0 +1,14 @@
+# keep the build context lean (only port/ is COPYd by the Dockerfile)
+.git
+docs
+re
+graphify-out
+**/*.so
+**/*.o
+**/*.lo
+**/*.dep
+**/.libs
+**/build
+**/build-*
+port/php-ext/modules
+port/php-ext/autom4te.cache

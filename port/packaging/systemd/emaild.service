@@ -1,0 +1,23 @@
+# emaild - engine-event -> SMTP alert daemon (Phase 5 port of clitest/emaild.exe).
+#
+# SCAFFOLD SEMANTICS (honest, documented): the resident poll loop needs the
+# i2_getEvents MicOpCode, which is an on-device calibration point
+# (docs/RE-snmp-daemons.md #3). Until then this unit is a one-shot: with the
+# installed default /etc/promise/emailsetting.xml (<enabled>0</enabled>) it
+# exits quietly; once the operator enables + configures SMTP it sends the
+# recovered TEST email at stack start, verifying the alert pipeline end-to-end.
+[Unit]
+Description=Promise emaild (event->SMTP alerts; one-shot scaffold until engine poll is calibrated)
+After=network.target
+PartOf=promise-webpam.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=-/etc/promise/promise.env
+ExecStart=/opt/promise/bin/emaild -f /etc/promise/emailsetting.xml --test
+# "notifications disabled" is the expected off state, not a failure.
+SuccessExitStatus=0
+
+[Install]
+WantedBy=promise-webpam.target

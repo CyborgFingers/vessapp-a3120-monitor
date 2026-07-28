@@ -1,0 +1,7 @@
+# /etc/pam.d/promise-webpam - PAM service for WebPAM Linux-credential login.
+# promise-pam-auth verifies allowlisted Linux users through this stack. It uses
+# the system's standard auth + account modules (pam_unix, plus whatever the box
+# layers on: pam_faillock, MFA, etc.), so WebPAM login honours the same policy
+# as a console/SSH login.
+@include common-auth
+@include common-account

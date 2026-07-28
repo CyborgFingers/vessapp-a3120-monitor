@@ -1,0 +1,93 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>LUN Affinity</title>
+</head>
+
+<body>
+
+<h3>LUN Affinity</h3>
+
+<p><script>writeModelName()</script> subsystems with two controllers include a LUN Affinity feature. Normally, either 
+  controller can access all logical drives. LUN Affinity enables you to specify 
+  which controller can access each logical drive. Use this feature to balance 
+  the load of your logical drives between the two controllers.</p>
+
+<p>To use LUN Affinity you must:</p>
+<ul>
+<li>Have two controllers in the subsystem</li>
+  <li>Enable LUN Affinity under <a href="ControllerSettingsHelp.html">controller 
+    settings</a></li>
+</ul>
+
+<h4>Disk Array Creation</h4>
+
+<p>When you create a logical drive using the <a href="DiskArraysCreateAdvHelp.html">Advanced</a> 
+  method of disk array creation, you can specify the Preferred Controller ID:
+  <ul>
+  <li>Controller 1 – Assign all logical drives to Controller 1</li>
+  <li>Controller 2 – Assign all logical drives to Controller 2</li>
+<li>Automatic – Alternate logical drive assignments between Controllers 1 and 2</li>
+</ul>
+ 
+ 
+<p>Automatic is the default and preferred setting because it will balance the 
+  logical drive assignments for you.</p>
+ 
+<p>When you create a logical drive using the <a href="DiskArraysCreateAutoHelp.html">Automatic</a> 
+  or <a href="DiskArraysCreateExpHelp.html">Express</a> disk array creation, the logical drives are assigned 
+  alternatively between Controllers 1 and 2 automatically.</p>
+
+<h4>Logical Drive Settings</h4> 
+ 
+  
+<p>After you have created a logical drive, you can click on the <a href="LogicalDriveSettingsHelp.html">Settings</a> 
+  tab and manually change the Preferred Controller ID between Controller 1 and 
+  Controller 2.</p>
+  
+  
+<p>If you create logical drives with LUN Affinity disabled, the Preferred Controller 
+  ID will show N/A, and your logical drives will be visible to both controllers.</p>
+  
+<p>If you create logical drives with LUN Affinity disabled, and later you <a href="ControllerSettingsHelp.html">enable 
+  LUN Affinity</a>, all of your logical drives will be assigned to Controller 
+  1. To balance the load, you can reassign some of your logical drives 
+  to Controller 2 under the Preferred Controller ID in the <a href="LogicalDriveSettingsHelp.html">Settings</a> 
+  tab.</p>
+  
+  
+<p>When you a delete a logical drive, the remaining logical drives keep the same 
+  Controller assignments. If you want to rebalance controller assignments of the remaining logical drives, change their Preferred 
+  Controller IDs in the <a href="LogicalDriveSettingsHelp.html">Settings</a> tab.</p>
+
+<h4>Failover and Failback</h4>
+
+<p>When one controller fails, the surviving controller takes over logical drive 
+  access until the failed controller is brought back online or is replaced. For 
+  example, LUN Affinity is enabled and your logical drives are assigned to Controller 
+  1. The following actions will happen:</p>
+<ul>
+  <li>If Controller 1 goes offline, Controller 2 takes over access to the logical 
+    drives assigned to Controller 1.</li>
+  <li>If Controller 1 comes back online, Controller 1 takes back access to the 
+    logical drives assigned to it.</li>
+  <li>If Controller 1 is replaced, the new controller takes over access to the 
+    logical drives assigned to Controller 1.</li>
+	
+  <li>All logical drives assigned to Controller 2 remain accessible by Controller 
+    2. Controller 1 cannot access them at any time.</li>
+</ul>
+ 
+ <p><b>Note:</b> On 
+  <script>writeModelName()</script>
+  subsystems with two controllers, when <a href="CacheMirroringHelp.html">Cache 
+  Mirroring</a> is disabled, LUN Affinity is enabled automatically.</p>
+ 
+  
+<script>writeGoBack()</script>
+</body>
+
+</html>

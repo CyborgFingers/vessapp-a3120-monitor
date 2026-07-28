@@ -1,0 +1,44 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Capacity Coercion</title>
+</head>
+
+<body>
+
+<h3>Capacity Coercion</h3>
+
+<p>This feature is designed for fault-tolerant logical drives
+(RAID 1, 5, 6, 10, and 1E). It is generally recommended to use physical drives of the same size in your disk arrays.
+When this is not possible, physical drives of different sizes will work but the system must adjust for the size
+differences by reducing or coercing the capacity of the larger drives to match the smaller ones.
+With <script>writeModelName()</script>, you can choose to enable Capacity Coercion and any one of four methods.</p>
+
+<p>Enable Capacity Coercion and select the Method in the <a href=ControllerSettingsHelp.html>Controller
+Settings</a> menu. The choices are:</p>
+<ul>
+<li><b>GB Truncate</b> – (Default) Reduces the useful capacity to
+the nearest 1,000,000,000 byte boundary.</li>
+<li><b>10GB Truncate</b> – Reduces the useful capacity to the nearest
+10,000,000,000 byte boundary.</li>
+<li><b>Group Rounding</b> – Uses an algorithm to determine how much
+to truncate. Results in the maximum amount of usable drive capacity.</li>
+<li><b>Table Rounding</b> – Applies a predefined table to determine
+how much to truncate.</li>
+</ul>
+<p> Capacity Coercion also affects a replacement drive used in a disk array. Normally, when
+an physical drive fails, the replacement drive must be the same capacity or larger. However, the Capacity Coercion feature
+permits the installation of a replacement drive that is slightly smaller (within 1 gigabyte) than the remaining working drive.
+For example, the remaining working  drives can be 80.5GB and the replacement drive can be 80.3, since all are rounded
+down to 80GB. This permits the smaller drive to be used. </p>
+
+<p>Without Capacity Coercion, the controller will not permit the use of a replacement physical drive that
+is slightly smaller than the remaining working drive(s).</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

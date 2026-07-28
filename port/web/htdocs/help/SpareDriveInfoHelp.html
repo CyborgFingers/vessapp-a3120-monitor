@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Spare Drive icon Information tab</title>
+</head>
+
+<body>
+
+<h3>Spare Drive</h3>
+
+<p>The Spare Drive–Information tab provides information about the selected spare 
+  disk drive.</p>
+
+<p>When a physical drive in a disk array fails and a spare drive of adequate capacity 
+  is available, the disk array will begin to <a href="RebuildHelp.html">rebuild</a> 
+  automatically using the spare drive.</p>
+
+<ul>
+<li><b>Spare ID</b> – Consecutive number assigned when the spare drive was created.</li>
+<li><b>Physical Drive ID</b> – The ID number of this physical drive.</li>
+<li><b>Spare Type</b> – Global, can be used by any disk array. Dedicated, can only be used by the assigned disk array.</li>
+  <li><b>Revertible Spare</b> – Yes or No. A revertible spare drive automatically 
+    returns to its spare drive assignment after the failed physical drive in the 
+    disk array is replaced. See <a href="TransitionHelp.html">Transition</a>.</li>
+<li><b>Operational Status</b> – OK is normal. Can also show Rebuilding or Offline.</li>
+  <li><b>Spare Check Status</b> – The result of the Spare Check function. Healthy, 
+    Failed or Not Checked.</li>
+  <li><b>Physical Capacity</b> – Theoretical capacity of the drive.</li>
+  <li><b>Configurable Capacity</b> – Capacity of the drive actually available 
+    for use.</li>
+<li><b>Block Size</b> – Sector size in bytes.</li>
+  <li><b>Drive Interface</b> – SATA.</li>
+<li><b>Model</b> – Drive Manufacturer's model name and/or number.</li>
+<li><b>Location</b> – The enclosure and slot number where the spare drive is physically installed.</li>
+<li><b>Configuration Status</b> – Type of spare drive: Global, Revertible Global, Dedicated, Revertible Dedicated.</li>
+<li><b>Operational Status</b> – OK is normal. Can also show Rebuilding or Offline.</li>
+<li><b>Serial Number</b> – From the drive manufacturer.</li>
+<li><b>Firmware Version</b> – From the drive manufacturer.</li>
+</ul>
+
+<p>To locate a spare drive in the <script>writeModelName()</script> subsystem enclosure:</p>
+<ol>
+  <li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Enclosures icon.</li>
+<li>Click on the Enclosure icon.</li>
+<li>Click on the Spare Drives icon.</li>
+<li>Click on the Spare Drive icon.</li>
+<li>In Management View, click on the spare drive in the Enclosure Front View graphic.<br>
+The disk status LED will flash to identify the carrier holding the drive.</li>
+</ol>
+
+<p>To change the parameters of a spare drive, click the <a href=SpareDriveSettingsHelp.html>Settings</a> tab.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

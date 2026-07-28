@@ -1,0 +1,74 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Connection Problems</title>
+</head>
+
+<body>
+
+<h3>Connection Problems</h3>
+
+<p>When you install your <script>writeModelName()</script> following the instructions in
+the <i><script>writeModelName()</script> Quick Start Guide</i> (printed) and <i>Product Manual</i>
+(on the Software CD), you should have little trouble getting your equipment
+to work the first time. But connection problems can arise that are not the User's
+or Installer's fault. Nor can every conceivable problem be covered in the documentation.</p>
+
+<p>Connection problems cause a majority of failures in almost
+any electrical system. While the installation of the cables and components was
+correct, they do not function properly, or at all, because:
+<ul>
+<li><p>A connector is dirty or corroded</li>
+<li><p>A connector is loose or damaged</li>
+<li><p>A cable looks OK outside but has an open circuit inside</li>
+<li><p>The wrong cable was used</li>
+</ul>
+
+<p><script>writeModelName()</script>s ship with a full set of new cables and terminators,
+as required for each specific model. Be sure to use these components because:
+1.) They are the proper ones for your RAID subsystem, 2.) They are in brand-new
+condition, and 3.) You paid for them with the purchase of your <script>writeModelName()</script>.</p>
+
+<h4>Serial Connections</h4>
+
+<p><script>writeModelName()</script> uses a serial connection for a command line utility
+(CLU). Normally, users prefer <script>writeSoftwareName()</script> because of its graphic user interface.
+But the CLU can do the same jobs. And it will work when your network connection
+is down.</p>
+
+<p> For <script>writeModelName()</script>, you must use the CLU to set the Management Port
+IP address in order for <script>writeSoftwareName()</script> to connect with it. This issue is discussed further
+under Network Connections (below). See the <i><script>writeModelName()</script> Quick Start Guide</i>
+or Chapter 2 of the <i>Product Manual</i> for more information on setup and connections.
+</p>
+
+<p>The CLU controls and manages but it does not move data. It
+communicates through a null-modem cable, supplied with the <script>writeModelName()</script>. A straight-through
+serial cable will not work for this purpose. You probably will not use the CLU
+often and want to disconnect and store the cable. Consider leaving it connected,
+to be sure it will be there when you need it.</p>
+
+<h4>Network Connections</h4>
+
+<p><script>writeModelName()</script> has an RJ-45 Management Port connector on the back of
+its cabinet. This is a Gigabit Ethernet connector designed to connect to your
+network. The <script>writeModelName()</script> becomes a node on your network like any other PC, server
+or other component with an IP address. <script>writeModelName()</script> ships from the factory an IP address
+of 10.0.0.2. You must change this address to one that will work with your network.
+You make the initial IP address setting using the CLU, as mentioned above. You
+can make subsequent IP address changes  using the Graphic User Interface (GUI).</p>
+
+<p>Note that <script>writeModelName()</script> Management Port can accept IP address assignments
+from a DHCP server. Use <script>writeModelName()</script>'s Command Line Utility (CLU) to enable this feature.
+If you have not activated DHCP support but there is a DHCP server on your network,
+there is a chance that it will inadvertently assign the <script>writeModelName()</script>'s Management Port
+IP address to another node. You might see a warning to this effect on your PC's
+monitor. If this happens, <script>writeSoftwareName()</script> may not be able to connect. See your network
+administrator to work out a suitable arrangement.</p>
+
+<script>writeGoBack()</script>
+</body>
+</html>

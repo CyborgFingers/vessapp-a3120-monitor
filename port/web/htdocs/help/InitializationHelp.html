@@ -1,0 +1,83 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Initialization</title>
+
+</head>
+
+<body>
+
+
+<h3>Initialization</h3>
+
+<p>Initialization is done to logical drives after they are created from a disk 
+  array. Initialization sets all data bits in the logical drive to zero. The action 
+  is useful because there may be residual data on the logical drives left behind 
+  from earlier configurations. For this reason, Initialization is recommended 
+  whenever you create a logical drive.</p>
+
+<p><b>Warning: When you initialize a logical drive, all the data on the logical drive will be lost.
+Backup any important data before you initialize a logical drive.</b></p>
+
+
+<h4>Intialize a Logical Drive</h4>
+
+<ol>
+  <li>Click on the Subsytem icon in Tree View.</li>
+  <li>Click on the Logical Drive Summary icon.</li>
+  <li>Click on the icon of the logical drive you want to Initialize.</li>
+  <li>From the dropdown menu on the Background Activities tab, select <i>Intialization</i>.</li>
+  <li>To select Quick Initialization, check the box.<br>
+    If you checked the box, enter a value in the Quick Initialization Size field. 
+    This value is the size of the initialization blocks in MB.</li>
+  <li>If you did not select Quick Initialization, enter a hexidecimal value in 
+    the Initialization Pattern in Hex field or use the default 00000000 value.</li>
+  <li>Click the <b>Submit</b> button.</li>
+  <li>In the confirmation box, type the word <b>confirm</b> in the field provided.</li>
+  <li>Click the <b>OK</b> button.</li>
+</ol>
+<p>The Background Activity tab displays the progress of the Initialization.</p>
+
+<p><b>Note:</b> You can also start Initialization from
+the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a>
+tab.
+
+<h4>Pause, Resume, or Stop Initialization</h4>
+
+<p>To pause, resume, or stop the Initialization:</p>
+  <ol>
+   <li>Click on the Subsytem icon in Tree View.</li>
+  <li>Click on the Logical Drive Summary icon.</li>
+  <li>Click on the icon of the logical drive under Initialization.</li>
+  <li>Click on the Background Activities tab in Management view.</li>
+  <li>Under Background Activities, click on the <a href="BackgroundActivityHelp.html">Initialization</a> link.</li>
+</ol>
+
+<p><b>Note:</b> You can also pause, resume, or stop the Initialization from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background Activities</a>
+tab.</p>
+  
+<h4>Set Initialization Priority</h4>
+
+<ol>
+  <li>Click on the Subsytem icon in Tree View.</li>
+   <li>From the dropdown menu on the Background Activities tab, select <i>Settings</i>.</li>
+  <li>Click on the Logical Drive Initialization Rate dropdown menu and select 
+    a rate: Low, Medium or High.</li>
+  <ul>
+    <li><b>Low</b> allocates fewer system resources to the Initialization Rate and more
+      to data read/write operations.</li>
+    <li><b>Medium</b> allocates a balance of system resources to the Initialization Rate
+      and data read/write operations.</li>
+    <li><b>High</b> allocates more system resources to the Initialization Rate and fewer
+      to data read/write operations.</li>
+  </ul>
+  <li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Subsystem icon Settings tab</title>
+</head>
+
+<body>
+
+<h3>Subsystem NTP Settings</h3>
+
+<p>The Subsystem–NTP Settings tab enables you to make Network Time Protocol (NTP) for the <script>writeModelName()</script>
+subsystem and to synchronize the subsystem with a NTP server.</p>
+
+<p>After you have made NTP settings, the <script>writeModelName()</script> subsystem synchronizes with the NTP server:</p>
+<ul>
+<li>At startup.</li>
+<li>Every night.</li>
+<li>When you synchronize manually.</li>
+</ul> 
+
+<h4>Making NTP Settings</h4>
+
+<p>To set a Network Time Protocol (NTP) for this subsystem:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View.</li>
+<li>In Management View, from the Settings tab dropdown menu, choose <i>NTP Management.</i></li>
+<li>Check the NTP Service box to enable the NTP service.</li>
+<li>Enter the URLs for NTP servers in the fields provided.<br>
+  One URL is required. Additional URLs are optional.</li>
+<li>From the Time Zone dropdown menu, choose your time zone.</li>
+<li>If your location observes Daylight Savings Time:
+<ul>
+<li>Check the Daylight Savings Time box.</li>
+<li>Set the start date from the DST Start Time dropdown menus.</li>
+<li>Set the end date from the DST End Time dropdown menus.</li>
+</ul></li>
+<li>Click the <b>Submit</b> button.</li>
+<li>Click the <b>OK</b> button in the notification dialog box.</li>
+</ol>
+
+<h4>Synchronizing Manually</h4>
+<p>The NTP service must be enabled before you can manually synchronize the subsystem.</p>
+<p>To synchronize this subsystem with an NTP Server:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View.</li>
+<li>In Management View, from the Settings tab dropdown menu, choose <i>NTP Management.</i></li>
+<li>Click the <b>Start Time Sync</b> button.</li>
+<li>Click the <b>OK</b> button in the notification dialog box.</li>
+</ol>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

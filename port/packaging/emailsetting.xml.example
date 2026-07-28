@@ -1,0 +1,18 @@
+<!-- emailsetting.xml - emaild's fault-alert config. Install as
+     /etc/promise/emailsetting.xml (the promise-mdmonitor handler passes it to
+     emaild with -f). emaild speaks PLAIN SMTP (no AUTH/TLS) by design, so it
+     sends to a LOCAL relay (postfix) on 127.0.0.1:25 that authenticates +
+     STARTTLS to the real mail server. See setup-mail-relay.sh.
+
+     severityThreshold: minimum raidv4 severity to email (0 Info .. 7 Fatal;
+     the RAID handler emits 2=Info rebuilds, 3=Warning degrade/spare,
+     5=Major disk-dead / LD-offline). -->
+<emailSetting>
+  <enabled>1</enabled>
+  <server>127.0.0.1</server>
+  <port>25</port>
+  <sender>noreply@example.com</sender>
+  <subjectPrefix>[VessApp A3120]</subjectPrefix>
+  <severityThreshold>2</severityThreshold>
+  <recipient>admin@example.com</recipient>
+</emailSetting>

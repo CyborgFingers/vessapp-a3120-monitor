@@ -1,0 +1,16 @@
+{
+    "CpuFanLevelList": [
+        {"Lower": 0,  "Upper": 59,  "Speedlevel": 20},
+        {"Lower": 60, "Upper": 69,  "Speedlevel": 35},
+        {"Lower": 70, "Upper": 79,  "Speedlevel": 55},
+        {"Lower": 80, "Upper": 89,  "Speedlevel": 75},
+        {"Lower": 90, "Upper": 100, "Speedlevel": 100}
+    ],
+    "SysFanLevelList": [
+        {"Lower": 0,  "Upper": 59,  "Speedlevel": 1},
+        {"Lower": 60, "Upper": 69,  "Speedlevel": 15},
+        {"Lower": 70, "Upper": 79,  "Speedlevel": 35},
+        {"Lower": 80, "Upper": 89,  "Speedlevel": 60},
+        {"Lower": 90, "Upper": 100, "Speedlevel": 100}
+    ]
+}

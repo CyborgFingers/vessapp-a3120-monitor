@@ -1,0 +1,13 @@
+# bgasched - background-activity scheduler (Linux port of bgasched.exe).
+# Triggered monthly by bgasched.timer: arms a redundancy-check ("check") scrub
+# on every idle md array = the periodic media patrol / redundancy check.
+# promise-mdmonitor surfaces any mismatch/read error it finds as an event.
+[Unit]
+Description=Promise bgasched (scheduled RAID media patrol / redundancy check)
+Documentation=man:md(4)
+PartOf=promise-webpam.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/promise/promise.env
+ExecStart=/opt/promise/bin/bgasched

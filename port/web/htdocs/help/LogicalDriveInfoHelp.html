@@ -1,0 +1,99 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Logical Drive icon Information tab</title>
+</head>
+
+<body>
+
+<h3>Logical Drive</h3>
+
+<p>The Logical Drive–Information tab displays a list of logical drives along with their status and capacity.
+Logical drives are made from disk arrays. </p>
+
+<p>To access the Logical Drives–Information tab:</p>
+<ol>
+<li>Click on the Subsystem  icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on the Disk Array icon.</li>
+<li>Click on the Logical Drives icon.</li>
+<li>Click on the Logical Drive icon.</li>
+</ol>
+
+<p>To specify an Alias or set the Read and Write Policies, click
+on the <a href=LogicalDriveSettingsHelp.html>Settings</a> tab.</p>
+
+<p>To see the <a href="LogicalDriveStatHelp.html">statistics</a> for this logical 
+  drive, click the dropdown menu on the Information tab and choose <i>Statistics</i>.</p>
+
+<h4>Logical Drive Information</h4>
+
+<ul>
+<li><b>Logical Drive ID</b> – A number assigned to
+the logical drive by the system.</li>
+<li><b>Alias</b> – Displays the alias, if one was assigned.</li>
+<li><b>RAID Level</b> – The <a href=RAIDlevels.html>RAID
+level</a> of this logical drive.</li>
+<li><b>Operations Status</b> – The operational status of the logical drive (see below).</li>
+<li><b>Capacity</b> –	This is the data storage capacity of the logical drive.</li>
+<li><b>Physical Capacity</b> – This is the data storage capacity of the physical drives used in the logical drive.</li>
+<li><b>Number of Axles</b> – Applies to RAID 50 and 60. Each axle represents a RAID 5 or RAID 6 logical drive.</li>
+<li><b>Number of Used Physical Drives</b> – The number of physical drives used in this
+logical drive.</li>
+<li><b>Stripe Size</b> – The <a href=StripeSizeHelp.html>stripe</a>
+size of this logical drive.</li>
+<li><b>Sector Size</b> – The <a href=SectorSizeHelp.html>sector</a>
+size of this logical drive.</li>
+<li><b>Disk Array ID</b> – The ID number of the disk array from which this logical drive was created.</li>
+<li><b>Read Policy</b> – The Read <a href=CachePolicyHelp.html>Cache</a>
+policy of this logical drive.</li>
+<li><b>Write Policy</b> – The Write <a href=CachePolicyHelp.html>Cache</a>
+policy of this logical drive.</li>
+<li><b>Serial Number</b> – The Serial Number of this logical drive.</li>
+<li><b>WWN</b> – The World Wide Number of this logical drive.</li>
+<li><b>Synchronized</b> – Has this logical drive been
+synchronized? Yes or No.</li>
+<li><b>Tolerable Number of Dead Drives</b> – RAID 6 and 60 only. Currently supports up to two dead physical drives.</li>
+<li><b>Parity Pace</b> – RAID 6 and 60 only. For information only.</li>
+<li><b>Codec Scheme</b> – RAID 6 and 60 only. For information only.</li>
+</ul>
+
+
+<h4>Disk Array and Logical Drive Status Definitions</h4>
+<ul>
+<li><b>OK</b> – This is the normal state of a logical
+drive. When a logical drive is Functional, it is ready for immediate use.
+For RAID Levels other than RAID 0 (Striping), the logical drive has full redundancy.</li>
+<li><b>Synchronizing</b> – This condition is temporary. Synchronizing is a maintenance function that
+verifies the integrity of data and redundancy in the logical drive. When an logical drive is Synchronizing, it will function and your data
+is available. However, access will be slower due to the synchronizing operation.</li>
+<li><b>Rebuilding</b> – This condition is temporary. When a physical drive has been replaced, the logical drive
+automatically begins rebuilding in order to restore redundancy (fault tolerance). When a logical drive is rebuilding, it will
+function and your data is available. However, access will be slower due to the rebuilding operation. </li>
+<li><b>Degraded</b> – This condition arises as the
+result of a physical drive failure. A Degraded logical drive will still function
+and your data is still available. However, the logical drive has lost redundancy
+(fault tolerance). You must determine the cause of the problem and correct
+it.</li>
+<li><b>Offline</b> – This condition arises as the result
+of a second physical drive failure on a fault-tolerant disk array or a single
+drive failure on a RAID 0. An Offline logical drive is not accessable but
+some or all of your data may remain intact. You must determine the cause of
+the problem and correct it.</li>
+<li><b>Transport Ready</b> – After you perform a successful
+Prepare for Transport operation, this condition means you can remove the physical
+drives of this disk array and move them to another enclosure or different
+drive slots. After you relocate the physical drives, the disk array status will show OK.</li>
+</ul>
+
+<p>Also see <a href=DiskArrayCreateLDHelp.html>Create Logical Drive</a>, <a href=DiskArrayDeleteLDHelp.html>Delete
+Logical Drive</a>, <a href=LDDegradedHelp.html>Logical Drive Degraded</a> and
+<a href=LDOfflineHelp.html>Logical Drive Offline</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Logical Drive Degraded</title>
+</head>
+
+<body>
+
+<h3>Logical Drive Degraded</h3>
+
+
+<p><script>writeSoftwareName()</script> displays yellow exclamations points (!)
+and red Xs in Tree
+View to identify components that need attention.</p>
+
+<p>When a yellow exclamation point (!)
+appears over a Subsystem, follow the exclamations to the lowest component
+with the red X. This is the source of the malfunction.</p>
+
+<p>By way of example, as a result of the physical drive failure, a disk array
+loses its redundancy the two logical drives on the array may go
+offline temporarily. </p>
+
+<p>On the front of the <script>writeModelName()</script> enclosure, the Status LED changes from green to red on the drive carrier holding
+the failed drive. This indicates a physical drive error. See Chapter 2 of the <i><script>writeModelName()</script> Product Manual</i> for information about 
+physical drive replacement.</p>
+
+
+
+<h4>Rebuild the Disk Array</h4>
+
+<h5>With a Spare Drive</h5>
+
+<p>When a physical drive in a disk array fails and a <a href="SpareDrivesInfoHelp.html">spare 
+  drive</a> of adequate capacity is available, the disk array will begin to <a href="RebuildHelp.html">rebuild</a> 
+  automatically using the spare drive.</p>
+
+
+<p>After the disk array rebuilds itself using the spare drive, you must replace 
+  the failed drive.</p>
+
+<p>To set up a spare drive, go to Spare Drives icon and click on the <a href=SpareDrivesCreateHelp.html>Create</a> tab.</p>
+
+<h5>Without a Spare Drive</h5>
+
+<p> If there is no hot spare drive of adequate capacity, you must remove the failed 
+  drive and install an unconfigured replacement drive of the same or greater capacity 
+  in the same slot as the failed drive. Until you install the replacement drive, 
+  the logical drive will remain Degraded.</p>
+<ul>
+ <li>If the <a href="RebuildHelp.html">Auto 
+  Rebuild</a> function is ENABLED, the disk array will begin to rebuild automatically 
+  as soon as you replace the failed drive.</li> 
+<li>If the Auto Rebuild function is DISABLED, you must <a href="RebuildHelp.html">manually rebuild</a> the disk array after 
+you replace the failed drive.</li> 
+</ul>
+
+<p><b> Important:</b> If your replacement disk drive was formerly part of a different 
+  disk array or logical drive, you must <a href="PhysicalDriveClearHelp.html">clear</a> 
+  the configuration data on the replacement drive before you use it.</p>
+
+<h5>Rebuild Operation</h5>
+
+<p> During rebuild:</p>
+
+<ul>
+<li>No warning icon displays over the Disk Array or Logical Drive</li>
+<li> The Management Window reports the Disk Array's Operational
+Status as <b>OK, Rebuilding</b></li>
+<li> The drive carrier holding the rebuilding physical drive
+displays a green Activity (left) LED while the Status (right) LED flashes
+green once per second.</li>
+<p>During rebuilding, you can still read and write data to the
+logical drive. However, fault tolerance is lost until the Disk Array returns
+to OK (not-rebuilding) status.</p>
+  <p><b>Note:</b> You can check the Rebuild progress, and also pause, resume, or 
+    stop the Rebuild from the Subsystem icon <a href=SubsystemBackgroundHelp.html>Background 
+    Activities</a> tab or the Disk Array icon <a href="DiskArrayBackgroundHelp.html">Background 
+    Activities</a> tab.</p>
+
+</ul>
+<p>After a successful rebuild:</p>
+<ul>
+<li>The Disk Array's Operational Status as <b>OK</b></li>
+<li>The rebuilt disk drive Status LED displays steady green</li>
+</ul>
+
+<p>For further information, see <a href=TroubleShootingHelp.html>Troubleshooting</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

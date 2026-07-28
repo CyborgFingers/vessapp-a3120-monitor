@@ -1,0 +1,54 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Fibre Channel Management icon Initiator tab</title>
+</head>
+
+<body>
+
+<h3>Fibre Channel Initiators</h3>
+
+<p>The Fibre Channel Management–Initiator tab enables you to view information about the initiators on the two Fibre 
+Channel ports on the Controller. You must add an initiator to the <script>writeModelName()</script>'s initiator list 
+in order to use the initiator to create a LUN for your logical drive.
+<ul>
+<li><b>#</b> –  Device number</li>
+<li><b>WWPN</b> –  World Wide Port Name</li>
+<li><b>Port ID</b> –  ID of the initiator, not the Fibre Channel port</li>
+<li><b>Symbolic Name</b> –  If used</li>
+</ul>
+
+<p><b>Note:</b> A Fibre Channel switch will also display as an initiator in the list.</p>
+
+<p><b>Note:</b> If your Host PC's Fibre Channel HBA is connected to the <script>writeModelName()</script> directly (not though a Fibre Channel switch), the initiator will NOT display in the initiator list.</p>
+
+<p>From this point, you can link to <a href=FCMgtNodeHelp.html>Node Status</a>,
+<a href=FCMgtPortHelp.html>Port Status</a>, <a href=FCMgtPortSettingsHelp.html>Settings</a>
+and <a href=FCMgtStatisticHelp.html>Statistics</a>; <a href=FCMgtSFPHelp.html>SFP
+(transceiver) Status</a> and a list of <a href=FCMgtLoggedInDeviceHelp.html>Logged-in
+Devices</a>.</p>
+
+<p>To view a list of recognized initiators:</p>
+<ol>
+<li>Click the Subsystem icon in Tree View. </li>
+<li>Click the Administrative Tools icon.</li> 
+<li>Click the Fibre Channel Management icon. </li>
+<li>In the Management window, click the Initiators tab.<br>
+A list of all currently recognized initiators appears the screen.</li>
+</ol>
+
+<p>To add an initiator to the <script>writeModelName()</script>'s initiator list:</p>
+<ol>
+<li>Check the box to the left of the initiator.</li>
+<li>Click the <b>Add to Initiator List</b> button.</li>
+</ol>
+<p>The initiator appears under <a href="StorageServicesInitiatorsHelp.html">Storage 
+  Services</a>. You can then use the initiator to create a <a href="StorageServicesLUNMapHelp.html">LUN</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

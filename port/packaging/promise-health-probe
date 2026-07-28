@@ -1,0 +1,290 @@
+#!/usr/bin/env python3
+# promise-health-probe - read-only drive/pool health for webpam-monitor.
+#
+# Emits pipe-delimited, key=value records that the raid_health backend parses
+# into WebPAM's physical-drive / disk-array / logical-drive records. Data comes
+# from `zpool` + `smartctl` on ZFS boxes (TrueNAS) or `smartctl` + /proc/mdstat
+# + `lvs` on generic Linux (Proxmox). It NEVER writes: no create/destroy/attach,
+# no zpool subcommand other than list/status, no smartctl test - status only.
+#
+# Output grammar (one record per line; tokens after the type are k=v):
+#   SUBSYS|backend=<zfs|generic>|host=<name>|enclosure=<0|1>
+#   ARRAY|id=<n>|name=<s>|level=<s>|state=<s>|size=<bytes>|free=<bytes>|members=<n>
+#   PD|id=<n>|arrayid=<n|-1>|osname=<sdX>|model=<s>|serial=<s>|size=<bytes>|state=<s>|temp=<C>|smart=<PASSED|FAILED|->
+#   LD|id=<n>|arrayid=<n>|name=<s>|size=<bytes>|used=<bytes>|state=<s>
+#
+# state vocabulary maps to WebPAM: OK, Degraded, Failed, Rebuilding, Offline, Unconfigured.
+import json, os, re, shutil, socket, subprocess
+
+# In a container we run the HOST's own tools (correct zfs/smartctl versions) by
+# nsenter-ing into PID 1's namespaces. Set VESSAPP_PROBE_NSENTER=1 and run the
+# container privileged with pid:host. Empty by default -> unchanged host/direct use.
+NS = ["nsenter", "-t", "1", "-m", "-u", "-i", "-n", "-p", "--"] if os.environ.get("VESSAPP_PROBE_NSENTER") else []
+
+def run(cmd):
+    try:
+        r = subprocess.run(NS + cmd, capture_output=True, text=True, timeout=30)
+        return r.stdout
+    except Exception:
+        return ""
+
+def have(x):
+    if NS:                                   # tools live on the host, not the container
+        return run(["sh", "-c", "command -v " + x]).strip() != ""
+    return shutil.which(x) is not None
+
+def esc(v):
+    # keep records single-line and '|'/'=' safe
+    return str(v).replace("|", "/").replace("=", "-").replace("\n", " ").strip()
+
+# ---- physical disks (both platforms) ---------------------------------------
+def list_disks():
+    """/dev/sdX (TYPE=disk) -> {path,size,model,serial}, sorted, id-assigned."""
+    disks = {}
+    out = run(["lsblk", "-bdn", "-o", "NAME,TYPE,SIZE,MODEL,SERIAL", "-P"])
+    for line in out.splitlines():
+        kv = dict(re.findall(r'(\w+)="([^"]*)"', line))
+        if kv.get("TYPE") != "disk":
+            continue
+        name = kv.get("NAME", "")
+        if not name:
+            continue
+        disks["/dev/" + name] = {
+            "osname": name,
+            "size": int(kv.get("SIZE") or 0),
+            "model": kv.get("MODEL", "").strip(),
+            "serial": kv.get("SERIAL", "").strip(),
+            "state": "OK",
+            "temp": "",
+            "smart": "-",
+            "arrayid": -1,
+        }
+    return disks
+
+def enrich_smart(disks):
+    if not have("smartctl"):
+        return
+    for path, d in disks.items():
+        js = run(["smartctl", "-j", "-H", "-A", "-i", path])
+        try:
+            s = json.loads(js)
+        except Exception:
+            continue
+        passed = s.get("smart_status", {}).get("passed")
+        if passed is True:
+            d["smart"] = "PASSED"
+        elif passed is False:
+            d["smart"] = "FAILED"
+            d["state"] = "Failed"
+        t = s.get("temperature", {}).get("current")
+        if isinstance(t, int):
+            d["temp"] = t
+        if not d["model"]:
+            d["model"] = (s.get("model_name") or s.get("device", {}).get("name") or "").strip()
+        if not d["serial"]:
+            d["serial"] = (s.get("serial_number") or "").strip()
+        cap = s.get("user_capacity", {}).get("bytes")
+        if cap and not d["size"]:
+            d["size"] = cap
+
+# ---- ZFS pools -> arrays ----------------------------------------------------
+def zfs_arrays(disks):
+    arrays = []
+    js = run(["zpool", "status", "-j", "-c", "off"]) or run(["zpool", "status", "-j"])
+    try:
+        data = json.loads(js)
+    except Exception:
+        return arrays
+    pools = data.get("pools", {})
+    sizes = zfs_pool_sizes()
+    for aid, (pname, pinfo) in enumerate(sorted(pools.items())):
+        state = pinfo.get("state", "UNKNOWN")
+        level = "stripe"
+        members = 0
+        # walk the vdev tree: record leaf disks -> this array, note top-level type
+        def walk(node):
+            nonlocal level, members
+            for vname, v in (node or {}).items():
+                vt = v.get("vdev_type", "")
+                if vt.startswith("raidz") or vt == "mirror":
+                    level = re.sub(r'-\d+$', '', vname)   # "raidz1-0" -> "raidz1"
+                path = v.get("path")
+                if path:
+                    members += 1
+                    dev = disk_of_path(path, disks)
+                    if dev:
+                        disks[dev]["arrayid"] = aid
+                        st = v.get("state", "ONLINE")
+                        if st != "ONLINE":
+                            disks[dev]["state"] = zfs_state(st)
+                walk(v.get("vdevs"))
+        walk(pinfo.get("vdevs"))
+        sz, free = sizes.get(pname, (0, 0))
+        arrays.append({"id": aid, "name": pname, "level": level,
+                       "state": zfs_state(state), "size": sz, "free": free,
+                       "members": members})
+    return arrays
+
+def zfs_pool_sizes():
+    out = run(["zpool", "list", "-Hp", "-o", "name,size,free"])
+    m = {}
+    for line in out.splitlines():
+        p = line.split("\t")
+        if len(p) >= 3:
+            try:
+                m[p[0]] = (int(p[1]), int(p[2]))
+            except ValueError:
+                pass
+    return m
+
+def zfs_state(s):
+    return {"ONLINE": "OK", "DEGRADED": "Degraded", "FAULTED": "Failed",
+            "OFFLINE": "Offline", "UNAVAIL": "Failed", "REMOVED": "Offline"}.get(s, s.title())
+
+def disk_of_path(path, disks):
+    """resolve a zpool leaf path (partuuid symlink or /dev/sdXN) to a /dev/sdX key.
+    readlink runs where the tools run (host, via NS) so it matches lsblk's view."""
+    real = run(["readlink", "-f", path]).strip() or path
+    base = re.sub(r'(\d+|p\d+)$', '', real)  # strip partition suffix
+    if base in disks:
+        return base
+    if real in disks:
+        return real
+    return None
+
+def zfs_datasets():
+    lds = []
+    out = run(["zfs", "list", "-Hp", "-d", "1", "-o", "name,used,avail", "-t", "filesystem"])
+    for line in out.splitlines():
+        p = line.split("\t")
+        if len(p) < 3 or p[0].count("/") != 1:        # top-level datasets only (skip roots + nested)
+            continue
+        if "/.system" in p[0] or "/ROOT" in p[0]:     # skip TrueNAS internal datasets
+            continue
+        try:
+            lds.append({"name": p[0], "used": int(p[1]), "size": int(p[1]) + int(p[2])})
+        except ValueError:
+            pass
+    return lds
+
+# ---- generic Linux: mdadm arrays + LVM --------------------------------------
+def md_arrays(disks):
+    arrays = []
+    try:
+        txt = open("/proc/mdstat").read()
+    except Exception:
+        return arrays
+    aid_base = 100  # keep md ids clear of any zfs ids
+    # split into per-md stanzas (a stanza is the "mdN :" line + its indented lines)
+    i = 0
+    for blk in re.split(r'\n(?=\S)', txt):
+        m = re.match(r'^(md\d+)\s*:\s*(\S+)\s+(\S+)\s+(.*)', blk, re.S)
+        if not m:
+            continue
+        name, _active, level = m.group(1), m.group(2), m.group(3)
+        members = re.findall(r'(sd\w+|nvme\w+)\[\d+\]', blk)
+        aid = aid_base + i
+        i += 1
+        for mem in members:
+            dev = "/dev/" + re.sub(r'(\d+|p\d+)$', '', mem)
+            if dev in disks:
+                disks[dev]["arrayid"] = aid
+        # health/redundancy is on the block-count line ([UUU_] or [n/m]), not line 1
+        state = "OK"
+        um = re.search(r'\[([U_]+)\]', blk)
+        nm = re.search(r'\[(\d+)/(\d+)\]', blk)
+        if (um and "_" in um.group(1)) or (nm and int(nm.group(2)) < int(nm.group(1))):
+            state = "Degraded"
+        if "recovery" in blk or "resync" in blk or "reshape" in blk:
+            state = "Rebuilding"
+        blocks = re.search(r'(\d+)\s+blocks', blk)
+        size = int(blocks.group(1)) * 1024 if blocks else 0   # mdstat blocks are 1 KiB
+        arrays.append({"id": aid, "name": name, "level": level,
+                       "state": state, "size": size, "free": 0, "members": len(members)})
+    return arrays
+
+def lvm_lds():
+    lds = []
+    if not have("lvs"):
+        return lds
+    out = run(["lvs", "--reportformat", "json", "-o", "lv_name,vg_name,lv_size", "--units", "b"])
+    try:
+        data = json.loads(out)
+        for rec in data.get("report", [{}])[0].get("lv", []):
+            sz = int(re.sub(r'[Bb]$', '', rec.get("lv_size", "0")))
+            lds.append({"name": rec.get("vg_name", "") + "/" + rec.get("lv_name", ""),
+                        "used": 0, "size": sz})
+    except Exception:
+        pass
+    return lds
+
+def boot_disks(disks, arrays, is_zfs):
+    """Kernel devices that hold the OS/boot pool - these are internal (M.2 / onboard),
+    NOT front hot-swap bays, so the enclosure front-view must not place them in a bay."""
+    internal = set()
+    if is_zfs:
+        boot_pool = None
+        for line in run(["zpool", "list", "-H", "-o", "name,bootfs"]).splitlines():
+            p = line.split("\t")
+            if len(p) >= 2 and p[1] not in ("-", ""):   # the pool with a bootfs is the boot pool
+                boot_pool = p[0]
+        if boot_pool:
+            baid = next((a["id"] for a in arrays if a["name"] == boot_pool), None)
+            if baid is not None:
+                internal = {path for path, d in disks.items() if d["arrayid"] == baid}
+    else:
+        src = run(["findmnt", "-no", "SOURCE", "/"]).strip()
+        real = run(["readlink", "-f", src]).strip() or src
+        base = re.sub(r'(\d+|p\d+)$', '', real)
+        if base in disks:
+            internal = {base}
+    return internal
+
+# ---- main -------------------------------------------------------------------
+def main():
+    disks = list_disks()
+    enrich_smart(disks)
+    is_zfs = have("zpool") and run(["zpool", "list", "-H"]).strip() != ""
+    if is_zfs:
+        arrays = zfs_arrays(disks)
+        pool_aid = {a["name"]: a["id"] for a in arrays}
+        lds = [dict(x, arrayid=pool_aid.get(x["name"].split("/")[0], 0)) for x in zfs_datasets()]
+        backend = "zfs"
+    else:
+        arrays = md_arrays(disks)
+        lds = [dict(x, arrayid=(arrays[0]["id"] if arrays else -1)) for x in lvm_lds()]
+        backend = "generic"
+
+    # front bay vs internal: give hot-swap disks bay numbers in device order; the
+    # boot/OS disk gets bay -1 so the front-view leaves it out of the physical bays.
+    internal = boot_disks(disks, arrays, is_zfs)
+    # A disk in no detected array (arrayid -1) is an onboard/OS disk (M.2, boot
+    # SSD), not a front hot-swap bay drive - the A3120 bays hold array members.
+    # (Boot-pool members are already marked internal by boot_disks above.) So a
+    # non-array host (Proxmox/LVM) shows its disks as Internal with empty bays,
+    # instead of placing onboard disks in physically-empty front slots.
+    internal |= {p for p, d in disks.items() if d.get("arrayid", -1) == -1}
+    nbay = 0
+    for path in sorted(disks.keys()):
+        if path in internal:
+            disks[path]["bay"] = -1
+        else:
+            disks[path]["bay"] = nbay
+            nbay += 1
+
+    encl = 1 if any(os.path.exists("/dev/i2c-%d" % i) for i in range(8)) else 0
+    print("SUBSYS|backend=%s|host=%s|enclosure=%d" % (backend, esc(socket.gethostname()), encl))
+    for a in arrays:
+        print("ARRAY|id=%d|name=%s|level=%s|state=%s|size=%d|free=%d|members=%d" % (
+            a["id"], esc(a["name"]), esc(a["level"]), esc(a["state"]),
+            a["size"], a["free"], a["members"]))
+    for pid, (path, d) in enumerate(sorted(disks.items())):
+        print("PD|id=%d|arrayid=%d|bay=%d|osname=%s|model=%s|serial=%s|size=%d|state=%s|temp=%s|smart=%s" % (
+            pid, d["arrayid"], d.get("bay", pid), esc(d["osname"]), esc(d["model"]), esc(d["serial"]),
+            d["size"], esc(d["state"]), esc(d["temp"]), esc(d["smart"])))
+    for lid, l in enumerate(lds):
+        print("LD|id=%d|arrayid=%d|name=%s|size=%d|used=%d|state=OK" % (
+            lid, l["arrayid"], esc(l["name"]), l["size"], l["used"]))
+
+if __name__ == "__main__":
+    main()

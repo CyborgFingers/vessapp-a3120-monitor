@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  emailsetting.xml - emaild alert settings (Linux port).
+
+  Port-defined schema (the Windows emaild parsed \emailsetting.xml via libprxml;
+  its exact tags are not in any shipped artifact). Fields cover what emaild.exe
+  demonstrably needs: SMTP relay, sender, recipients, and a severity filter.
+  severityThreshold uses the raidv4/event_EN.xml scale:
+    2 info | 3 warning | 4 minor | 5 major | 6 critical | 7 fatal
+  Only events at or above the threshold are mailed. <auth>/STARTTLS = CALIBRATE.
+-->
+<emailSetting>
+  <enabled>1</enabled>
+  <server>127.0.0.1</server>
+  <port>25</port>
+  <auth>none</auth>
+  <username></username>
+  <password></password>
+  <sender>vessapp@localhost</sender>
+  <subjectPrefix>[VessApp]</subjectPrefix>
+  <severityThreshold>3</severityThreshold>
+  <recipient>admin@localhost</recipient>
+  <recipient>storage-ops@localhost</recipient>
+</emailSetting>

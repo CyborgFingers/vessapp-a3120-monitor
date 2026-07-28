@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Disk Arrays icon Create tab</title>
+</head>
+
+<body>
+
+<h3>Create a Disk Array</h3>
+
+<p>The Disk Arrays–Create tab enables you to create new disk arrays.
+A disk array is a collection of physical drives in a <a href=RAIDlevels.html>RAID</a>.
+Logical drives are made from disk arrays. </p>
+
+<p>To create a disk array:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>From the dropdown menu on the Create tab, select one of the following options:
+<ul>
+<li><a href=DiskArraysCreateAutoHelp.html>Automatic</a>
+– Creates a new disk array following a default set of parameters. Makes
+one logical drive automatically. Also makes a hot spare drive for all
+RAID levels except RAID 0, if at least four unconfigured physical drives
+are available.</li>
+<li><a href=DiskArraysCreateExpHelp.html>Express</a> – You choose the parameters
+for a new disk array by specifiying the characteristics you want. You
+can create multiple logical drives at the same time, however they will
+all be identical. You can choose to make a hot spare drive for all RAID
+levels except RAID 0, if at least four unconfigured physical drives are
+available. </li>
+<li><a href=DiskArraysCreateAdvHelp.html>Advanced</a>–
+You directly specify all parameters for a new disk array. Makes one logical
+drive automatically. You can create additional logical drives at a later
+time, if additional configurable capacity is available. Does not make
+a hot spare drive.</li>
+</ul>
+</li>
+<li>Input the information and make the choices pertaining to each option.<br>
+See the help topics on each creation option for more information.</li>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

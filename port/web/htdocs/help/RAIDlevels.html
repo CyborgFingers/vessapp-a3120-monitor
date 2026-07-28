@@ -1,0 +1,287 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>RAID Levels</title>
+</head>
+
+<body>
+
+
+<h3>RAID Levels</h3>
+
+<p> RAID (Redundant Array of Independent Disks) organizes multiple
+physical drives together as a disk array. Logical drives are made from a disk
+array. A logical drive is an entity that the computer's operating system recognizes
+as single drive.</p>
+
+<p>The benefits of a RAID can include: higher data transfer rates for increased server performance, increased overall storage capacity for a single drive
+designation (such as, C, D, E; SDA, SDB, etc.), data redundancy/fault tolerance for ensuring continuous system operation in the event of a disk drive failure.</p>
+
+<p>Each RAID level uses a different organizational
+model and offers its own set of benefits. The following outline breaks down the properties
+for each type of RAID disk array available with <script>writeBrandName()</script> products.
+</p>
+<p><script>writeModelName()</script> subsystems support these RAID Levels:</p>
+
+<table width=300 border=0 cellspacing=0 cellpadding=0>
+<tr>
+<td valign=top><ul>
+<li><a href=#RAID0>RAID 0</a></li>
+<li><a href=#RAID1>RAID 1</a></li>
+<li><a href=#RAID1E>RAID 1E</a></li>
+<li><a href=#RAID5>RAID 5</a></li>
+</ul>
+</td>
+<td valign=top>
+<ul>
+<li><a href=#RAID6>RAID 6</a></li>
+<li><a href=#RAID10>RAID 10</a></li>
+</ul></td>
+</tr>
+</table>
+
+<p>With <script>writeModelName()</script> , in many cases you can <a href=DiskArrayMigrationHelp.html>convert</a>
+a disk array from one RAID Level to another.</p>
+
+<a name=RAID0></a><h4>RAID 0: Stripe</h4>
+<p>When a disk array is striped, the read and write blocks of
+data are interleaved between the sectors of multiple drives. Performance is
+increased, since the workload is balanced between drives or members that form
+the disk array. Identical physical drives are recommended for performance as well
+as data storage efficiency.</p>
+
+<p>The disk array's data capacity is equal to the number
+of disk drive members multiplied by the smallest drive's capacity. For example, one 100 GB and three 
+120 GB drives will form a 400 GB (4 x 100 GB) disk array instead of 460 GB.</p>
+<p>RAID 0 requires one or more physical drives.</p>
+<p>Recommended applications: Image Editing, Pre-Press Applications, other applications requiring high bandwidth.</p>
+
+
+<a name=RAID1></a><h4>RAID 1: Mirror</h4>
+<p>When a disk array is mirrored, identical data is written to
+a pair of drives, while reads are performed in parallel. The reads are performed
+using elevator seek and load balancing techniques where the workload is distributed
+in the most efficient manner. Whichever drive is not busy and is positioned
+closer to the data will be accessed first.</p> 
+
+<p>With RAID 1, if one drive fails or
+has errors, the other mirrored drive continues to function.  Moreover, if a spare 
+drive is present, the spare drive will
+be used as the replacement drive and data will begin to be mirrored to it from
+the remaining good drive.</p>
+
+<p>The logical drive's data capacity equals the smaller physical drive. For example, a 100 GB physical drive and a 
+120 GB physical drive have a combined capacity of 100 GB in a mirrored logical drive.</p>
+
+<p>RAID 1 requires two physical drives only. You can create multiple
+RAID 1 logical drives on the same subsystem.</p>
+
+<p>Recommended applications: Accounting, Payroll, Financial,
+other applications requiring very high availability.</p>
+
+<a name=RAID1E></a><h4>RAID 1E: Enhanced Mirroring</h4>
+<p>RAID 1E offers the security of mirrored data provided by RAID 1 plus the added
+capacity of more than two physical drives. It also offers overall increased read/write
+performance plus the flexibility of using an odd number of physical drives. With RAID
+1E, each data stripe is mirrored onto two physical drives. If one drive fails or has
+errors, the other drives continue to function, providing fault tolerance.</p>
+
+<p>The advantage of RAID 1E is the ability to use an odd number
+of physical drives, unlike <a href=#RAID1>RAID 1</a> and <a href=#RAID10>RAID
+10</a>. You can also create a RAID 1E logical drive with an even number of physical drives. 
+However, if you have an even number of drives, you will obtain greater
+security with comparable performance using <a href=#RAID10>RAID 10</a>. </p>
+
+<p>RAID 1E requires a minimum of three physical drives. You can create an array with just 
+two physical drives and specify RAID 1E. But the resulting array will actually be a RAID 1.</p>
+
+<p>Recommended applications: Imaging Applications, Database
+Servers, General Fileservers.</p>
+<h4><a name=RAID3></a>RAID 3: Block and Dedicated Parity</h4>
+<p>RAID 3 organizes data blocks across the physical drives but stores parity data on a dedicated drive. 
+Using a small stripe unit size, RAID 3 has very high linear read/write performance. At the same time,
+RAID 3 has storage efficiency and data security comparable to RAID 5.</p>
+
+<p>The capacity of a RAID 3 disk array is the smallest drive size multiplied by 
+  the number of drives minus one. Hence, a RAID 3 disk array with (4) 100 GB hard 
+  drives will have a capacity of 300 GB. A disk array with (8) 120 GB hard drives 
+  and (1) 100 GB hard drive will have a capacity of 800 GB.</p>
+
+<p>RAID 3 consists of 3 to 16 physical drives.</p>
+<p>Recommended applications: Video editing and other uses with high data transfer rates.</p>
+
+<h4><a name=RAID5></a>RAID 5: Block and Parity Stripe</h4>
+<p>RAID 5 organizes block data and parity data across the physical drives. Generally, 
+  RAID Level 5 tends to exhibit lower random write performance due to the heavy 
+  workload of parity recalculation for each I/O. RAID 5 is generally considered 
+  to be the most versatile RAID level.</p>
+  
+<p>The capacity of a RAID 5 disk array is the smallest drive size multiplied by 
+  the number of drives minus one. Hence, a RAID 5 disk array with (4) 100 GB hard 
+  drives will have a capacity of 300 GB. A disk array with (8) 120 GB hard drives 
+  and (1) 100 GB hard drive will have a capacity of 800 GB.</p>
+
+<p>RAID 5 consists of 3 to 16 physical drives.</p>
+<p>Recommended applications: File and Application Servers; WWW, E-mail, News servers, Intranet Servers.</p>
+
+<h4><a name=RAID6></a>RAID 6: Block Stripe with Dual Parity</h4>
+<p>RAID 6 organizes block data and dual parity data across the physical drives. Generally, 
+  RAID Level 6 tends to exhibit lower random write performance due to the heavy 
+  workload of two parity recalculations for each I/O. RAID 6 is generally considered 
+  to be among the safest RAID levels.</p>
+  
+<p>The capacity of a RAID 6 logical drive is the smallest drive size multiplied by 
+  the number of drives minus two. Hence, a RAID 6 disk array with (4) 100 GB hard 
+  drives will have a capacity of 200 GB. A disk array with (8) 120 GB hard drives 
+  and (1) 100 GB hard drive will have a capacity of 700 GB. RAID 6 becomes more 
+  capacity efficient as the number of physical drives in the array increases.</p>
+
+<p>RAID 6 consists of 4 to 16 physical drives.</p>
+<p>Recommended applications: File and Application Servers; applications where high availablity and reliability are essential.</p>
+
+<h4><a name=RAID10></a>RAID 10: Mirror+Stripe</h4>
+<p>Mirror+Stripe combines both of the <a href=#RAID1>RAID
+1</a> and <a href=#RAID0>RAID 0</a> disk array types.
+RAID 10 can increase performance by reading and writing data in parallel
+striping,while protecting data by duplicating it mirroring.</p>
+
+<p>Promise implements RAID 10 by creating a data stripe over one pair of disk
+drives, then mirroring the stripe over a second pair of disk drives. Some
+applications refer to this method as RAID 0+1.</p>
+
+<p>The data capacity RAID 10 logical drive equals the capacity of the smallest
+physical drive times the number of physical drives, divided by two.
+In some cases, RAID 10 offers double fault tolerance, depending on which
+physical drives fail.</p>
+
+<p>RAID 10 requires an even number of physical drives and a minimum of four. For RAID 10 characteristics with an odd number of physical drives,
+use <a href=#RAID1E>RAID 1E</a>.</p>
+<p>Recommended applications: Imaging Applications, Database
+Servers, General Fileservers.</p>
+<h4><a name=RAID30></a>RAID 30: Striped Dedicated Parity</h4>
+
+<p>RAID 30 combines both <a href=#RAID3>RAID 3</a> and <a href=#RAID0>RAID
+0</a> features. Data is striped across disks as in <a href=#RAID0>RAID 0</a>,
+and it uses dedicated parity as in <a href=#RAID3>RAID 3</a>. RAID 30 provides
+data reliability, very high linear read/write performance, and supports larger volume sizes.</p>
+
+<p>The data capacity RAID 30 logical drive equals the capacity of the smallest physical drive times the
+ number of physical drives, minus two.</p>
+
+<p>RAID 30 also provides high reliability because data is still
+available even if multiple physical drives fail (one in each <a href=RAID30Axles.html>axle</a>).
+The greater the number of <a href=RAID30Axles.html>axles</a>, the greater
+the number of physical drives that can fail without the RAID 30 array going offline.</p>
+
+<table width="350" border="1" cellspacing="0" cellpadding="3">
+  <tr>
+    <td align=center><b>Component</b></td>
+    <td align=center><b>Minimum</b></td>
+    <td align=center><b>Maximum</b></td>
+  </tr>
+  <tr>
+    <td>Number of Axles</td>
+    <td align=center>2</td>
+    <td align=center>16</td>
+  </tr>
+  <tr>
+    <td>Physical Drives per Axle</td>
+    <td align=center>3</td>
+    <td align=center>16</td>
+  </tr>
+  <tr>
+    <td>Physical Drives per Array</td>
+    <td align=center>6</td>
+    <td align=center>256</td>
+  </tr>
+</table>
+
+<p>Recommended applications: Video editing and other uses with high data transfer rates that also require maximum availability.</p>
+
+<h4><a name=RAID50></a>RAID 50: Striped Distributed Parity</h4>
+
+<p>RAID 50 combines both <a href=#RAID5>RAID 5</a> and <a href=#RAID0>RAID
+0</a> features. Data is striped across disks as in <a href=#RAID0>RAID 0</a>,
+and it uses distributed parity as in <a href=#RAID5>RAID 5</a>. RAID 50 provides
+data reliability, good overall performance and supports larger volume sizes.</p>
+
+<p>The data capacity RAID 50 logical drive equals the capacity of the smallest physical drive times the
+ number of physical drives, minus two.</p>
+
+<p>RAID 50 also provides high reliability because data is still
+available even if multiple physical drives fail (one in each <a href=RAID50Axles.html>axle</a>).
+The greater the number of <a href=RAID50Axles.html>axles</a>, the greater
+the number of physical drives that can fail without the RAID 50 array going offline.</p>
+
+<table width="350" border="1" cellspacing="0" cellpadding="3">
+  <tr>
+    <td align=center><b>Component</b></td>
+    <td align=center><b>Minimum</b></td>
+    <td align=center><b>Maximum</b></td>
+  </tr>
+  <tr>
+    <td>Number of Axles</td>
+    <td align=center>2</td>
+    <td align=center>16</td>
+  </tr>
+  <tr>
+    <td>Physical Drives per Axle</td>
+    <td align=center>3</td>
+    <td align=center>32</td>
+  </tr>
+  <tr>
+    <td>Physical Drives per Array</td>
+    <td align=center>6</td>
+    <td align=center>256</td>
+  </tr>
+</table>
+
+<p>Recommended applications: File and Application Servers, Transaction Processing, Office applications with many users accessing small files.</p>
+
+<h4><a name=RAID60></a>RAID 60: Striped Distributed Double-Parity Arrays</h4>
+
+<p>RAID 60 combines both <a href=#RAID6>RAID 6</a> and <a href=#RAID0>RAID
+0</a> features. Data is striped across disks as in <a href=#RAID0>RAID 0</a>,
+and it uses double-distributed parity as in <a href=#RAID6>RAID 6</a>. RAID 60 provides
+data reliability, good overall performance and supports larger volume sizes.</p>
+
+<p>The total capacity of a RAID 60 logical drive is the smallest physical drive times the number of physical drives, minus four.</p>
+
+<p>RAID 60 also provides very high reliability because data is still available 
+  even if multiple disk drives fail (up to two in each <a href=RAID60Axles.html>axle</a>). 
+  The greater the number of <a href=RAID60Axles.html>axles</a>, the greater the 
+  number of disk drives that can fail without the RAID 60 array going offline.</p>
+
+<table width="350" border="1" cellspacing="0" cellpadding="3">
+  <tr>
+    <td align=center><b>Component</b></td>
+    <td align=center><b>Minimum</b></td>
+    <td align=center><b>Maximum</b></td>
+  </tr>
+  <tr>
+    <td>Number of Axles</td>
+    <td align=center>2</td>
+    <td align=center>16</td>
+  </tr>
+  <tr>
+    <td>Physical Drives per Axle</td>
+    <td align=center>4</td>
+    <td align=center>32</td>
+  </tr>
+  <tr>
+    <td>Physical Drives per Array</td>
+    <td align=center>8</td>
+    <td align=center>256</td>
+  </tr>
+</table>
+
+
+<p>Recommended applications: File and Application Servers, Transaction Processing, Office applications with many users accessing small files.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

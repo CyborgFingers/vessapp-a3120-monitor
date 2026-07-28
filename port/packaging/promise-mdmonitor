@@ -1,0 +1,50 @@
+#!/bin/sh
+# promise-mdmonitor - mdadm --monitor --program handler for the VessApp Linux
+# port (P5 events). mdadm calls this on every array event as:
+#     promise-mdmonitor <EventType> <md-device> [<component-device>]
+# It maps the mdadm event to a Promise event (event_map.c), appends it to the
+# port's RAID event log (read back by getEvents -> events.php), and fires the
+# SMTP alert (emaild) + SNMP trap (promise_trap). The event log is always
+# written; mail/trap delivery depends on the configured endpoints.
+set -u
+EVENT="${1:-}"; MD="${2:-}"; DEV="${3:-}"
+BIN=/opt/promise/bin
+LOG=/var/log/promise-raid/events.log
+
+# mdadm event -> Promise event id (event_map.c) + raidv4 severity number.
+case "$EVENT" in
+  Fail|FailSpare)     ID=0x000D0002; SEV=5 ;;   # PD_MARKED_DEAD (Major)
+  SpareActive)        ID=0x000D0005; SEV=3 ;;   # PD_SPARE_ACTIVATED (Warning)
+  DegradedArray)      ID=0x00130006; SEV=5 ;;   # array degraded, data at risk -> Major (sounds the alarm; a boot-degraded or late-noticed array emits only this, not Fail)
+  DeviceDisappeared)  ID=0x00090003; SEV=5 ;;   # LD_OFFLINE (Major)
+  RebuildStarted)     ID=0x00130002; SEV=2 ;;   # DA_REBUILD_STARTED (Info)
+  RebuildFinished)    ID=0x00130003; SEV=2 ;;   # DA_REBUILD_DONE (Info)
+  *)                  ID=;           SEV=2 ;;   # TestMessage / MoveSpare / ... : log only
+esac
+
+mkdir -p "$(dirname "$LOG")" 2>/dev/null
+# tab-delimited: <unix_ts> <event> <id_hex> <sev> <md> <dev>  (getEvents parses this)
+printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$(date +%s)" "$EVENT" "${ID:-0}" "$SEV" "$MD" "$DEV" >> "$LOG"
+[ -n "$ID" ] || exit 0
+
+# SMTP alert (only when a mail config exists) + SNMP trap (needs net-snmp's
+# snmptrap + a receiver). Both best-effort, detached.
+CFG=/etc/promise/emailsetting.xml
+[ -x "$BIN/emaild" ] && [ -f "$CFG" ] && "$BIN/emaild" -f "$CFG" --event "$ID" >/dev/null 2>&1 &
+if [ -x "$BIN/promise_trap" ]; then
+  # trap destination: /etc/promise/snmptrap.conf may set SNMP_TRAP_HOST/COMMUNITY
+  # (else promise_trap's 127.0.0.1 / VessApp default). Source = the array + device.
+  [ -f /etc/promise/snmptrap.conf ] && . /etc/promise/snmptrap.conf
+  "$BIN/promise_trap" -e "$ID" -s "${MD}${DEV:+ }${DEV}" \
+    ${SNMP_TRAP_HOST:+-h $SNMP_TRAP_HOST} ${SNMP_TRAP_COMMUNITY:+-c $SNMP_TRAP_COMMUNITY} \
+    >/dev/null 2>&1 &
+fi
+
+# Audible alarm on a Major+ fault (PC-speaker buzzer). The vendor sounds the
+# buzzer on a drive/enclosure fault; this is the Linux equivalent. The monitor
+# runs as root so it can drive the console. Silence from WebPAM (buzzer.php ->
+# promise-buzzer mute) or disable it (/var/lib/promise-buzzer/disabled).
+case "$SEV" in
+  5|6|7) [ -x "$BIN/promise-buzzer" ] && "$BIN/promise-buzzer" alarm >/dev/null 2>&1 & ;;
+esac
+exit 0

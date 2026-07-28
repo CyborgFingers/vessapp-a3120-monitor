@@ -1,0 +1,247 @@
+<?php
+$supports = array(
+	array(
+		'name' => 'North America',
+		'location' => array(
+			array(
+				'name' => 'USA',
+				'item' => array(
+					'Поддержка по телефону' => '+1 (408) 645-3469',
+					'Техническая поддержка' => 'support@promise.com',
+					'URL' => 'http://support.promise.com',	
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'EMEA',
+		'location' => array(
+			array(
+				'name' => 'Germany',
+				'item' => array(
+					'Поддержка по телефону' => '+49 (0) 2 31 56 76 48 - 10',
+					'Техническая поддержка' => 'support-de@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'United Kingdom',
+				'item' => array(
+					'Поддержка по телефону' => '+44 (845) 1546130',
+					'Техническая поддержка' => 'support-uk@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'Europe',
+				'item' => array(
+					'Поддержка по телефону' => '+31 (0) 40-235-2600',
+					'Техническая поддержка' => 'support@eu.promise.com',
+				),
+			),
+			array(
+				'name' => 'MEA',
+				'item' => array(
+					'Поддержка по телефону' => '+97145571951',
+					'Техническая поддержка' => 'support@mea.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+		)
+	),
+	array(
+		'name' => 'Asia-Pacific',
+		'location' => array(
+			array(
+				'name' => 'Australia',
+				'item' => array(
+					'Поддержка по телефону' => '+61-7-56999629',
+					'Техническая поддержка' => 'support@au.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Beijing',
+				'item' => array(
+					'Поддержка по телефону' => '+8610-8857-8085/8095',
+					'Техническая поддержка' => 'support@cn.promise.com',
+					'Sales' => 'sales@cn.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'India',
+				'item' => array(
+					'Поддержка по телефону' => '+91-9962411666',
+					'Техническая поддержка' => 'support@in.promise.com',
+					'Sales' => 'sales@in.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Indonesia',
+				'item' => array(
+					'Поддержка по телефону' => '180011101787',
+					'Техническая поддержка' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Japan',
+				'item' => array(
+					'Поддержка по телефону' => '+81-3-6801-8064',
+					'Техническая поддержка' => 'support@jp.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Korea',
+				'item' => array(
+					'Поддержка по телефону' => '00798142030091',
+					'Техническая поддержка' => 'support@kr.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Malaysia',
+				'item' => array(
+					'Поддержка по телефону' => '+60-3-92127992',
+					'Техническая поддержка' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'New Zealand',
+				'item' => array(
+					'Поддержка по телефону' => '+64 99518714',
+					'Техническая поддержка' => 'support@au.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Philippines',
+				'item' => array(
+					'Поддержка по телефону' => '180011101787',
+					'Техническая поддержка' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Shanghai',
+				'item' => array(
+					'Поддержка по телефону' => '+8621-3214-0395',
+					'Техническая поддержка' => 'support@cn.promise.com',
+					'Sales' => 'sales@cn.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Singapore',
+				'item' => array(
+					'Поддержка по телефону' => '+65 31594529',
+					'Техническая поддержка' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Taiwan',
+				'item' => array(
+					'Поддержка по телефону' => '+886-3-578-0002',
+					'Техническая поддержка' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Thailand',
+				'item' => array(
+					'Поддержка по телефону' => '+66 600035381',
+					'Техническая поддержка' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+			array(
+				'name' => 'Vietnam',
+				'item' => array(
+					'Поддержка по телефону' => '+84 12280429',
+					'Техническая поддержка' => 'support@tw.promise.com',
+					'URL' => 'http://support.promise.com',
+				),
+			),
+		),
+	),
+);
+
+function pack_value($v) {
+	if (strpos($v, '@')) {
+		return sprintf('<a href="mailto:%s">%s</a>', $v, $v);
+	}
+	if (strpos($v, '://')) {
+		return sprintf('<a href="%s" target="_blank">%s</a>', $v, $v);
+	}
+	return $v;
+}
+?>
+<html>
+
+<head>
+	<link rel="stylesheet" href="/help/help.css" type="text/css">
+	<style>
+		.nationStyle {
+			font-family: verdana, arial, helvetica;
+			font-size: 16px;
+			color: #003399
+		}
+	</style>
+	<title>Help Page</title>
+</head>
+
+<body class=textHelp>
+
+	<h3 class="headerHelp">Promise Technology Контакты</h3>
+
+	<p>Ниже приведена контактная информация для продуктов Promise Technology.</p>
+
+	<table cellpadding="10" class=textHelp width="654" border="0">
+
+
+	<?php foreach ($supports as $continent) { ?>
+		<tr>
+			<td valign="top" class=nationStyle><b><?=$continent['name']?></b></td>
+		</tr>
+
+		<tr>
+			<td valign="top">
+				<table border="0" width="100%">
+					<?php foreach ($continent['location'] as $loca) { ?>
+					<tr style="margin-top: 5px;">
+						<td width="190" valign="top">
+							<b><?=$loca['name']?></b>
+						</td>
+						<td style="padding-top: 3px;">
+							<ul>
+								<?php foreach ($loca['item'] as $item => $val) { ?>
+								<li style="padding-bottom: 4px;"><?=$item?>: <?=pack_value($val)?></li>
+								<? } ?>
+							</ul>
+						</td>
+					</tr>
+					<tr colspan="2"><td>&nbsp;</td></tr>
+					<?php } ?>
+				</table>
+			</td>
+		</tr>
+
+	<? } ?>
+
+<?php
+if(preg_match('/index.php/',$_SERVER['HTTP_REFERER'])) {
+	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+}
+if(preg_match('/help/',$_SERVER['HTTP_REFERER'])) {
+	//	echo '<tr><td><a href="'.$_SERVER['HTTP_REFERER'].'">Back</a></td><td></td></tr>';
+	echo '<table><tr><td><img src=help/helpImages/ball-back.gif></td><td><a href=javascript:history.back()>Go Back</a></td></tr></table>';
+}
+?>
+
+	</table>
+</body>
+
+</html>

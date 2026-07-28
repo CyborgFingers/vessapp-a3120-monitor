@@ -1,0 +1,65 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Disk Array icon CreateLD tab</title>
+</head>
+
+<body>
+
+<h3>Create a Logical Drive</h3>
+
+<p>The Disk Array–Create LD tab enables you to create additional logical drives under this disk array.
+When you create a disk array, you automatically create one logical drive also. If the initial logical drive used less than the full capacity of the disk
+array, you can create additional logical drives from the same disk array.</p>
+
+<p>To create a logical drive:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Disk Arrays icon.</li>
+<li>Click on a Disk Array icon.</li>
+<li>Click on the Create LD tab in Management View.</li>
+<li>Enter an Alias for the logical drive in the field provided.</li>
+<li>From the <a href=RAIDlevels.html>RAID Level</a> dropdown
+list, select a RAID level for this logical drive.<br>
+All RAID levels supported by the disk array appear in the list.</li>
+<li>Enter a capacity and select unit of measure (MB, GB, TB).<br>
+The default value is the available capacity of the disk array. You can use
+this value or any lesser amount.</li>
+<li>From the <a href=StripeSizeHelp.html>Stripe</a> dropdown
+menu, select a Stripe size for this logical drive.<br>
+The choices are 64 KB, 128 KB, 256 KB, 512 KB, and 1 MB. 64 KB is the default.</li>
+<li>From the <a href=SectorSizeHelp.html>Sector</a> dropdown
+menu, select a Sector size for this logical drive.<br>
+The choices are 512 B, 1 KB, 2 KB, and 4 KB. 512 B is the default.</li>
+<li>From the Read Policy dropdown menu, select a Read <a href=CachePolicyHelp.html>Cache</a> policy
+for this logical drive.<br>
+The choices are Read Cache, Read Ahead and No (read) Cache.
+Read Ahead is the default.</li>
+<li>From the Write Policy dropdown menu, select a Write <a href=CachePolicyHelp.html>Cache</a> policy for this logical drive.<br>
+The choices are Write Through (thru) and Write Back. Write Back is the default.
+If you selected No Cache under Read Cache, this setting will be Write Through.</li>
+<li>Click the <b>Update</b> button to enter the logical drive parameters.</li>
+<li>Review the results. If there is remaining space on the disk array, you can create another logical dirive,
+following the steps above. Each logical drive can have a different set of parameters.</li>
+<li>Click the <b>Next</b> button when you are done.<br>
+A new window displays with the disk array information and the proposed logical drives with their parameters.</li>
+<li>Click the <b>Submit</b> button create the logical drives.</li>
+</ol>
+
+<p>The new logical drive appears in the Logical Drive List on the
+<a href=DiskArrayInfoHelp.html>Information</a> tab.</p>
+
+<p><b>Note 1:</b>If you created a fault-tolerant logical drive (any RAID level
+except RAID 0), the Operational Status of new logical drive will display <i>Synchronizing</i>
+for several minutes after creation. You can use the logical drive during this
+period but read/write performance could be slower than normal.</p>
+
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

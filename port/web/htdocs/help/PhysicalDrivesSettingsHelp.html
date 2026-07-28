@@ -1,0 +1,48 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Physical Drives icon Global Settings tab</title>
+</head>
+
+<body>
+
+<h3>Physical Drives Global Settings</h3>
+
+<p>The Physical Drives–Global Settings tab enables you to make settings that apply 
+  to all of the physical disk drives installed in the <script>writeModelName()</script> subsystem enclosure.</p>
+<p>To make settings for all physical drives:</p>
+<ol>
+<li>Click the Subsytem icon in Tree View.</li>
+<li>Click the Enclosures icon.</li>
+<li>Click the Enclosure icon.</li>
+<li>Click the Physical Drives icon.</li>
+<li>Click the Global Settings tab in Management View.</li>
+<li>Make the following settings as needed.<br><br>
+For <b>SATA drives</b>, check the boxes to enable:
+<ul>
+<li>Write Cache</li>
+<li>Read Look Ahead Cache</li>
+<li>Command Queuing (for disk drives that support Command Queuing)</li>
+<li>From the DMA Mode dropdown menu, select the DMA mode.<br>
+UDMA5 is the default.</li>
+</ul>
+<p>Type a number in the Medium Error Threshold field. See the Note below.</p>
+
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Note:</b> Medium Error Threshold is the number of bad blocks tolerated before the controller marks the drive as Dead.</p>
+<ul>
+<li>The maximum mumber of bad blocks is 4,294,967,294.</li>
+<li>The default setting of zero blocks disables this function.</li>
+<li>With the Threshold set to zero, drives are not marked Dead even when errors are detected.</li>
+</ul>
+
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

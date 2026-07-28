@@ -1,0 +1,86 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Netsend</title>
+</head>
+
+<body>
+
+<h3>Netsend</h3>
+
+<p><script>writeModelName()</script>'s Netsend service sends <script>writeModelName()</script> subsystem events 
+in the form of text messages to your Host PC and other networked PCs.</p>
+<p>In order to use Netsend:</p>
+<ul>
+<li>Netsend must be running on the <script>writeModelName()</script></li>
+<li>You must provide the IP address for each recipient PC</li>
+<li>The Messenger service must be running on each recipient PC</li>
+</ul>
+
+<p>To manually start, restart or stop the Netsend service:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+  <li>Click on the <b>Netsend Management</b> link in Management view.</li>
+<li>Under Running Status:
+<ul>
+<li>If the service is stopped, click the <b>Start</b> button to start the service.</li>
+<li>If the service is started, click the <b>Stop</b> button to stop the service.<br>
+Or click on the <b>Restart</b> button to restart the service.</li>
+</ul>
+</ol>
+
+<p>To change the Netsend Automatic/Manual start setting:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+  <li>Click on the Netsend link.</li>
+<li>Under Startup Type:
+<ul>
+<li>Click on the Automatic option to start the service automatically during system startup.</li>
+<li>Click on the Manual option to start the service manually (the service does not start during system startup).</li>
+</ul>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<p>To add recipients of Netsend messages:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+   <li>Click on the <b>Netsend Management</b> link in Management view.</li>
+<li>Enter the recipient PC's IP address in the Recipient IP Address field.</li>
+<li>Under Recipient filter, select the lowest level of Severity to be reported for each event.<br>
+The selected level plus all higher levels of Severity will be reported.</li>
+<ul>
+<li>Information – Information only, no action is required</li>
+    <li>Warning – User can decide whether or not action is required</li>
+    <li>Minor – Action is needed but the condition is not a serious at this time</li>
+    <li>Major – Action is needed now</li>
+    <li>Critical – Action is needed now and the implications of the condition are serious</li>
+    <li>Fatal – Non-Recoverable error or failure has occurred</li>
+</ul>
+<li>Click the <b>Update</b> button to add the new recipient to the list</li>
+<li>When you are done, click on the <b>Submit</b> button.</li>
+</ol>
+
+<p>To delete recipients of Netsend messages:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+  <li>Click on the <b>Netsend Management</b> link in Management view.</li>
+<li>Highlight the recipient you want to delete in the recipient list.</li>
+<li>Click the <b>Delete</b> button to remove the recipient from the list.</li>
+<li>When you are done, click on the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Note:</b> If your Netsend and Messenger service settings are correct but 
+  the recipient PC does not receive event messages, check the recipient PC's Firewall 
+  settings. Refer to your OS documentation for more information.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

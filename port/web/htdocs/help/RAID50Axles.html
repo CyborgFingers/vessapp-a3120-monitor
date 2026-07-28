@@ -1,0 +1,99 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>RAID 50 Axles</title>
+</head>
+
+<body>
+
+<h3>RAID 50 Axles</h3>
+
+<p>When you create a RAID 50, you must specify the number of
+axles. An <b>axle</b> refers to a single RAID 5 array that is striped
+with other RAID 5 arrays to make RAID 50. A RAID 50 axle:</p>
+<ul>
+<li>Can have three or more physical drives</li>
+<li>Must have the same number of physical drives</li>
+</ul>
+
+<p>RAID 50 also provides high reliability because data is still
+available even if multiple disk drives fail (one in each axle). The greater
+the number of axles, the greater the number of disk drives that can fail without
+the RAID 50 array going offline.</p>
+
+<p>The chart below shows RAID 50 arrays with 6 to 16 disk drives,
+the available number of axles, and the resulting distribution of disk drives
+on each axle.</p>
+
+<table width=300 border=1 cellspacing=0 cellpadding=4>
+<tr>
+<td align=center><b>No. of Drives in RAID 50 Array</b></td>
+<td align=center><b>No. of Axles in RAID 50 Array</b></td>
+<td align=center><b>No. of Drives per Axle</b></td>
+</tr>
+<tr>
+<td align=center>6</td>
+<td align=center>2</td>
+<td align=center>3</td>
+</tr>
+<tr>
+<td align=center>8</td>
+<td align=center>2</td>
+<td align=center>4</td>
+</tr>
+<tr>
+<td align=center>9</td>
+<td align=center>3</td>
+<td align=center>3</td>
+</tr>
+<tr>
+<td align=center>10</td>
+<td align=center>2</td>
+<td align=center>5</td>
+</tr>
+<tr>
+<td align=center rowspan=3>12</td>
+<td align=center>2</td>
+<td align=center>6</td>
+</tr>
+<tr>
+<td align=center>3</td>
+<td align=center>4</td>
+</tr>
+<tr>
+<td align=center>4</td>
+<td align=center>3</td>
+</tr>
+<tr>
+<td align=center>14</td>
+<td align=center>2</td>
+<td align=center>7</td>
+</tr>
+<tr>
+<td align=center rowspan=2>15</td>
+<td align=center>3</td>
+<td align=center>5</td>
+</tr>
+<tr>
+<td align=center>5</td>
+<td align=center>3</td>
+</tr>
+<tr>
+<td align=center>16</td>
+<td align=center>4</td>
+<td align=center>4</td>
+</tr>
+</table>
+
+<p><b>Note:</b> Early <script>writeModelName()</script>s allow you to create a RAID 50 disk array 
+with a different number of physical drives on each axle.</p>
+
+<p>See also <a href=RAIDlevels.html>RAID Levels</a>.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

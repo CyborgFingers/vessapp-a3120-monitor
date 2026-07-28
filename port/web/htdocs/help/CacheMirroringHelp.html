@@ -1,0 +1,67 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Cache Mirroring</title>
+</head>
+
+<body>
+
+<h3>Cache Mirroring</h3>
+
+<p><script>writeModelName()</script>
+  subsystems with two controllers include a Cache Mirroring feature. Cache Mirroring 
+  causes the local controller to mirror write data to the remote controller. That 
+  means, when there is write data in the cache of the controller managing the 
+  target logical drive, the same write data is copied to the cache of the other 
+  controller as well. This arrangement protects the data from loss, in the event 
+  that the local controller fails before the data is written to the logical drive.</p>
+  
+<p>Cache Mirroring works whether the <a href="CachePolicyHelp.html">write cache 
+  policy</a> of your logical drives is set to Write Back or Write Through. However, 
+  you only realize the advantage of Cache Mirroring when the write cache policy 
+  is set to Write Back.</p>
+
+<p>With Cache Mirroring <b>enabled</b>, any write data in the controller cache that has not been
+written to the logical drive, will be written to the logical drive, even if the controller fails.
+Enable Cache Mirroring when you require failover/failback protection.</p>
+
+<p>With Cache Mirroring <b>disabled</b>, any write data in the controller cache 
+  that has not been written to the logical drive, will be lost if the controller 
+  fails. On the other hand, write performance increases because of greater bandwidth. 
+  Disable Cache Mirroring when you require maximum performance.</p>
+
+<p>To use Cache Mirroring you must:</p>
+<ul>
+  <li>Have two controllers in the subsystem</li>
+  <li>Set Redundancy Type to Active-Active under <a href="SubsystemSettingsHelp.html">subsystem 
+    settings</a></li>
+  <li>Enable Cache Mirroring under <a href="SubsystemSettingsHelp.html">subsystem 
+    settings</a></li>
+</ul>
+
+<h4>Failover and Failback</h4>
+
+<p>When one controller fails, the surviving controller takes over logical drive 
+  access until the failed controller is brought back online or is replaced. For 
+  example, Cache Mirroring is enabled and your logical drives are assigned to Controller 
+  1. The following actions will happen:</p>
+<ul>
+  <li>If Controller 1 goes offline, Controller 2 takes over access to the logical 
+    drives assigned to Controller 1.</li>
+   <li>All write data that is still in the controller cache will be written to the logical drives, even though the controller managing them has failed.</li>
+ <li>If Controller 1 comes back online, Controller 1 takes back access to the 
+    logical drives assigned to it.</li>
+  <li>If Controller 1 is replaced, the new controller takes over access to the 
+    logical drives assigned to Controller 1.</li>
+</ul>
+
+<p>Also see <a href="LUNAffinityHelp.html">LUN Affinity</a>.</p>
+ 
+  
+<script>writeGoBack()</script>
+</body>
+
+</html>

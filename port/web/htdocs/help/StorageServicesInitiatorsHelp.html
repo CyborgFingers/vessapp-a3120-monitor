@@ -1,0 +1,78 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Storage Services icon Initiators tab</title>
+</head>
+
+<body>
+
+<h3>Initiators</h3>
+
+<p>The Storage Services–Initiators tab enables you to add and delete
+initiators. You must add an initiator to the <script>writeModelName()</script>'s initiator list 
+in order to use the initiator to create a LUN for your logical drive.</p>
+
+<p>To VIEW a list of initiators:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administrative Tools icon.</li>
+<li>Click on the Storage Services icon.</li>
+<li>Click the Initiators tab in Management View.<br>
+Intiators are listed by index number and name.</li>
+</ol>
+
+<p>To ADD an initiator to the <script>writeModelName()</script>'s initiator list:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administrative Tools icon.</li>
+<li>Click on the Storage Services icon.</li>
+<li>Click the Initiators tab in Management View.</li>
+<li>From the Initiators tab dropdown menu, select <i>Add Initiator</i>.</li>
+<li>Enter the initiator's name in the Initiator Name field.
+<ul>
+	<li><b>Fibre Channel</b> – A Fibre Channel initiator name is the World Wide Port Name of the device and is composed of a series of eight, two-digit 
+    hexadecimal numbers.</li>
+	<li><b>iSCSI</b> – An iSCSI initiator name is the iSCSI name of the initiator device and is composed of a single text string. iSCSI 
+    WWNs are somewhat different from regular WWNs.</li>
+    <li><b>SAS</b> – A SAS initiator name is the SAS address of the HBA card in the Host PC.</li>
+	</ul>
+	Obtain the initiator name from the initiator utility on your host system.<br>
+	Note that the initiator name you input must match exactly in order for the connection to work.</li>
+</li>
+<li>Click the <b>Submit</b> button.</li>
+</ol>
+
+<p><b>Note:</b> For Fibre Channel models, click on the Fibre Channel Management 
+  icon, then click on the <a href="FCMgtInitiatorHelp.html">Initiators</a> tab, 
+  to see a list of initiators recognized by the 
+  <script>writeModelName()</script>
+   controller. You can add the initiators to the initiator list from that screen.</p>
+   
+<p><b>Note:</b> For iSCSI models, if iSNS is enabled, you can copy and paste the Initiator Name. Click on the iSCSI Management icon, 
+then click on the iSNS tab dropdown menu and select <i>Get Initiators</i>. When the initiators display, highlight and copy the 
+one you want and paste it into the Initiator Name field.</p>
+
+<p><b>Note:</b> For SAS models, click on the SAS Management icon, then click on 
+  the <a href="SASmgtPortInitHelp.html">Initiators</a> tab, to see a list of initiators 
+  recognized by the 
+  <script>writeModelName()</script>
+   controller. You can add the initiators to the initiator list from that screen.</p>
+
+<p>To DELETE an initiator:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree View.</li>
+<li>Click on the Administrative Tools icon.</li>
+<li>Click on the Storage Services icon.</li>
+<li>Click the Initiators tab in Management View.</li>
+<li>From the Initiators tab dropdown menu, select <i>Delete Initiators</i>.</li>
+<li>Check the box to the left of the initiator you want to delete.</li>
+<li>Click the <b>Submit</b> button.<br>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

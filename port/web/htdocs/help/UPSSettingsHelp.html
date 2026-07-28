@@ -1,0 +1,93 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>UPS icon Settings tab</title>
+</head>
+
+<body>
+
+<h3>UPS Settings</h3>
+
+<p>The UPS–Settings tab enables you to make management settings that control how the <script>writeModelName()</script> or <script>writeModel4Name()</script> subsystem detects the UPS unit and responds to 
+data reported by the UPS.</p>
+
+<p>To make UPS settings:</p>
+<ol>
+<li>Click the Subsystem icon in Tree view.</li>
+<li>Click the UPS icon.</li>
+<li>Click the Settings tab in Management View.</li>
+</ol>
+
+<h4><script>writeModelName()</script> UPS Settings</h4>
+
+<p>Perform the following actions as required:</p>
+<ul>
+<li>Verify the <b>Current UPS Communication</b> method. See Note 1:
+<ul>
+<li>SNMP - Network connection.</li>
+<li>Serial - Serial connection.</li>
+<li>Unknown - No connection.</li>
+</ul>
+<li>Choose a <b>Detection Setting</b> from the dropdown menu:
+<ul>
+<li>Automatic - Default. If a UPS is detected when the subsystem boots, the setting changes to Enable.</li>
+<li>Enable - Monitors UPS. Settings changes, reports warnings, and logs events.</li>
+<li>Disable - Monitors UPS only.</li>
+</ul>
+<li>Type values into the Threshold fields. See Note 2:</li>
+<ul>
+<li><b>Running Time Remaining Threshold</b> - Actual time below this value resets <a href="AdaptiveWritebackCacheHelp.html">adaptive 
+        writeback cache</a> to writethrough.</li>
+<li><b>Warning Temperature Threshold</b> - Actual temperature above this value triggers a warning and logs an <a href="SubsystemEventHelp.html">event</a>.</li>
+<li><b>Loading Ratio Threshold</b> - Actual loading ratio (percentage) above this threshold triggers a warning and logs an <a href="SubsystemEventHelp.html">event</a>. See Note 3.</li>
+<li><b>Battery Charge Remaining Threshold</b> - Reserve capacity below this percentage triggers a warning and logs an <a href="SubsystemEventHelp.html">event</a>.</li>
+</ul>
+<li>For UPS units with network cards, type the IP addresses or DNS names in fields UPS 1 and UPS 2. See Note 4.</li>
+</ul>
+<p>Click the <b>Submit</b> button to apply your settings.</p>
+
+<p><b>Note 1:</b> <script>writeModelName()</script> supports multiple UPS units using network or serial connections, but not a combination of both methods.<br>
+<b>Note 2:</b> Detection Setting must be set to Auto. If a UPS is detected, the setting changes to Enable.<br>
+<b>Note 3:</b> The maximum recommended Loading Ratio varies among models of UPS units. The general range is 60% to 80%.<br>
+<b>Note 4:</b> To specify UPS units by DNS names, ask your IT administrator to add the DNS names to the DNS server, before you make UPS settings.</p>
+
+<h4><script>writeModel4Name()</script> UPS Settings</h4>
+
+<p>Perform the following actions as required:</p>
+<ul>
+<li>Verify the <b>Current UPS Communication</b> method:
+<ul>
+<li>USB - USB connection.</li>
+<li>Unknown - No connection.</li>
+</ul>
+<li>Choose a <b>Detection Setting</b> from the dropdown menu:
+<ul>
+<li>Automatic - Default. If a UPS is detected when the subsystem boots, the setting changes to Enable.</li>
+<li>Enable - Monitors UPS. Settings changes, reports warnings, and logs events.</li>
+<li>Disable - Monitors UPS only.</li>
+</ul>
+<li>Choose an <b>Action Mode</b> setting from the dropdown menu:
+<ul>
+<li>None - No additional action when Threshold value is exceeded.</li>
+<li>ShutDown - Shuts down the subsystem when a Threshold value is exceeded.</li>
+</ul>
+<li>Type values into the Threshold fields. See Note 1:</li>
+<ul>
+<li><b>Running Time Remaining Threshold</b> - Actual time below this value triggers the action set under Action Mode.</li>
+<li><b>Warning Temperature Threshold</b> - Actual temperature above this value triggers the action set under Action Mode.</li>
+<li><b>Loading Ratio Threshold</b> - Actual loading ratio (percentage) above this threshold triggers the action set under Action Mode. See Note 2.</li>
+<li><b>Battery Charge Remaining Threshold</b> - Reserve capacity below this percentage triggers a the action set under Action Mode.</li>
+</ul>
+</ul>
+<p>Click the <b>Submit</b> button to apply your settings.</p>
+
+<p><b>Note 1:</b> Detection Setting must be set to Auto. If a UPS is detected, the setting changes to Enable.<br>
+<b>Note 2:</b> The maximum recommended Loading Ratio varies among models of UPS units. The general range is 60% to 80%.</p>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>

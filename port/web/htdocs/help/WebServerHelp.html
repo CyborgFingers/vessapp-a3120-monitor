@@ -1,0 +1,61 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content=text/html;charset=windows-1252>
+<script src=common.js></script>
+<link rel=stylesheet href=help.css type=text/css>
+<title>Web Server</title>
+</head>
+
+<body>
+
+<h3>Web Server</h3>
+
+<p><script>writeModelName()</script>'s Web Server service connects <script>writeSoftwareName()</script> to the <script>writeModelName()</script> subsystem though your browser.</p>
+
+<p>To change the Web Server settings:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the <b>Web Server Setting</b> link in Management view.</li>
+<li>Enter the HTTP Port number.<br>8090 is the default.</li>
+<li>Enter Session Time Out interval.<br>
+    This setting causes <script>writeSoftwareName()</script> to timeout after a period of inactivity.<br>
+24 minutes is the default. The range is 1 to 1440 minutes (one day).</li>
+<li>If you want to use a secure connection, check the Enable SSL box.</li>
+<li>If you checked the Enable SSL box, enter a HTTPS Port number.<br>8443 is the default.</li>
+<li>When you are done, click on the <b>Submit</b> button.</li>
+<li>Click <b>OK</b> in the confirmation box to restart the Web Server service with your changes.</li>
+</ol>
+
+
+<p>To change the Web Server Automatic/Manual start setting:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the <b>Web Server Setting</b> link in Management view.</li>
+<li>Under Startup Type:
+<ul>
+<li>Click on the Automatic option to start the service automatically during system startup.</li>
+<li>Click on the Manual option to start the service manually (the service does not start during system startup).</li>
+</ul>
+<li>Click on the <b>Submit</b> button.</li>
+</ol>
+
+<p>To manually start, restart, or stop the Web Server service:</p>
+<ol>
+<li>Click on the Subsystem icon in Tree view.</li>
+<li>Click on the Administration Tools icon.</li>
+<li>Click on the <b>Web Server Setting</b> link in Management view.</li>
+<li>Under Running Status:
+<ul>
+<li>If the service is stopped, click the <b>Start</b> button to start the service.</li>
+<li>If the service is started, click the <b>Stop</b> button to stop the service.<br>
+Or click on the <b>Restart</b> button to restart the service.</li>
+</ul>
+</ol>
+
+<script>writeGoBack()</script>
+</body>
+
+</html>
