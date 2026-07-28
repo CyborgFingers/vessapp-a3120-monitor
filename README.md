@@ -74,7 +74,7 @@ property of their respective owners.
 
 ## License
 
-**Proprietary — All Rights Reserved.** © 2026 Joshua McNabb-Moss.
+**Proprietary — All Rights Reserved.** © 2026 Number 8 Technologies Limited.
 See [LICENSE](LICENSE). No use, modification, or redistribution without prior
 written permission. To request permission, contact the copyright holder via
-[github.com/CyborgFingers](https://github.com/CyborgFingers).
+[github.com/Number-8-Technologies](https://github.com/Number-8-Technologies).
