@@ -86,6 +86,24 @@ def enrich_smart(disks):
         cap = s.get("user_capacity", {}).get("bytes")
         if cap and not d["size"]:
             d["size"] = cap
+        # full identity for the drive detail page (fields the vendor summary
+        # struct doesn't carry: serial/firmware/interface/block-size/...).
+        d["detail"] = {
+            "serial": (s.get("serial_number") or "").strip(),
+            "firmware": (s.get("firmware_version") or "").strip(),
+            "model": (s.get("model_name") or "").strip(),
+            "logical_block": s.get("logical_block_size"),
+            "physical_block": s.get("physical_block_size"),
+            "capacity": cap,
+            "rotation": s.get("rotation_rate"),            # 0/absent = SSD
+            "form_factor": (s.get("form_factor") or {}).get("name"),
+            "protocol": (s.get("device") or {}).get("protocol"),   # ATA / SCSI / NVMe
+            "sata_version": (s.get("sata_version") or {}).get("string"),
+            "ata_version": (s.get("ata_version") or {}).get("string"),
+            "speed": ((s.get("interface_speed") or {}).get("current") or {}).get("string"),
+            "power_on_h": (s.get("power_on_time") or {}).get("hours"),
+            "smart": d.get("smart", "-"),
+        }
 
 # ---- ZFS pools -> arrays ----------------------------------------------------
 def zfs_arrays(disks):
@@ -240,10 +258,33 @@ def boot_disks(disks, arrays, is_zfs):
             internal = {base}
     return internal
 
+def write_drives_json(disks):
+    """Side snapshot of full smartctl drive identity for phydrv.php to fill the
+    native rows the vendor health backend leaves empty (serial/firmware/...)."""
+    drives = []
+    for path, d in disks.items():
+        det = d.get("detail")
+        if not det:
+            continue
+        drives.append(dict(det, osname=d.get("osname", ""), dev=path))
+    snap = {"drives": drives,
+            "by_osname": {x["osname"]: x for x in drives if x.get("osname")},
+            "by_serial": {x["serial"]: x for x in drives if x.get("serial")}}
+    try:
+        tmp = "/run/promise/drives.json.tmp"
+        with open(tmp, "w") as f:
+            json.dump(snap, f)
+        os.chmod(tmp, 0o644)
+        os.replace(tmp, "/run/promise/drives.json")
+    except OSError:
+        pass   # non-container / read-only run: health.dat on stdout still works
+
+
 # ---- main -------------------------------------------------------------------
 def main():
     disks = list_disks()
     enrich_smart(disks)
+    write_drives_json(disks)
     is_zfs = have("zpool") and run(["zpool", "list", "-H"]).strip() != ""
     if is_zfs:
         arrays = zfs_arrays(disks)

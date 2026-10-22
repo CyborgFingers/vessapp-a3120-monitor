@@ -1,0 +1,280 @@
+#!/usr/bin/env python3
+"""promise-alerts - WebPAM "System Events" collector + enclosure-fault notifier.
+
+Runs as ROOT from the container entrypoint loop. Produces one snapshot that the
+(www-data) events.php renders, merging the three real event sources on a
+controller-less TrueNAS box:
+
+  1. TrueNAS system alerts   - `midclt call alert.list` (pools, disks, SMART,
+     certs, updates ... the authoritative system log). 115 alert classes.
+  2. WebPAM enclosure faults - the board temp / fan / voltage sensors only
+     WebPAM reads. Thresholds here are the ALERT policy (the on-page colour is
+     the C HAL's own copy in smbus_encl.c - keep the two in step).
+  3. Host syslog tail        - `journalctl` warning+ lines, for low-level detail.
+
+Enclosure faults are EDGE-triggered: a newly-raised fault is emailed through the
+TrueNAS mail config (= the WebPAM SMTP relay) via `midclt call mail.send`, and
+both raise and clear are appended to a small persisted log so the event page
+shows history. State in /etc/promise so it survives a redeploy.
+
+Host access mirrors the health probe: nsenter into PID 1 + the host `midclt` /
+`journalctl` when VESSAPP_PROBE_NSENTER=1 (unset on a plain docker host -> the
+TrueNAS + syslog sources are simply empty, enclosure faults still work).
+
+Offline check of the fault/edge logic:  promise-alerts --self-test
+"""
+import glob
+import json
+import os
+import subprocess
+import sys
+import time
+
+SNAPSHOT   = "/run/promise/alerts.json"            # www-data reads this
+STATE      = "/etc/promise/alert-state.json"       # last-seen enclosure faults
+HISTORY    = "/etc/promise/enclosure-events.jsonl" # raise/clear log (capped)
+HIST_MAX   = 500
+BLOWER     = "/run/promise/blower.state"           # "<rpm> <fault0|1>" from promise-encld
+
+# Alert thresholds (mirror smbus_encl.c TEMP_WARN_C/TEMP_CRIT_C + the voltage
+# rails). ponytail: duplicated because the C copy drives the hardware-page
+# colour and this copy drives email; if you change one, change the other.
+TEMP_WARN, TEMP_CRIT = 90, 100
+RAIL_NOMINAL = {"AVCC": 3.3, "+3.3V": 3.3, "3VSB": 3.3}   # +/-0.3 V band
+RAIL_BAND = 0.3
+VBAT_LOW = 2.6                                             # CMOS cell dying
+
+
+def host(args):
+    pre = (["nsenter", "-t", "1", "-m", "-u", "-i", "-n", "-p", "--"]
+           if os.environ.get("VESSAPP_PROBE_NSENTER") else [])
+    return subprocess.run(pre + args, capture_output=True, text=True, timeout=30)
+
+
+def midclt(method, *params):
+    r = host(["midclt", "call", method, *[json.dumps(p) for p in params]])
+    if r.returncode != 0:
+        raise RuntimeError(f"{method}: {r.stderr.strip() or r.returncode}")
+    return json.loads(r.stdout or "null")
+
+
+# --- sensor reads (sysfs; the real hwmon the HAL uses, shared from the host) ---
+def _hwmons():
+    for base in sorted(glob.glob("/sys/class/hwmon/hwmon*")):
+        try:
+            name = open(f"{base}/name").read().strip()
+        except OSError:
+            name = ""
+        yield base, name
+
+
+def _read_int(path):
+    try:
+        return int(open(path).read().strip())
+    except (OSError, ValueError):
+        return None
+
+
+def read_sensors():
+    """Return (readings, faults). faults are the non-NORMAL sensor conditions."""
+    temps, volts, cpu_fan = {}, {}, None
+    for base, name in _hwmons():
+        if name == "coretemp":
+            for lp in glob.glob(f"{base}/temp*_label"):
+                lbl = open(lp).read().strip()
+                val = _read_int(lp.replace("_label", "_input"))
+                if val is None:
+                    continue
+                if lbl == "Package id 0":
+                    temps["CPU"] = val // 1000
+                elif lbl.startswith("Core "):
+                    temps[lbl] = val // 1000
+        elif name == "pch_skylake":
+            v = _read_int(f"{base}/temp1_input")
+            if v and v > 0:
+                temps["PCH"] = v // 1000
+        elif name == "nct6776":
+            for lp in glob.glob(f"{base}/temp*_label"):
+                if open(lp).read().strip() == "SYSTIN":
+                    v = _read_int(lp.replace("_label", "_input"))
+                    if v and v > 0:
+                        temps["Controller"] = v // 1000
+            for idx, rail in ((0, "Vcore"), (2, "AVCC"), (3, "+3.3V"), (7, "3VSB"), (8, "Vbat")):
+                mv = _read_int(f"{base}/in{idx}_input")
+                if mv is not None:
+                    volts[rail] = mv / 1000.0
+            cpu_fan = _read_int(f"{base}/fan2_input")
+
+    faults = []
+    for lbl, c in temps.items():
+        if c >= TEMP_CRIT:
+            faults.append(("critical", f"temp:{lbl}", f"{lbl} temperature {c}C (>= {TEMP_CRIT}C critical)"))
+        elif c >= TEMP_WARN:
+            faults.append(("warning", f"temp:{lbl}", f"{lbl} temperature {c}C (>= {TEMP_WARN}C warning)"))
+    for rail, nom in RAIL_NOMINAL.items():
+        v = volts.get(rail)
+        if v is not None and abs(v - nom) > RAIL_BAND:
+            faults.append(("warning", f"volt:{rail}", f"{rail} rail {v:.2f}V (nominal {nom:.1f}V)"))
+    if volts.get("Vbat") is not None and volts["Vbat"] < VBAT_LOW:
+        faults.append(("warning", "volt:Vbat", f"CMOS battery {volts['Vbat']:.2f}V low (replace coin cell)"))
+    if cpu_fan == 0:
+        faults.append(("warning", "fan:CPU", "CPU fan stopped (0 RPM)"))
+    # blower ch1 fault flagged by promise-encld (it owns the i2c read)
+    try:
+        rpm, fault = open(BLOWER).read().split()
+        if fault == "1":
+            faults.append(("warning", "fan:Blower", f"Chassis blower fault ({rpm} RPM)"))
+    except (OSError, ValueError):
+        pass
+    return {"temps": temps, "volts": volts, "cpu_fan": cpu_fan}, faults
+
+
+# --- external event sources -------------------------------------------------
+_LEVEL = {"CRITICAL": "critical", "ERROR": "critical", "WARNING": "warning",
+          "NOTICE": "info", "INFO": "info"}
+
+
+def truenas_events():
+    try:
+        alerts = midclt("alert.list") or []
+    except Exception:
+        return []
+    out = []
+    for a in alerts:
+        if a.get("dismissed"):
+            continue
+        sev = _LEVEL.get(a.get("level", "INFO"), "info")
+        ts = a.get("datetime", {})
+        t = int(ts.get("$date", 0)) // 1000 if isinstance(ts, dict) else 0
+        text = a.get("formatted") or a.get("text") or a.get("klass") or "(alert)"
+        out.append({"source": "System", "severity": sev, "time": t,
+                    "id": a.get("klass", ""), "desc": text})
+    return out
+
+
+def syslog_events(n=50):
+    r = host(["journalctl", "-p", "warning", "-n", str(n), "-o", "short-iso", "--no-pager"])
+    if r.returncode != 0:
+        return []
+    out = []
+    for line in r.stdout.splitlines():
+        line = line.strip()
+        if not line or line.startswith("--"):
+            continue
+        out.append({"source": "syslog", "severity": "warning", "time": 0,
+                    "id": "", "desc": line[:300]})
+    return out
+
+
+# --- edge-triggered notify + history ----------------------------------------
+def load_json(path, default):
+    try:
+        return json.load(open(path))
+    except (OSError, ValueError):
+        return default
+
+
+def append_history(entries):
+    if not entries:
+        return
+    lines = []
+    try:
+        lines = open(HISTORY).read().splitlines()
+    except OSError:
+        pass
+    lines += [json.dumps(e) for e in entries]
+    tmp = HISTORY + ".tmp"
+    with open(tmp, "w") as f:
+        f.write("\n".join(lines[-HIST_MAX:]) + "\n")
+    os.replace(tmp, HISTORY)
+
+
+def send_mail(subject, body):
+    try:
+        cfg = midclt("mail.config")
+        to = cfg.get("fromemail") or "root"
+        midclt("mail.send", {"subject": subject, "text": body, "to": [to]})
+    except Exception as e:
+        print(f"[alerts] mail.send failed: {e}", file=sys.stderr)
+
+
+def diff_and_notify(faults):
+    """Email newly-raised faults; log raise+clear. Returns history tail list."""
+    now = int(time.time())
+    cur = {key: (sev, desc) for sev, key, desc in faults}
+    prev = load_json(STATE, {})
+    new_raise = [(k, v) for k, v in cur.items() if k not in prev]
+    cleared = [k for k in prev if k not in cur]
+
+    src = lambda key: "Drive" if key.startswith("disk:") else "Enclosure"
+    hist = []
+    for key, (sev, desc) in new_raise:
+        hist.append({"source": src(key), "severity": sev, "time": now, "id": key, "desc": desc})
+        send_mail(f"[WebPAM] {src(key)} {sev}: {desc}",
+                  f"WebPAM detected a {src(key).lower()} fault.\r\n\r\n    {desc}\r\n")
+    for key in cleared:
+        hist.append({"source": src(key), "severity": "info", "time": now, "id": key,
+                     "desc": f"RESOLVED: {prev[key][1] if isinstance(prev[key], (list, tuple)) else key}"})
+    append_history(hist)
+    tmp = STATE + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(cur, f)
+    os.replace(tmp, STATE)
+    return hist
+
+
+def hdsentinel_faults():
+    """Disk-health faults computed by promise-hdsentinel (single source)."""
+    try:
+        snap = json.load(open("/run/promise/hdsentinel.json"))
+    except (OSError, ValueError):
+        return []
+    return [tuple(x) for x in snap.get("faults", [])]
+
+
+def run():
+    _, faults = read_sensors()
+    faults += hdsentinel_faults()
+    diff_and_notify(faults)
+    events = truenas_events() + syslog_events()
+    # enclosure history (recent) rounds out the event log with raise/clear
+    try:
+        for line in open(HISTORY).read().splitlines()[-100:]:
+            events.append(json.loads(line))
+    except (OSError, ValueError):
+        pass
+    tmp = SNAPSHOT + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump({"generated": int(time.time()), "events": events}, f)
+    os.chmod(tmp, 0o644)
+    os.replace(tmp, SNAPSHOT)
+    print(f"[alerts] {len(events)} events, {len(faults)} active enclosure fault(s)")
+
+
+def self_test():
+    global STATE, HISTORY
+    import tempfile
+    d = tempfile.mkdtemp()
+    STATE, HISTORY = d + "/state.json", d + "/hist.jsonl"
+    # 1st pass: two faults raised -> both in history as their severity
+    f1 = [("critical", "temp:CPU", "CPU temperature 101C"), ("warning", "fan:CPU", "CPU fan stopped")]
+    h = diff_and_notify(f1)   # mail.send will fail quietly offline - fine
+    assert len(h) == 2 and all(e["source"] == "Enclosure" for e in h), h
+    assert {e["severity"] for e in h} == {"critical", "warning"}, h
+    # 2nd pass: CPU temp cleared, fan persists -> one RESOLVED, no re-raise
+    h = diff_and_notify([("warning", "fan:CPU", "CPU fan stopped")])
+    assert len(h) == 1 and h[0]["desc"].startswith("RESOLVED") and h[0]["id"] == "temp:CPU", h
+    # 3rd pass: same fault still active -> nothing new
+    assert diff_and_notify([("warning", "fan:CPU", "CPU fan stopped")]) == [], "stable fault re-notified"
+    print("self-test OK")
+
+
+if __name__ == "__main__":
+    if "--self-test" in sys.argv[1:]:
+        self_test()
+        sys.exit(0)
+    try:
+        run()
+    except Exception as e:
+        print(f"[alerts] FAILED: {e}", file=sys.stderr)
+        sys.exit(1)

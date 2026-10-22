@@ -461,6 +461,9 @@ static void tick(encld *e) {
             }
             rpm = nct7802y_read_rpm(bus, NCT7802Y_ADDR, 1);
             blower_health(e, rpm);
+            /* expose blower ch1 state for promise-alerts (it owns the i2c read). */
+            FILE *bs = fopen("/run/promise/blower.state", "w");
+            if (bs) { fprintf(bs, "%d %d\n", rpm < 0 ? 0 : rpm, e->blower_fault ? 1 : 0); fclose(bs); }
         }
         if (have_temp) {
             if (resolve_cpu_dir(e) == 0) {

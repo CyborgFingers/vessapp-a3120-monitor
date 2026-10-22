@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""promise-webpam-update - apply a queued WebPAM update (root side).
+
+Driven by the entrypoint watcher when /run/promise/update.request appears. On
+TrueNAS it asks the middleware to update THIS app (pull the new image + recreate,
+keeping the app's config/volumes), so settings survive. The unprivileged web tier
+(update.php) only QUEUES the request; this performs it. Progress is written to
+/run/promise/update.status for the UI.
+
+VERIFY ON THE BOX: the exact app-update call for your TrueNAS version
+(`app.update <name>` here) and the app-name discovery (it matches the running
+image, or set VESSAPP_APP_NAME). If this does not complete, the TrueNAS UI's
+Apps -> Update button for this app performs the same pull+recreate.
+"""
+import json
+import os
+import subprocess
+import sys
+
+REQUEST = "/run/promise/update.request"
+STATUS = "/run/promise/update.status"
+IMAGE_HINT = "vessapp-a3120-monitor"
+
+
+def host(args):
+    pre = (["nsenter", "-t", "1", "-m", "-u", "-i", "-n", "-p", "--"]
+           if os.environ.get("VESSAPP_PROBE_NSENTER") else [])
+    return subprocess.run(pre + args, capture_output=True, text=True, timeout=120)
+
+
+def midclt(method, *params):
+    r = host(["midclt", "call", method, *[json.dumps(p) for p in params]])
+    if r.returncode != 0:
+        raise RuntimeError(f"{method}: {r.stderr.strip() or r.returncode}")
+    return json.loads(r.stdout or "null")
+
+
+def set_status(text):
+    try:
+        with open(STATUS, "w") as f:
+            f.write(text + "\n")
+    except OSError:
+        pass
+
+
+def find_app_name():
+    name = os.environ.get("VESSAPP_APP_NAME")
+    if name:
+        return name
+    for app in midclt("app.query") or []:
+        if IMAGE_HINT in json.dumps(app):          # the app whose config uses our image
+            return app.get("name") or app.get("id")
+    raise RuntimeError(f"no TrueNAS app references '{IMAGE_HINT}'; set VESSAPP_APP_NAME")
+
+
+def main():
+    target = sys.argv[1] if len(sys.argv) > 1 else ""
+    if not target and os.path.exists(REQUEST):
+        with open(REQUEST) as f:
+            target = f.read().strip()
+    set_status(("applying " + target).strip())
+    try:
+        name = find_app_name()
+        midclt("app.update", name)                 # pulls new image + recreates, keeps config
+        set_status(("applying " + target + " (restarting)").strip())
+        return 0
+    except Exception as e:
+        set_status(f"failed: {e}")
+        return 1
+
+
+if __name__ == "__main__":
+    # Consume the request first, so a failure doesn't loop the watcher.
+    try:
+        os.remove(REQUEST)
+    except OSError:
+        pass
+    sys.exit(main())

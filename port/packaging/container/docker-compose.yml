@@ -7,8 +7,11 @@
 # has no drive-management code path at all.
 services:
   webpam-monitor:
-    image: webpam-monitor:local        # build first: see README.md (docker build ...)
-    pull_policy: never                 # use the locally-built image, never try a registry
+    image: ghcr.io/weta-technologies/vessapp-a3120-monitor:latest
+    # Published by .github/workflows/release.yml on each version tag; the in-app
+    # updater pulls newer tags from here. (Follows the repo owner - update if the
+    # repo moves.) For local dev, build it yourself (see README) and set
+    # image: webpam-monitor:local with pull_policy: never.
     container_name: webpam-monitor
     restart: unless-stopped
     privileged: true                   # required for nsenter into the host
@@ -21,6 +24,16 @@ services:
       #   docker exec webpam-monitor /opt/promise/bin/promise-webpam-passwd <pw>)
       WEBPAM_PASSWORD: "change-me-please"
       HEALTH_REFRESH: "60"             # seconds between host health snapshots
+      # Mirror the TrueNAS `webpam` group (+ TrueNAS admins) into WebPAM login, so
+      # those users sign in with their TrueNAS password. Leave unset on a plain
+      # Docker host (no midclt). See port/packaging/promise-webpam-group-sync.
+      VESSAPP_TRUENAS_SYNC: "1"
+      # Drive health via Hard Disk Sentinel (normalised Health % + temp). It is
+      # PROPRIETARY freeware, so it is NOT bundled - set to 1 and the free Linux
+      # console binary is downloaded from hdsentinel.com into the persisted
+      # volume on first run. Set 0 to disable (drive pages then use smartctl only).
+      # Credit: Hard Disk Sentinel (c) Janos Mathe - https://www.hdsentinel.com
+      VESSAPP_HDSENTINEL: "1"
     volumes:
       - webpam_monitor_cfg:/etc/promise # persist the TLS cert + login password
 volumes:

@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+"""promise-hdsentinel - Hard Disk Sentinel drive-health bridge for webpam-monitor.
+
+Hard Disk Sentinel (https://www.hdsentinel.com) computes a normalised per-drive
+Health % + temperature that smartctl alone does not. It is PROPRIETARY freeware,
+so it is NOT bundled in this (GPL) image - instead `--fetch` downloads the
+official free Linux console binary into the persisted /etc/promise volume on
+first run. The container is privileged + pid:host and sees the host /dev/sd*, so
+hdsentinel runs here directly (no nsenter) as root.
+
+  promise-hdsentinel --fetch   # one-shot: download + install the binary (idempotent)
+  promise-hdsentinel           # run `hdsentinel -solid`, parse, write the JSON snapshot
+  promise-hdsentinel --self-test
+
+Writes /run/promise/hdsentinel.json for the drive pages (phydrv*.php, matched by
+serial or OS name) and for promise-alerts (health below threshold -> event+email).
+
+Credit: Hard Disk Sentinel (c) Janos Mathe - https://www.hdsentinel.com
+"""
+import glob
+import json
+import os
+import subprocess
+import sys
+
+# Official free Linux console build (x64). Pinned version; bump when HD Sentinel
+# ships a newer console release. ponytail: single const, obvious upgrade point.
+HDS_URL = "https://www.hdsentinel.com/hdslin/hdsentinel-020c-x64.zip"
+BIN = "/etc/promise/bin/hdsentinel"
+SNAPSHOT = "/run/promise/hdsentinel.json"
+HEALTH_WARN, HEALTH_CRIT = 90, 50   # HD Sentinel health %: 100 = perfect
+
+
+def fetch():
+    """Download + install the console binary into the persisted volume (idempotent)."""
+    if os.path.exists(BIN) and os.access(BIN, os.X_OK):
+        return 0
+    import io
+    import urllib.request
+    import zipfile
+    os.makedirs(os.path.dirname(BIN), exist_ok=True)
+    try:
+        # hdsentinel.com 403s the default python-urllib UA; send a browser one.
+        req = urllib.request.Request(HDS_URL, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) webpam-monitor"})
+        with urllib.request.urlopen(req, timeout=60) as r:   # HTTPS, official host
+            data = r.read()
+        zf = zipfile.ZipFile(io.BytesIO(data))
+        # the archive holds a single executable (named "HDSentinel")
+        name = next(n for n in zf.namelist() if not n.endswith("/"))
+        tmp = BIN + ".tmp"
+        with open(tmp, "wb") as f:
+            f.write(zf.read(name))
+        os.chmod(tmp, 0o755)
+        os.replace(tmp, BIN)
+        print(f"[hdsentinel] installed {name} -> {BIN}")
+        return 0
+    except Exception as e:
+        print(f"[hdsentinel] fetch failed ({e}); drive pages fall back to smartctl", file=sys.stderr)
+        return 1
+
+
+def parse_solid(text):
+    """`hdsentinel -solid` -> list of drive dicts. One line per drive:
+       <dev> <temp_C> <health%> <power_on_h> <model> <serial> <size_MB>
+    (model has spaces replaced by underscores, so the line is exactly 7 tokens)."""
+    drives = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line.startswith("/dev/"):
+            continue
+        p = line.split()
+        if len(p) < 7:
+            continue
+        try:
+            dev, temp, health, poh, model, serial, size = p[0], int(p[1]), int(p[2]), int(p[3]), p[4], p[5], int(p[6])
+        except ValueError:
+            continue
+        drives.append({"dev": dev, "osname": dev.rsplit("/", 1)[-1], "temp": temp,
+                       "health": health, "power_on_h": poh,
+                       "model": model.replace("_", " "), "serial": serial, "size_mb": size})
+    return drives
+
+
+def drive_faults(drives):
+    out = []
+    for d in drives:
+        h = d["health"]
+        if h < HEALTH_CRIT:
+            out.append(("critical", f"disk:{d['osname']}", f"Disk {d['osname']} ({d['model']}) health {h}% (HD Sentinel)"))
+        elif h < HEALTH_WARN:
+            out.append(("warning", f"disk:{d['osname']}", f"Disk {d['osname']} ({d['model']}) health {h}% (HD Sentinel)"))
+    return out
+
+
+def run():
+    if not (os.path.exists(BIN) and os.access(BIN, os.X_OK)):
+        return   # not installed -> no snapshot; pages fall back to smartctl
+    try:
+        r = subprocess.run([BIN, "-solid"], capture_output=True, text=True, timeout=60)
+    except Exception as e:
+        print(f"[hdsentinel] run failed: {e}", file=sys.stderr)
+        return
+    drives = parse_solid(r.stdout)
+    snap = {"drives": drives,
+            "by_osname": {d["osname"]: d for d in drives},
+            "by_serial": {d["serial"]: d for d in drives if d["serial"]},
+            "faults": drive_faults(drives)}   # promise-alerts reads these (single source)
+    tmp = SNAPSHOT + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(snap, f)
+    os.chmod(tmp, 0o644)
+    os.replace(tmp, SNAPSHOT)
+    print(f"[hdsentinel] {len(drives)} drive(s) snapshotted")
+
+
+def self_test():
+    sample = (
+        "/dev/sda 37 100 13492 ST4000NM024B-2TF103          WQB0YLB9     3815448\n"
+        "/dev/sdd 44  98  3416 WD_Blue_SA510_M.2_2280_250GB 23034G802233  238475\n"
+        "garbage line that is not a drive\n"
+    )
+    ds = parse_solid(sample)
+    assert len(ds) == 2, ds
+    assert ds[0]["osname"] == "sda" and ds[0]["health"] == 100 and ds[0]["temp"] == 37, ds[0]
+    assert ds[1]["model"] == "WD Blue SA510 M.2 2280 250GB" and ds[1]["size_mb"] == 238475, ds[1]
+    # faults: both healthy (>=90) -> none; drop sdd to 70 -> one warning; to 40 -> critical
+    assert drive_faults(ds) == [], "healthy drives should not fault"
+    ds[1]["health"] = 70
+    f = drive_faults(ds)
+    assert len(f) == 1 and f[0][0] == "warning" and f[0][1] == "disk:sdd", f
+    ds[1]["health"] = 40
+    assert drive_faults(ds)[0][0] == "critical", "severe wear should be critical"
+    print("self-test OK")
+
+
+if __name__ == "__main__":
+    if "--self-test" in sys.argv[1:]:
+        self_test(); sys.exit(0)
+    if "--fetch" in sys.argv[1:]:
+        sys.exit(fetch())
+    run()

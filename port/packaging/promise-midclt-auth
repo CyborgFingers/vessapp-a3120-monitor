@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""promise-midclt-auth - WebPAM auth backend for the TrueNAS app (container).
+
+Drop-in for promise-pam-auth. php_i2 execs the auth helper as:
+    promise-pam-auth <username>        # password on stdin, one line
+and reads the exit status: 0 = authenticated, 1 = denied, 2 = usage error.
+
+Validates against the HOST's TrueNAS accounts through the middleware, reached the
+same way the health probe reaches zpool: nsenter into PID 1 and run `midclt`.
+Only users already on the WebPAM allowlist (/etc/promise/webpam.pamusers) ever
+reach this helper, so service/system accounts are never offered here.
+
+Uses `auth.login_ex` with the PASSWORD_PLAIN mechanism (the current TrueNAS
+password-check path; older `auth.check_password` was removed). A one-shot midclt
+call authenticates on an ephemeral connection and returns a response_type:
+SUCCESS = the password is valid. (OTP_REQUIRED/EXPIRED/AUTH_ERR -> denied here;
+an account with MFA must use the local administrator login.)
+"""
+import json
+import os
+import subprocess
+import sys
+
+
+def host_cmd(args):
+    """Prefix with nsenter-into-PID-1 when running inside the container."""
+    if os.environ.get("VESSAPP_PROBE_NSENTER"):
+        return ["nsenter", "-t", "1", "-m", "-u", "-i", "-n", "-p", "--"] + args
+    return args
+
+
+def main():
+    if len(sys.argv) < 2 or not sys.argv[1]:
+        return 2
+    user = sys.argv[1]
+    password = sys.stdin.readline().rstrip("\n")
+    if not password:                      # no NULL authentication
+        return 1
+    payload = {"mechanism": "PASSWORD_PLAIN", "username": user, "password": password}
+    cmd = host_cmd(["midclt", "call", "auth.login_ex", json.dumps(payload)])
+    try:
+        res = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+    except Exception:
+        return 1
+    if res.returncode != 0:
+        return 1
+    try:
+        ok = json.loads(res.stdout).get("response_type") == "SUCCESS"
+    except Exception:
+        ok = False
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""promise-webpam-mail-sync - push WebPAM's SMTP settings into TrueNAS.
+
+email.php (www-data) writes /run/promise/mailsync.request - a JSON object of
+TrueNAS mail.config fields - when the admin ticks "route TrueNAS alerts through
+this SMTP server". This root-side applier reads it and calls the middleware
+`mail.update` via nsenter, so TrueNAS sends its own alerts through the same
+server configured in WebPAM. The web tier only queues; this performs.
+
+Field names match the live mail.config schema (outgoingserver / port / security
+[PLAIN|SSL|TLS] / smtp [auth bool] / user / pass / fromemail).
+
+VERIFY ON THE BOX: the mail.update field names / security enum for your TrueNAS
+version (confirmed against this box's mail.config at build time).
+"""
+import json
+import os
+import subprocess
+import sys
+
+REQUEST = "/run/promise/mailsync.request"
+STATUS = "/run/promise/mailsync.status"
+
+
+def host(args):
+    pre = (["nsenter", "-t", "1", "-m", "-u", "-i", "-n", "-p", "--"]
+           if os.environ.get("VESSAPP_PROBE_NSENTER") else [])
+    return subprocess.run(pre + args, capture_output=True, text=True, timeout=30)
+
+
+def set_status(text):
+    try:
+        with open(STATUS, "w") as f:
+            f.write(text + "\n")
+    except OSError:
+        pass
+
+
+def main():
+    if not os.path.exists(REQUEST):
+        return 0
+    try:
+        with open(REQUEST) as f:
+            cfg = json.load(f)
+    except Exception as e:
+        os.remove(REQUEST)
+        set_status(f"failed: bad request ({e})")
+        return 1
+    os.remove(REQUEST)                       # consume before applying (no retry loop)
+    cfg.setdefault("fromname", "TrueNAS via WebPAM")
+    r = host(["midclt", "call", "mail.update", json.dumps(cfg)])
+    if r.returncode == 0:
+        set_status("ok: TrueNAS mail configured from WebPAM")
+        return 0
+    set_status(f"failed: {r.stderr.strip() or r.returncode}")
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

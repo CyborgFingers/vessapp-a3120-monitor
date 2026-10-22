@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+"""promise-webpam-ssl - apply an admin-supplied TLS certificate (or regenerate
+the built-in self-signed one) and reload nginx.
+
+sslsettings.php (www-data) queues the change in /run/promise/ssl.request; this
+root applier (run from the entrypoint loop) performs it: validate the cert/key
+pair, install /etc/promise/webpam.{crt,key} (+ CA chain appended to the cert),
+reload nginx. On any failure the previous cert is restored so HTTPS stays up.
+"""
+import grp
+import json
+import os
+import subprocess
+import sys
+
+REQ = "/run/promise/ssl.request"
+STATUS = "/run/promise/ssl.status"
+CRT = "/etc/promise/webpam.crt"
+KEY = "/etc/promise/webpam.key"
+
+
+def status(msg):
+    try:
+        with open(STATUS, "w") as f:
+            f.write(msg + "\n")
+        os.chmod(STATUS, 0o644)
+    except OSError:
+        pass
+
+
+def run(args, inp=None):
+    return subprocess.run(args, capture_output=True, text=True, timeout=30, input=inp)
+
+
+def www_gid():
+    try:
+        return grp.getgrnam("www-data").gr_gid
+    except KeyError:
+        return -1
+
+
+def set_perms():
+    g = www_gid()
+    try:
+        os.chown(CRT, 0, g); os.chmod(CRT, 0o644)
+        os.chown(KEY, 0, g); os.chmod(KEY, 0o640)
+    except OSError:
+        pass
+
+
+def reload_nginx():
+    r = run(["nginx", "-s", "reload"])
+    return r.returncode == 0, (r.stderr.strip() or r.stdout.strip())
+
+
+def backup():
+    for p in (CRT, KEY):
+        try:
+            if os.path.exists(p):
+                with open(p) as a, open(p + ".bak", "w") as b:
+                    b.write(a.read())
+        except OSError:
+            pass
+
+
+def restore():
+    for p in (CRT, KEY):
+        try:
+            if os.path.exists(p + ".bak"):
+                os.replace(p + ".bak", p)
+        except OSError:
+            pass
+    set_perms()
+
+
+def host_san():
+    """DNS/IP SANs for a regenerated self-signed cert (host IPs via nsenter)."""
+    san = ["DNS:localhost", "IP:127.0.0.1"]
+    h = run(["hostname"]).stdout.strip()
+    if h:
+        san.append("DNS:" + h)
+    pre = ["nsenter", "-t", "1", "-m", "-u", "-i", "-n", "-p", "--"] if os.environ.get("VESSAPP_PROBE_NSENTER") else []
+    ips = run(pre + ["hostname", "-I"]).stdout.split() if pre or True else []
+    for ip in ips:
+        if ":" in ip:
+            continue
+        parts = ip.split(".")
+        if len(parts) == 4 and all(p.isdigit() for p in parts):
+            san.append("IP:" + ip)
+    extra = os.environ.get("WEBPAM_SAN", "")
+    for tok in extra.split():
+        san.append(("IP:" if tok.replace(".", "").isdigit() else "DNS:") + tok)
+    return ",".join(san)
+
+
+def cert_key_match(cert, key):
+    """(ok, reason). A cert and key pair iff their public keys match (RSA + EC)."""
+    cpub = run(["openssl", "x509", "-noout", "-pubkey"], inp=cert)
+    if cpub.returncode != 0:
+        return False, "certificate is not valid PEM"
+    kpub = run(["openssl", "pkey", "-pubout"], inp=key)
+    if kpub.returncode != 0:
+        return False, "private key is not valid PEM"
+    if cpub.stdout.strip() != kpub.stdout.strip():
+        return False, "certificate and private key do not match"
+    return True, "ok"
+
+
+def do_install(cert, key, chain):
+    if "-----BEGIN CERTIFICATE-----" not in (cert or ""):
+        return "failed: no PEM certificate"
+    if "PRIVATE KEY-----" not in (key or ""):
+        return "failed: no PEM private key"
+    ok, reason = cert_key_match(cert, key)
+    if not ok:
+        return "failed: " + reason
+    backup()
+    try:
+        fullchain = cert if not (chain or "").strip() else cert.rstrip() + "\n" + chain.strip() + "\n"
+        with open(CRT, "w") as f:
+            f.write(fullchain if fullchain.endswith("\n") else fullchain + "\n")
+        with open(KEY, "w") as f:
+            f.write(key if key.endswith("\n") else key + "\n")
+        set_perms()
+    except OSError as e:
+        restore()
+        return f"failed: {e}"
+    ok, err = reload_nginx()
+    if not ok:
+        restore(); reload_nginx()
+        return f"failed: nginx rejected the certificate ({err}); previous cert restored"
+    for p in (CRT + ".bak", KEY + ".bak"):
+        try: os.remove(p)
+        except OSError: pass
+    return "ok: certificate installed and nginx reloaded"
+
+
+def do_selfsigned():
+    backup()
+    san = host_san()
+    r = run(["openssl", "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "3650",
+             "-keyout", KEY, "-out", CRT,
+             "-subj", "/CN=" + os.environ.get("WEBPAM_CN", "Vess A3120 WebPAM Monitor"),
+             "-addext", "subjectAltName=" + san])
+    if r.returncode != 0:
+        restore()
+        return f"failed: openssl ({r.stderr.strip()})"
+    set_perms()
+    ok, err = reload_nginx()
+    if not ok:
+        return f"warning: self-signed cert written but nginx reload failed ({err})"
+    for p in (CRT + ".bak", KEY + ".bak"):
+        try: os.remove(p)
+        except OSError: pass
+    return "ok: self-signed certificate regenerated (" + san + ")"
+
+
+def main():
+    if not os.path.exists(REQ):
+        return 0
+    try:
+        with open(REQ) as f:
+            req = json.load(f)
+    except Exception as e:
+        os.remove(REQ)
+        status(f"failed: bad request ({e})")
+        return 1
+    os.remove(REQ)   # consume before applying (no retry storm)
+    action = req.get("action")
+    if action == "install":
+        status(do_install(req.get("cert", ""), req.get("key", ""), req.get("chain", "")))
+    elif action == "selfsigned":
+        status(do_selfsigned())
+    else:
+        status(f"failed: unknown action {action!r}")
+    return 0
+
+
+def self_test():
+    import tempfile
+    d = tempfile.mkdtemp()
+    def gen(stub):
+        k, c = d + f"/{stub}.key", d + f"/{stub}.crt"
+        run(["openssl", "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1",
+             "-keyout", k, "-out", c, "-subj", "/CN=test"])
+        return open(c).read(), open(k).read()
+    cert1, key1 = gen("a")
+    _, key2 = gen("b")
+    ok, _ = cert_key_match(cert1, key1); assert ok, "matching pair should pass"
+    ok, why = cert_key_match(cert1, key2); assert not ok and "not match" in why, why
+    ok, why = cert_key_match("garbage", key1); assert not ok, "non-PEM cert should fail"
+    print("self-test OK")
+
+
+if __name__ == "__main__":
+    if "--self-test" in sys.argv[1:]:
+        self_test(); sys.exit(0)
+    sys.exit(main())

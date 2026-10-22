@@ -14,12 +14,43 @@ mkdir -p /run/php /etc/promise
 # (it was ephemeral under /var/lib/promise-hwmon, wiped on every app update).
 install -d -m 0775 -o www-data -g www-data /etc/promise/hwmon 2>/dev/null || true
 
-# --- TLS cert (persisted when /etc/promise is a mounted volume) ---------------
-if [ ! -s /etc/promise/webpam.crt ] || [ ! -s /etc/promise/webpam.key ]; then
+# --- TLS cert (self-signed, persisted in /etc/promise) ------------------------
+# Modern browsers IGNORE the CN and REQUIRE a subjectAltName; a SAN-less cert is
+# rejected outright (ERR_CERT_COMMON_NAME_INVALID). So we put the host's own IPs
+# (what you actually browse to) + hostname in the SAN. It is still self-signed,
+# so the browser shows a one-time "not trusted" prompt until you install your own
+# cert (Administration -> SSL / TLS Certificate) - but it is now VALID for the IP.
+# Host IPs come from the host netns (privileged + pid:host); on a plain docker
+# host set WEBPAM_SAN="192.0.2.10 nas.lan" to the names/IPs you reach it by.
+build_san() {
+  local san="DNS:localhost,IP:127.0.0.1" h tok
+  h="$(hostname 2>/dev/null)"; [ -n "$h" ] && san="$san,DNS:$h"
+  local ips; ips="$(nsenter -t 1 -m -u -i -n -p -- hostname -I 2>/dev/null)"
+  for tok in $ips ${WEBPAM_SAN:-}; do
+    case "$tok" in
+      *:*)                                 : ;;                 # skip IPv6
+      [0-9]*.[0-9]*.[0-9]*.[0-9]*)         san="$san,IP:$tok" ;;
+      "")                                  : ;;
+      *)                                   san="$san,DNS:$tok" ;;
+    esac
+  done
+  printf '%s' "$san"
+}
+regen_cert=0
+[ -s /etc/promise/webpam.crt ] && [ -s /etc/promise/webpam.key ] || regen_cert=1
+# upgrade an older SAN-less cert, and refresh if the host's primary IP isn't on it
+if [ "$regen_cert" = 0 ]; then
+  openssl x509 -in /etc/promise/webpam.crt -noout -text 2>/dev/null | grep -q "Subject Alternative Name" || regen_cert=1
+  PRIMARY_IP="$(nsenter -t 1 -m -u -i -n -p -- hostname -I 2>/dev/null | tr ' ' '\n' | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' | head -1)"
+  [ -n "$PRIMARY_IP" ] && { openssl x509 -in /etc/promise/webpam.crt -noout -text 2>/dev/null | grep -qF "$PRIMARY_IP" || regen_cert=1; }
+fi
+if [ "$regen_cert" = 1 ]; then
+  SAN="$(build_san)"
   openssl req -x509 -newkey rsa:2048 -nodes -days 3650 \
     -keyout /etc/promise/webpam.key -out /etc/promise/webpam.crt \
-    -subj "/CN=${WEBPAM_CN:-webpam-monitor}" >/dev/null 2>&1 \
-    && echo "[entrypoint] generated self-signed TLS cert" \
+    -subj "/CN=${WEBPAM_CN:-Vess A3120 WebPAM Monitor}" \
+    -addext "subjectAltName=$SAN" >/dev/null 2>&1 \
+    && echo "[entrypoint] generated self-signed TLS cert ($SAN)" \
     || echo "[entrypoint] WARNING: openssl cert generation failed - :8443 will not start"
 fi
 chown root:www-data /etc/promise/webpam.key 2>/dev/null || true
@@ -49,7 +80,30 @@ else
   echo "[entrypoint] WARNING: probe produced no snapshot. Needs 'privileged: true' + 'pid: host'"
   echo "[entrypoint]          so nsenter can read the host's zpool/smartctl. Pages will be empty."
 fi
-( while true; do sleep "${HEALTH_REFRESH:-60}"; refresh || true; done ) &
+# Hard Disk Sentinel drive-health bridge (opt-in). HD Sentinel is PROPRIETARY
+# freeware -> not bundled in this GPL image; fetched from hdsentinel.com into the
+# persisted /etc/promise volume on first run. Slow cadence (drive health changes
+# slowly + avoid hammering SMART). Writes /run/promise/hdsentinel.json for the
+# drive pages + promise-alerts. Dormant if fetch fails -> pages fall back to smartctl.
+# Fetch (opt-in download of the proprietary binary) only when explicitly enabled.
+if [ "${VESSAPP_HDSENTINEL:-}" = 1 ]; then
+  /usr/bin/python3 -I /opt/promise/bin/promise-hdsentinel --fetch >/dev/null 2>&1 || true
+fi
+# Parse on a slow loop whenever the binary is present (run() self-no-ops if not),
+# unless explicitly disabled - so a persisted volume that already holds the binary
+# keeps refreshing even if the app's stored env doesn't carry VESSAPP_HDSENTINEL.
+if [ "${VESSAPP_HDSENTINEL:-1}" != 0 ]; then
+  hds_refresh() { /usr/bin/python3 -I /opt/promise/bin/promise-hdsentinel >/dev/null 2>&1 || true; }
+  hds_refresh
+  ( while true; do sleep "${HDS_REFRESH:-900}"; hds_refresh; done ) &
+fi
+
+# System Events snapshot: TrueNAS alert.list + enclosure sensor faults + syslog
+# tail -> /run/promise/alerts.json for events.php; emails new enclosure faults
+# through the TrueNAS mail relay (midclt mail.send). Root, same nsenter path.
+alerts_refresh() { /usr/bin/python3 -I /opt/promise/bin/promise-alerts >/dev/null 2>&1 || true; }
+alerts_refresh
+( while true; do sleep "${HEALTH_REFRESH:-60}"; refresh || true; alerts_refresh; done ) &
 
 # --- host NIC mirror: the container has its OWN netns (eth0/lo only), but the
 # front-panel network LEDs + frontpanel.php must see the HOST's physical NICs.
@@ -93,7 +147,10 @@ if [ "${VESSAPP_BACKEND:-}" = smbus ]; then
   # Load the host i2c drivers (host kernel, via nsenter) so /dev/i2c-<bus> exists,
   # then materialise the device node in THIS (privileged) container so php_i2 and
   # promise-encld can open the SMBus (PCA9555 LEDs @0x20/0x21, NCT7802Y @0x2e).
-  nsenter -t 1 -m -u -i -n -p -- modprobe i2c-dev i2c-i801 nct6775 2>/dev/null || true
+  # -a: load ALL THREE as modules. Without it, modprobe reads "i2c-i801 nct6775"
+  # as PARAMETERS to i2c-dev, so the nct6775 Super-I/O (CPU fan + system voltages)
+  # never loads and the sensor page shows no CPU fan / empty voltages.
+  nsenter -t 1 -m -u -i -n -p -- modprobe -a i2c-dev i2c-i801 nct6775 2>/dev/null || true
   for n in 0 1 2 3 4 5; do [ -e "/dev/i2c-$n" ] || mknod "/dev/i2c-$n" c 89 "$n" 2>/dev/null || true; done
   # php-fpm workers (www-data) read the NCT7802Y blowers over SMBus via php_i2, so
   # www-data needs rw on the node - mknod leaves it root-only, which silently drops
@@ -127,6 +184,33 @@ if [ "${VESSAPP_BACKEND:-}" = smbus ]; then
     echo "[entrypoint] WARNING: /dev/i2c-$BUS absent - SMBus enclosure unavailable (fans/LEDs off)"
   fi
 fi
+
+# --- TrueNAS user sync: mirror the `webpam` group (+ TrueNAS admins) into the
+# WebPAM allowlist so those users sign in with their TrueNAS password. Opt-in via
+# VESSAPP_TRUENAS_SYNC=1 (set in the TrueNAS compose; left off on a plain Docker
+# host, which has no midclt). Runs as root here, so nsenter can reach midclt. ----
+if [ "${VESSAPP_TRUENAS_SYNC:-0}" = 1 ]; then
+  /opt/promise/bin/promise-webpam-group-sync \
+    || echo "[entrypoint] WARNING: TrueNAS group sync failed (is midclt reachable via nsenter?)"
+  ( while true; do sleep "${WEBPAM_SYNC_REFRESH:-300}"; \
+      /opt/promise/bin/promise-webpam-group-sync >/dev/null 2>&1 || true; done ) &
+fi
+
+# --- updater: apply a queued update (root). update.php (www-data) drops the
+# target tag in /run/promise/update.request; we perform the pull + restart via the
+# host app updater, so the unprivileged web tier never updates itself. -----------
+( while true; do
+    if [ -f /run/promise/update.request ]; then
+      /opt/promise/bin/promise-webpam-update >/dev/null 2>&1 || true
+    fi
+    if [ -f /run/promise/mailsync.request ]; then
+      /opt/promise/bin/promise-webpam-mail-sync >/dev/null 2>&1 || true
+    fi
+    if [ -f /run/promise/ssl.request ]; then
+      /usr/bin/python3 -I /opt/promise/bin/promise-webpam-ssl >/dev/null 2>&1 || true
+    fi
+    sleep 10
+  done ) &
 
 # --- serve (php-fpm workers = www-data read the snapshot; nginx front) ---------
 echo "[entrypoint] starting php-fpm + nginx (read-only monitor) on :8443 (:8088 redirects)"
