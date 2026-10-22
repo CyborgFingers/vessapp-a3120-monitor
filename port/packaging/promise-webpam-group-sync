@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""promise-webpam-group-sync - mirror a TrueNAS group into the WebPAM allowlist.
+"""promise-webpam-group-sync - mirror TrueNAS groups into the WebPAM allowlist.
 
-Ensures a `webpam` group exists on the TrueNAS host, then writes every member of
-that group (and of the builtin administrators group) into the WebPAM PAM
-allowlist (/etc/promise/webpam.pamusers, "username:groupId"). php_i2 then lets
-those users sign in to WebPAM with their TrueNAS password (via the midclt
-promise-pam-auth backend) at the privilege below. So: add someone to the
-`webpam` group in TrueNAS - or make them a TrueNAS admin - and they can log in.
+Ensures a `webpam` group exists on the TrueNAS host, then writes into the WebPAM
+PAM allowlist (/etc/promise/webpam.pamusers, "username:groupId"):
+  * every member of the `webpam` group  - an EXPLICIT grant, allowed at any
+    non-root uid (so the TrueNAS admin account, uid 950, works when added); and
+  * every TrueNAS admin (builtin_administrators) with uid >= UID_MIN - a
+    convenience include that skips low-uid service accounts.
+php_i2 then lets those users sign in to WebPAM with their TrueNAS password (via
+the midclt promise-pam-auth backend) at the privilege below.
 
 Host access mirrors the health probe: nsenter into PID 1 + the host's `midclt`.
 
@@ -20,10 +22,10 @@ import subprocess
 import sys
 
 GROUP = "webpam"
-ADMIN_GROUPS = ("builtin_administrators",)   # TrueNAS admins also get WebPAM access
+ADMIN_GROUPS = ("builtin_administrators",)   # TrueNAS admins get WebPAM access too
 PRIV = 4                                     # WebPAM groupId 4 = super (full admin)
 ALLOWLIST = "/etc/promise/webpam.pamusers"
-UID_MIN = 1000                               # never allowlist system/service accounts
+UID_MIN = 1000                               # floor for the admin-group auto-include only
 
 
 def host(args):
@@ -49,14 +51,20 @@ def member_ids(groups, wanted_names):
     return ids
 
 
-def allowlist_lines(users, ids, priv=PRIV, uid_min=UID_MIN):
-    """`username:priv` lines for real (non-builtin, uid>=uid_min) users in ids."""
+def allowlist_lines(users, webpam_ids, admin_ids, priv=PRIV, uid_min=UID_MIN):
+    """`username:priv` lines. webpam members -> any non-root uid; admins -> uid>=min.
+    Root (uid 0) and builtin accounts are never allowlisted."""
     out = set()
     for u in users or []:
-        if u.get("id") in ids and not u.get("builtin") and (u.get("uid") or 0) >= uid_min:
-            name = u.get("username")
-            if name:
-                out.add(f"{name}:{priv}")
+        if u.get("builtin") or (u.get("uid") or 0) == 0:
+            continue
+        uid = u.get("uid") or 0
+        uid_id = u.get("id")
+        name = u.get("username")
+        if not name:
+            continue
+        if uid_id in webpam_ids or (uid_id in admin_ids and uid >= uid_min):
+            out.add(f"{name}:{priv}")
     return sorted(out)
 
 
@@ -66,9 +74,10 @@ def sync():
     if not any(g.get("name") == GROUP for g in groups):
         midclt("group.create", {"name": GROUP})
         groups = midclt("group.query")
-    ids = member_ids(groups, {GROUP, *ADMIN_GROUPS})
+    webpam_ids = member_ids(groups, {GROUP})
+    admin_ids = member_ids(groups, set(ADMIN_GROUPS))
     users = midclt("user.query")
-    lines = allowlist_lines(users, ids)
+    lines = allowlist_lines(users, webpam_ids, admin_ids)
     tmp = ALLOWLIST + ".tmp"
     with open(tmp, "w") as f:
         f.write("\n".join(lines) + ("\n" if lines else ""))
@@ -77,19 +86,23 @@ def sync():
 
 
 def self_test():
-    groups = [{"name": "webpam", "users": [101, 102]},
-              {"name": "builtin_administrators", "users": [1, 101, 200]},
+    groups = [{"name": "webpam", "users": [101, 102, 950]},             # 950 = admin acct (low uid)
+              {"name": "builtin_administrators", "users": [1, 101, 200, 951]},
               {"name": "other", "users": [300]}]
-    users = [{"id": 101, "username": "alice", "uid": 3001, "builtin": False},
-             {"id": 102, "username": "bob",   "uid": 3002, "builtin": False},
-             {"id": 1,   "username": "root",  "uid": 0,    "builtin": True},
-             {"id": 200, "username": "svc",   "uid": 57,   "builtin": True},
-             {"id": 300, "username": "carol", "uid": 3003, "builtin": False}]
-    ids = member_ids(groups, {"webpam", "builtin_administrators"})
-    assert ids == {101, 102, 1, 200}, ids
-    lines = allowlist_lines(users, ids)
-    # root/svc excluded (builtin + low uid); carol excluded (not a member)
-    assert lines == ["alice:4", "bob:4"], lines
+    users = [{"id": 101, "username": "alice",         "uid": 3001, "builtin": False},
+             {"id": 102, "username": "bob",           "uid": 3002, "builtin": False},
+             {"id": 950, "username": "truenas_admin", "uid": 950,  "builtin": False},
+             {"id": 951, "username": "svc950",        "uid": 950,  "builtin": False},
+             {"id": 1,   "username": "root",          "uid": 0,    "builtin": True},
+             {"id": 200, "username": "svc",           "uid": 57,   "builtin": True},
+             {"id": 300, "username": "carol",         "uid": 3003, "builtin": False}]
+    webpam_ids = member_ids(groups, {"webpam"})
+    admin_ids = member_ids(groups, {"builtin_administrators"})
+    lines = allowlist_lines(users, webpam_ids, admin_ids)
+    # alice/bob/truenas_admin via webpam (truenas_admin allowed despite uid 950);
+    # svc950 is admin-only at uid 950 -> excluded; root/svc builtin -> excluded;
+    # carol not a member.
+    assert lines == ["alice:4", "bob:4", "truenas_admin:4"], lines
     print("self-test OK")
 
 
