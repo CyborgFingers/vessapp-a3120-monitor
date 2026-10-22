@@ -57,6 +57,7 @@ COPY port/packaging/promise-midclt-auth           /opt/promise/bin/promise-midcl
 COPY port/packaging/promise-webpam-group-sync     /opt/promise/bin/promise-webpam-group-sync
 COPY port/packaging/promise-webpam-update         /opt/promise/bin/promise-webpam-update
 COPY port/packaging/promise-webpam-mail-sync      /opt/promise/bin/promise-webpam-mail-sync
+COPY port/packaging/promise-alerts                /opt/promise/bin/promise-alerts
 COPY port/packaging/php-webpam.ini         /etc/php/8.4/fpm/conf.d/90-promise-webpam.ini
 COPY port/packaging/fpm-webpam.conf        /etc/php/8.4/fpm/pool.d/webpam.conf
 COPY port/packaging/nginx-webpam.conf      /etc/nginx/conf.d/webpam.conf
@@ -66,9 +67,9 @@ COPY port/packaging/container/entrypoint.sh /entrypoint.sh
 RUN set -eux; \
     rm -f /etc/php/8.4/fpm/pool.d/www.conf /etc/nginx/sites-enabled/default; \
     chmod +x /opt/promise/bin/promise-health-probe /opt/promise/bin/promise-encld /entrypoint.sh; \
-    chown root:root /opt/promise/bin/promise-pam-auth /opt/promise/bin/promise-midclt-auth /opt/promise/bin/promise-webpam-group-sync /opt/promise/bin/promise-webpam-update /opt/promise/bin/promise-webpam-mail-sync; \
+    chown root:root /opt/promise/bin/promise-pam-auth /opt/promise/bin/promise-midclt-auth /opt/promise/bin/promise-webpam-group-sync /opt/promise/bin/promise-webpam-update /opt/promise/bin/promise-webpam-mail-sync /opt/promise/bin/promise-alerts; \
     chmod 4755 /opt/promise/bin/promise-pam-auth; \
-    chmod 0755 /opt/promise/bin/promise-midclt-auth /opt/promise/bin/promise-webpam-group-sync /opt/promise/bin/promise-webpam-update /opt/promise/bin/promise-webpam-mail-sync; \
+    chmod 0755 /opt/promise/bin/promise-midclt-auth /opt/promise/bin/promise-webpam-group-sync /opt/promise/bin/promise-webpam-update /opt/promise/bin/promise-webpam-mail-sync /opt/promise/bin/promise-alerts; \
     php8.4 -n -d extension=/opt/promise/lib/php/i2.so -m | grep -qx i2; \
     mkdir -p /run/promise /run/php /opt/promise/share; \
     printf '%s\n' '{ "EthLed1": { "Interface": "", "Mac": "", "Mode": 0 }, "EthLed2": { "Interface": "", "Mac": "", "Mode": 0 } }' > /opt/promise/share/frontpanel.json

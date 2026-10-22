@@ -215,6 +215,30 @@ static int fan_enabled(const char *name) {
     return strncmp(v, "false", 5) == 0 ? 0 : 1;
 }
 
+/* "ever spun" memory: a blower channel that has read >0 RPM at least once is a
+ * FITTED fan, so a later 0 RPM is a real MALFUNCTION; a channel never seen
+ * spinning is an empty port -> NOT_INSTALLED (no false alarm). The NCT7802Y
+ * tach cannot tell "absent" from "stopped", so we infer it from history.
+ * ponytail: a blower DOA from boot reads as Not Installed - acceptable, the
+ * slot is still shown; state in /run/promise (www-data-writable). */
+#define FAN_SEEN_FILE "/run/promise/fan-seen"
+static int fan_seen(const char *name) {
+    FILE *f = fopen(FAN_SEEN_FILE, "r");
+    if (!f) return 0;
+    char line[64]; int found = 0;
+    while (fgets(line, sizeof line, f)) {
+        line[strcspn(line, "\n")] = 0;
+        if (strcmp(line, name) == 0) { found = 1; break; }
+    }
+    fclose(f);
+    return found;
+}
+static void fan_mark_seen(const char *name) {
+    if (fan_seen(name)) return;
+    FILE *f = fopen(FAN_SEEN_FILE, "a");
+    if (f) { fprintf(f, "%s\n", name); fclose(f); }
+}
+
 static int collect_fans(fan_rec *out, int max) {
     int n = 0;
     /* Fan 1 = CPU fan, from the nct6776 Super-I/O fan2 header (matches the vendor's
@@ -240,9 +264,11 @@ static int collect_fans(fan_rec *out, int max) {
         for (int ch = 1; ch <= 2 && n < max; ch++) {
             int rpm = nct7802y_read_rpm(b, NCT7802Y_ADDR, ch);
             if (rpm < 0) continue;
-            snprintf(out[n].name, sizeof out[n].name, "Blower");
+            snprintf(out[n].name, sizeof out[n].name, "Blower %d", ch);
             out[n].rpm = rpm;
-            out[n].sts = rpm > 0 ? FAN_STS_FUNCTIONAL : FAN_STS_MALFUNCTION;
+            if (rpm > 0) { fan_mark_seen(out[n].name); out[n].sts = FAN_STS_FUNCTIONAL; }
+            else out[n].sts = fan_seen(out[n].name) ? FAN_STS_MALFUNCTION
+                                                    : FAN_STS_NOT_INSTALLED;  /* empty port */
             n++;
         }
     }
@@ -308,6 +334,19 @@ static const struct { const char *hwlabel; const char *rail; } VOLT_RAILS[] = {
     { "nct6776_in7", "3VSB"  },   /* standby 3.3V rail (verified in7=3.38V) */
     { "nct6776_in8", "Vbat"  },   /* CMOS coin cell  (verified in8=3.17V)   */
 };
+
+/* Voltage alert bounds (mirror promise-alerts). The fixed 3.3V-class rails get
+ * a +/-0.3V band; Vbat warns low (dying CMOS cell). Vcore is CPU-dynamic
+ * (SpeedStep) -> no fixed threshold. mv = kernel-compensated rail millivolts. */
+static unsigned char volt_status(const char *rail, int mv) {
+    if (strcmp(rail, "Vbat") == 0)
+        return mv < 2600 ? VOLTAGE_STS_OVER_LOW_THRESHOLD : VOLTAGE_STS_NORMAL;
+    if (strcmp(rail, "AVCC") == 0 || strcmp(rail, "+3.3V") == 0 || strcmp(rail, "3VSB") == 0) {
+        if (mv > 3600) return VOLTAGE_STS_OVER_HIGH_THRESHOLD;
+        if (mv < 3000) return VOLTAGE_STS_OVER_LOW_THRESHOLD;
+    }
+    return VOLTAGE_STS_NORMAL;   /* Vcore + anything else: display only */
+}
 
 static int collect_volts(hwmon_reading *out, int max) {
     hwmon_reading v[MAX_VOLTS];
@@ -395,7 +434,7 @@ I2B_API_RET_E smbus_getVoltageSensorInfo(I2bVoltageSensorData_t *out, unsigned l
         unsigned tenths = (unsigned)(dv % 10);
         d->SensorId = (unsigned char)(i + 1);
         d->CurVolt  = (unsigned char)(((whole & 0xf) << 4) | (tenths & 0xf)); /* hi.lo, PHP "%u.%uV" */
-        d->StatusFlag = VOLTAGE_STS_NORMAL;
+        d->StatusFlag = volt_status(v[i].label, (int)v[i].value);
         strncpy((char *)d->Type, v[i].label, sizeof d->Type - 1);
     }
     return I2B_API_RET_SUCCESS;

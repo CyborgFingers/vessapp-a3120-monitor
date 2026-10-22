@@ -10,6 +10,41 @@
  ******************************************************************************/
 include 'event0.php';
 
+/* System Events source for the TrueNAS monitor: the vendor RAID-engine event
+ * stream (getEvents) is absent on a controller-less box, so we render the real
+ * events collected by the root `promise-alerts` helper into /run/promise/
+ * alerts.json - TrueNAS alert.list + enclosure sensor faults + syslog tail -
+ * mapped onto the same event fields the table below already renders. */
+function webpam_system_events()
+{
+  $events = array();
+  @date_default_timezone_set('Pacific/Auckland');   /* show alert times in NZ local */
+  $raw = @file_get_contents('/run/promise/alerts.json');
+  if ($raw === false) return $events;
+  $data = json_decode($raw, true);
+  if (!is_array($data) || empty($data['events'])) return $events;
+  $sevnum = array('critical' => 7, 'warning' => 3, 'info' => 2);
+  $sevstr = array('critical' => 'Critical', 'warning' => 'Warning', 'info' => 'Information');
+  $seq = count($data['events']);
+  foreach ($data['events'] as $e) {
+    $sev = isset($e['severity']) ? $e['severity'] : 'info';
+    $t = isset($e['time']) ? intval($e['time']) : 0;
+    $o = new stdClass();
+    $o->evt_SequenceNumber = $seq--;
+    $o->evt_DeviceId = isset($e['source']) ? $e['source'] : '-';
+    $o->evt_VendorEventId = isset($e['id']) ? $e['id'] : '';
+    $o->evt_Severity = isset($sevnum[$sev]) ? $sevnum[$sev] : 2;
+    $o->_Severity = isset($sevstr[$sev]) ? $sevstr[$sev] : 'Information';
+    $o->evt_Timestamp = $t;
+    $o->_Timestamp = $t ? date('Y/m/d H:i:s', $t) : '-';
+    $o->evt_Desc = isset($e['desc']) ? $e['desc'] : '';
+    $o->evt_defaultEventId = '';   /* used by saveEvents() export */
+    $o->evt_specInfo = '';
+    $events[] = $o;
+  }
+  return $events;
+}
+
 $server = getServer();
 $subsystem = $server->getSubsystem();
 $dt = $subsystem->getDateAndTime();
@@ -37,15 +72,7 @@ $_SESSION['lastfile'] = $file;
 
 $note = isset($_GET['note']) ? $_GET['note'] : null;
 $result = isset($_GET['result']) ? $_GET['result'] : 0;
-if (isset($_POST['clear'])) {
-  table_wait();
-  $result = $subsystem->clearEventLog($location);
-  if ($result)
-    redirectPage($file . '&result=' . $result . '&note=' . gresult('cleareventfail'));
-  else
-    redirectPage($file . '&note=' . gresult('cleareventok'));
-  exit;
-} else if (!isset($_POST['save'])) {
+if (!isset($_POST['save'])) {   /* clearing system alerts / syslog is not ours to do */
   // do not reverse or sort after clearing events
   if (!isset($_SESSION['reverse']))
     SetSessionValue('reverse', 1);
@@ -62,15 +89,8 @@ if (isset($_POST['clear'])) {
 // SyncSession();
 
 
-$firstSeq = $subsystem->getFirstEventSeqNo($location);
-$firstSeqNo = $firstSeq->firstSequenceNo;
-
 $getAllEvents = 1;
-if ($getAllEvents) {
-  // give a large number to get all
-  $events = $subsystem->getEvents($location, 10240, $firstSeqNo, $language);
-} else
-  $events = $subsystem->getEvents($location, 50, $firstSeqNo, $language);
+$events = webpam_system_events();
 
 $bHasEvent = 0;
 if (count($events))
@@ -200,7 +220,6 @@ if ($bHasEvent) {
       <table border=0 cellspacing=2 cellpadding=0 align=center>
         <tr>
           <td>
-            <input class=input-p type=submit value="' . gjsprop('cleareventlog') . '" name=clear ' . ($pv > USER_GROUP_POWER ? 'onclick="return validate()"' : 'disabled title="' . gjsalert('noauthtocleareventlog') . '"') . '>
             <input class=input-p type=submit value="' . gjsprop('saveeventlog') . '" name=save ' . ($pv > USER_GROUP_POWER ? '' : 'disabled title="' . gjsalert('noauthsaveeventlog') . '"') . '>
           </td>
         </tr>

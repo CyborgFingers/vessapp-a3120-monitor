@@ -49,7 +49,12 @@ else
   echo "[entrypoint] WARNING: probe produced no snapshot. Needs 'privileged: true' + 'pid: host'"
   echo "[entrypoint]          so nsenter can read the host's zpool/smartctl. Pages will be empty."
 fi
-( while true; do sleep "${HEALTH_REFRESH:-60}"; refresh || true; done ) &
+# System Events snapshot: TrueNAS alert.list + enclosure sensor faults + syslog
+# tail -> /run/promise/alerts.json for events.php; emails new enclosure faults
+# through the TrueNAS mail relay (midclt mail.send). Root, same nsenter path.
+alerts_refresh() { /usr/bin/python3 -I /opt/promise/bin/promise-alerts >/dev/null 2>&1 || true; }
+alerts_refresh
+( while true; do sleep "${HEALTH_REFRESH:-60}"; refresh || true; alerts_refresh; done ) &
 
 # --- host NIC mirror: the container has its OWN netns (eth0/lo only), but the
 # front-panel network LEDs + frontpanel.php must see the HOST's physical NICs.
