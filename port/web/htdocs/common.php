@@ -31,6 +31,35 @@ function webpam_hdsentinel($serial = '', $osname = '')
   return null;
 }
 
+/* Full smartctl drive identity (promise-health-probe writes /run/promise/
+ * drives.json). phydrv.php fills the native rows the vendor health backend
+ * leaves empty - serial / firmware / interface / block size / capacity. */
+function webpam_drivedetail($serial = '', $osname = '')
+{
+  static $snap = false;
+  if ($snap === false) {
+    $raw = @file_get_contents('/run/promise/drives.json');
+    $snap = $raw === false ? null : json_decode($raw, true);
+  }
+  if (!is_array($snap)) return array();
+  $serial = trim((string) $serial);
+  if ($serial !== '' && isset($snap['by_serial'][$serial])) return $snap['by_serial'][$serial];
+  $osname = trim((string) $osname);
+  if ($osname !== '' && isset($snap['by_osname'][$osname])) return $snap['by_osname'][$osname];
+  return array();
+}
+
+/* Human drive-interface string from a drives.json detail record, e.g.
+ * "SATA 3.3 (6.0 Gb/s)". Empty string when nothing is known. */
+function webpam_iface($dd)
+{
+  if (!is_array($dd)) return '';
+  $base = trim((string) ($dd['sata_version'] ?? ($dd['protocol'] ?? '')));
+  $speed = trim((string) ($dd['speed'] ?? ''));
+  if ($base === '' && $speed === '') return '';
+  return $speed !== '' ? trim($base . ' (' . $speed . ')') : $base;
+}
+
 /* ---- webpam-monitor: read-only drive posture --------------------------------
  * This is the drive-health MONITOR build. Every page that WRITES to a drive or
  * array - create/delete/expand/migrate, spare assign/remove, initialize,

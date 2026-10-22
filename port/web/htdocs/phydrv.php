@@ -140,27 +140,39 @@ if ($physicalDrive == null) {
     table_row(gprop('errorcount'), $physicalDrive->getProperty('NumberOfErrors'));
   } else {
     table_head_fold(gprop('physicaldriveinfo'), 'PD', null, null, array('pad' => 2, 'space' => 1, 'border' => 0, 'class' => 'tableContentInner'));
+    /* smartctl detail to fill the identity rows the vendor backend leaves blank */
+    $dd = webpam_drivedetail(
+      isset($physicalDrive->pdi_DriveSerialNo) ? $physicalDrive->pdi_DriveSerialNo : '',
+      isset($physicalDrive->pdi_OsName) ? $physicalDrive->pdi_OsName : ''
+    );
     table_row(gprop('physicaldriveid'), $physicalDrive->pdi_FlatId + 1, $leftWidth);
     if (!isset($physicalDrive->_missing)) {
       table_row(gprop('location'), gprop('enclosure') . ' ' . ($physicalDrive->pdi_EnclosureId + 1) . ' ' . gprop('slot') . ' ' . $physicalDrive->pdi_SlotId);
 
       table_row(gprop('alias'), preg_replace("/\s/", "&nbsp;", $physicalDrive->pdi_DriveAlias));
     }
-    table_row(gprop('physicalcapacity'), $physicalDrive->pdi_PhysicalSize);
+    table_row(gprop('physicalcapacity'), $physicalDrive->pdi_PhysicalSize ?: ($dd['capacity'] ?? ''));
     if (!isset($physicalDrive->_missing)) {
       table_row(gprop('configurablecapacity'), $physicalDrive->pdi_ConfigurableSize);
       table_row(gprop('usedcapacity'), $physicalDrive->pdi_UsedSize);
-      table_row(gprop('blocksize'), $physicalDrive->pdi_BlockSize . ' Bytes');
-      table_row(gprop('opstatus'), $physicalDrive->_opStatusEx, null, getStatusColor($physicalDrive->_opStatus));
+      table_row(gprop('blocksize'), ($physicalDrive->pdi_BlockSize ?: ($dd['logical_block'] ?? '')) . ' Bytes');
+      $opEx = $physicalDrive->_opStatusEx;
+      if ($opEx === null || $opEx === '') {   /* vendor backend left it blank -> derive from SMART */
+        $sm = $dd['smart'] ?? '';
+        if ($sm === 'PASSED') { table_row(gprop('opstatus'), 'OK', null, 'green'); }
+        else if ($sm === 'FAILED') { table_row(gprop('opstatus'), 'Failing (SMART)', null, 'red'); }
+        else { table_row(gprop('opstatus'), $opEx); }
+      } else
+        table_row(gprop('opstatus'), $opEx, null, getStatusColor($physicalDrive->_opStatus));
     } else
       table_row(gprop('opstatus'), $physicalDrive->_opStatus, null, 'red');
     table_row(gprop('configurationstatus'), $physicalDrive->_cfgStatus);
     table_row(gprop('model'), $physicalDrive->pdi_DriveModelNo);
     if (!isset($physicalDrive->_missing)) {
-      table_row(gprop('driveinterface'), $physicalDrive->pdi_DriveInterface);
-      table_row(gprop('serialnumber'), $physicalDrive->pdi_DriveSerialNo);
-      table_row(gprop('firmwareversion'), $physicalDrive->pdi_DriveFirmwareVer);
-      table_row(gprop('protocolversion'), $physicalDrive->pdi_ProtocolMajorVer);
+      table_row(gprop('driveinterface'), $physicalDrive->pdi_DriveInterface ?: webpam_iface($dd));
+      table_row(gprop('serialnumber'), $physicalDrive->pdi_DriveSerialNo ?: ($dd['serial'] ?? ''));
+      table_row(gprop('firmwareversion'), $physicalDrive->pdi_DriveFirmwareVer ?: ($dd['firmware'] ?? ''));
+      table_row(gprop('protocolversion'), $physicalDrive->pdi_ProtocolMajorVer ?: ($dd['sata_version'] ?? ($dd['ata_version'] ?? '')));
     }
     table_row(gprop('visibleto'), $physicalDrive->_visibleto);
     /* HD Sentinel normalised drive health (if installed; else these rows vanish
