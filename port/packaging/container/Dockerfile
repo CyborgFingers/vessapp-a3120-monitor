@@ -32,7 +32,9 @@ RUN set -eux; cd /src/port; \
 # ---------- runtime stage ----------
 FROM debian:trixie-slim
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# apt -y upgrade patches the base image's packages (PHP included) to the latest
+# trixie security level at build time; rebuilding on each release keeps it current.
+RUN apt-get update && apt-get -y upgrade && apt-get install -y --no-install-recommends \
       nginx php8.4-fpm php8.4-cli python3 util-linux smartmontools openssl ca-certificates curl \
  && rm -rf /var/lib/apt/lists/*
 # extension + password tool
