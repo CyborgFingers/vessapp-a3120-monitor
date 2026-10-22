@@ -30,14 +30,14 @@ BORDER-RIGHT: #c5c5c5 1px solid;
 
 
 .input-p-login {font-size:12px; font:bold;background:url(/images/buttonlogin.gif) repeat center; width:192px; height:26px;border:solid 1px #3c5f79; cursor:pointer;line-height: 22px;padding-bottom: 4px;color:#dcdcdc;}
-.input-login{padding: 0px 6px; width: 192px; line-height: 16px; height: 22px;background:url(/images/log_inputbg.gif); border:solid 1px #8d8d8d;border-bottom:solid 1px #e8e8e8;color:#000;font:bold;}
+.input-login{padding: 0px 6px; width: 192px; box-sizing: border-box; line-height: 16px; height: 24px;background:#fff url(/images/log_inputbg.gif); border:solid 1px #8d8d8d;border-bottom:solid 1px #e8e8e8;color:#000;font:bold;}
 .rightText{width:131px; color: #000; font:bold;} 
 .right{width:131px; color: #000; font:bold;}
-.rightText{ float:left; display:table-cell;width:131px; line-height:22px;}
+.rightText{ float:left; display:table-cell;width:auto; line-height:22px;}
 .rightText img{float:left;}
 .rightText span{float:left;}
 .headerBody{width:100%; margin:0 auto; text-align:center;}
-.noteText{margin-left:139px; *padding-left:139px; display:inline-table; width:192px;line-height: 20px;}
+.noteText{display:inline-table; width:192px; height:40px; vertical-align:top; line-height: 20px;}
 .text5 {font-size:12px;color:#262626;}
 .text5red {font-size:11px; color:#FF0000;}
 .text5white {font-size:11px; color:#00538d;}

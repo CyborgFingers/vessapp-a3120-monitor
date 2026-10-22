@@ -251,8 +251,10 @@ a.headerSubMenuText{margin-right:10px;margin-left:2px;}
 .logtab1{ border-top:solid 1px #c0c0c0; border-left:solid 1px #aeadad; border-right:solid 1px #aeadad; border-bottom:solid 1px #aeadad; background:url(/images/bg_log.gif);padding:2px; margin:0 auto; }
 .logtab2{ width:520px; height:270px; border-top:solid 1px #a3a3a3; border-left:solid 1px #a3a3a3;  border-right:solid 1px #a3a3a3;  border-bottom:solid 1px #ededed; background:url(/images/bg_log2.gif);padding:2px;}
 .login{margin:0 auto;padding:0px; vertical-align:bottom;}
+/* 54px = 14px button-to-note gap + 40px .noteText reservation: same space above the fields as below, so they sit dead-centre in .logtab2 */
+#loginLayout{padding-top:54px; text-align:center;}
 .icoimg{ 
 float:left;
-margin: 0px 0px 0px 32px;
+margin: 0px;
 display:block;
 }

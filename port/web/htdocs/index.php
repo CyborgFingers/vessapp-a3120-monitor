@@ -284,7 +284,6 @@ else {
               <td align=left nowrap>
                 <input class="input-p-login" type="submit" value="<? echo gprop('login') ?>" name="submit" />
               </td>
-              <td class="rightText"></td>
             </tr>
           </table>
         </td>
