@@ -40,7 +40,9 @@ def fetch():
     import zipfile
     os.makedirs(os.path.dirname(BIN), exist_ok=True)
     try:
-        with urllib.request.urlopen(HDS_URL, timeout=60) as r:   # HTTPS, official host
+        # hdsentinel.com 403s the default python-urllib UA; send a browser one.
+        req = urllib.request.Request(HDS_URL, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) webpam-monitor"})
+        with urllib.request.urlopen(req, timeout=60) as r:   # HTTPS, official host
             data = r.read()
         zf = zipfile.ZipFile(io.BytesIO(data))
         # the archive holds a single executable (named "HDSentinel")
