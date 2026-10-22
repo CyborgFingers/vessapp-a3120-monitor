@@ -14,12 +14,43 @@ mkdir -p /run/php /etc/promise
 # (it was ephemeral under /var/lib/promise-hwmon, wiped on every app update).
 install -d -m 0775 -o www-data -g www-data /etc/promise/hwmon 2>/dev/null || true
 
-# --- TLS cert (persisted when /etc/promise is a mounted volume) ---------------
-if [ ! -s /etc/promise/webpam.crt ] || [ ! -s /etc/promise/webpam.key ]; then
+# --- TLS cert (self-signed, persisted in /etc/promise) ------------------------
+# Modern browsers IGNORE the CN and REQUIRE a subjectAltName; a SAN-less cert is
+# rejected outright (ERR_CERT_COMMON_NAME_INVALID). So we put the host's own IPs
+# (what you actually browse to) + hostname in the SAN. It is still self-signed,
+# so the browser shows a one-time "not trusted" prompt until you trust/install it
+# (see the Certificate help page, /certhelp.php) - but it is now VALID for the IP.
+# Host IPs come from the host netns (privileged + pid:host); on a plain docker
+# host set WEBPAM_SAN="192.0.2.10 nas.lan" to the names/IPs you reach it by.
+build_san() {
+  local san="DNS:localhost,IP:127.0.0.1" h tok
+  h="$(hostname 2>/dev/null)"; [ -n "$h" ] && san="$san,DNS:$h"
+  local ips; ips="$(nsenter -t 1 -m -u -i -n -p -- hostname -I 2>/dev/null)"
+  for tok in $ips ${WEBPAM_SAN:-}; do
+    case "$tok" in
+      *:*)                                 : ;;                 # skip IPv6
+      [0-9]*.[0-9]*.[0-9]*.[0-9]*)         san="$san,IP:$tok" ;;
+      "")                                  : ;;
+      *)                                   san="$san,DNS:$tok" ;;
+    esac
+  done
+  printf '%s' "$san"
+}
+regen_cert=0
+[ -s /etc/promise/webpam.crt ] && [ -s /etc/promise/webpam.key ] || regen_cert=1
+# upgrade an older SAN-less cert, and refresh if the host's primary IP isn't on it
+if [ "$regen_cert" = 0 ]; then
+  openssl x509 -in /etc/promise/webpam.crt -noout -text 2>/dev/null | grep -q "Subject Alternative Name" || regen_cert=1
+  PRIMARY_IP="$(nsenter -t 1 -m -u -i -n -p -- hostname -I 2>/dev/null | tr ' ' '\n' | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' | head -1)"
+  [ -n "$PRIMARY_IP" ] && { openssl x509 -in /etc/promise/webpam.crt -noout -text 2>/dev/null | grep -qF "$PRIMARY_IP" || regen_cert=1; }
+fi
+if [ "$regen_cert" = 1 ]; then
+  SAN="$(build_san)"
   openssl req -x509 -newkey rsa:2048 -nodes -days 3650 \
     -keyout /etc/promise/webpam.key -out /etc/promise/webpam.crt \
-    -subj "/CN=${WEBPAM_CN:-webpam-monitor}" >/dev/null 2>&1 \
-    && echo "[entrypoint] generated self-signed TLS cert" \
+    -subj "/CN=${WEBPAM_CN:-Vess A3120 WebPAM Monitor}" \
+    -addext "subjectAltName=$SAN" >/dev/null 2>&1 \
+    && echo "[entrypoint] generated self-signed TLS cert ($SAN)" \
     || echo "[entrypoint] WARNING: openssl cert generation failed - :8443 will not start"
 fi
 chown root:www-data /etc/promise/webpam.key 2>/dev/null || true

@@ -69,6 +69,11 @@ Read-only is **structural**, not just hidden buttons:
 - **System events & alerts:** the **Events** page merges TrueNAS system alerts,
   the enclosure sensor faults WebPAM detects, drive-health warnings, and the host
   syslog; each new fault is emailed once your SMTP (above) is set.
+- **HTTPS certificate:** the cert is self-signed (no public CA will issue one for
+  a private IP) but now includes the box's **IP in the certificate**, so there's
+  no name-mismatch error. To clear the one-time *"not secure"* prompt entirely,
+  use the **"Certificate / warning?"** link on the login page → download & trust
+  it once. Reaching WebPAM by a hostname too? set `WEBPAM_SAN="nas.lan"`.
 - **Rollback:** the prior image is kept as `webpam-monitor:stable-patched`.
 
 See [`docs/TRUENAS.md`](docs/TRUENAS.md) for the full guide.

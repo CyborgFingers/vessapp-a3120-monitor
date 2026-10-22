@@ -79,3 +79,5 @@ echo "[setup] Open https://<nas-ip>:$HTTPS_PORT and log in as 'administrator' (t
 echo "[setup] TrueNAS admins + members of the 'webpam' group can also sign in with their TrueNAS login."
 echo "[setup] Drive Health % is provided by Hard Disk Sentinel (https://www.hdsentinel.com),"
 echo "[setup]   proprietary freeware auto-downloaded on first run (set VESSAPP_HDSENTINEL=0 to opt out)."
+echo "[setup] HTTPS uses a self-signed cert that now includes this box's IP (no name-mismatch)."
+echo "[setup]   To stop the browser warning, open the 'Certificate' link on the login page and trust it once."

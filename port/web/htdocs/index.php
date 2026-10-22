@@ -286,6 +286,13 @@ else {
               </td>
               <td class="rightText"></td>
             </tr>
+            <tr>
+              <td></td>
+              <td align=left nowrap>
+                <a href="certhelp.php" style="font-size:11px;color:#888;text-decoration:none;">Certificate / “not secure” warning?</a>
+              </td>
+              <td></td>
+            </tr>
           </table>
         </td>
       </tr>
