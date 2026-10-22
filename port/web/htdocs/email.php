@@ -114,6 +114,23 @@ $curuser = getCurrentUser($subsystem);
       $emailsetting->from = htmlspecialchars($_POST['from']);
       $emailsetting->subject = htmlspecialchars($_POST['subject']);
       $testresult = $subsystem->setEmailSetting($emailsetting);
+      // Optional: route TrueNAS's own system alerts through this same SMTP
+      // server. www-data only QUEUES (reads what was just POSTed); the root
+      // watcher (promise-webpam-mail-sync) applies it via midclt mail.update.
+      if (isset($_POST['truenassync'])) {
+        $__port = (int)$_POST['smtpport'];
+        $__auto = ($_POST['authmethod'] === 'AUTO');
+        $__m = array(
+          'outgoingserver' => $_POST['smtphost'],
+          'port'           => $__port,
+          'security'       => ($_POST['encryption'] == 0 ? 'PLAIN' : ($__port === 465 ? 'SSL' : 'TLS')),
+          'smtp'           => $__auto,
+          'user'           => $__auto ? $_POST['username'] : '',
+          'pass'           => $__auto ? ($_POST['password'] ?? '') : '',
+          'fromemail'      => $_POST['from'],
+        );
+        @file_put_contents('/run/promise/mailsync.request', json_encode($__m));
+      }
     }
     if ($testresult == PIERR_NO_ERROR)
       $note = gresult('emailapplyok');
@@ -172,6 +189,7 @@ $curuser = getCurrentUser($subsystem);
 
         table_row_edit(gprop('smtpserverip'), $emailsetting->smtphost, 'smtphost', 63, 30, null, 'msg_smtphost');
         table_row_edit(gprop('smtpserverport'), $emailsetting->smtpport, 'smtpport', 5, 30, null, 'msg_smtpport');
+        table_row_checkbox('Also route TrueNAS system alerts through this SMTP server', false, 'truenassync');
       ?>
         <!-- SMTP Encryption -->
         <tr>

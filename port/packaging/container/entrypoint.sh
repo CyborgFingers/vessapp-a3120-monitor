@@ -146,6 +146,9 @@ fi
     if [ -f /run/promise/update.request ]; then
       /opt/promise/bin/promise-webpam-update >/dev/null 2>&1 || true
     fi
+    if [ -f /run/promise/mailsync.request ]; then
+      /opt/promise/bin/promise-webpam-mail-sync >/dev/null 2>&1 || true
+    fi
     sleep 10
   done ) &
 
