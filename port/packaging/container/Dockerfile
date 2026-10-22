@@ -40,6 +40,7 @@ COPY --from=build /src/port/php-ext/modules/i2.so /opt/promise/lib/php/i2.so
 COPY --from=build /promise-webpam-passwd          /opt/promise/bin/promise-webpam-passwd
 COPY --from=build /promise-encld                  /opt/promise/bin/promise-encld
 COPY port/packaging/fanconfig.json                /opt/promise/share/fanconfig.json
+COPY VERSION                                      /opt/promise/share/VERSION
 # htdocs + probe + the shipped web-tier configs (used verbatim, like _fpm-inner.sh)
 COPY port/web/htdocs                       /opt/promise/webpam/htdocs
 # php-webpam.ini sets auto_prepend_file to this SAPI-compat shim; EVERY page

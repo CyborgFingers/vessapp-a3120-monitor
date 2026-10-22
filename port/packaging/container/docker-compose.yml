@@ -7,8 +7,11 @@
 # has no drive-management code path at all.
 services:
   webpam-monitor:
-    image: webpam-monitor:local        # build first: see README.md (docker build ...)
-    pull_policy: never                 # use the locally-built image, never try a registry
+    image: ghcr.io/weta-technologies/vessapp-a3120-monitor:latest
+    # Published by .github/workflows/release.yml on each version tag; the in-app
+    # updater pulls newer tags from here. (Follows the repo owner - update if the
+    # repo moves.) For local dev, build it yourself (see README) and set
+    # image: webpam-monitor:local with pull_policy: never.
     container_name: webpam-monitor
     restart: unless-stopped
     privileged: true                   # required for nsenter into the host
