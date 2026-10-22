@@ -54,8 +54,14 @@ fi
 # persisted /etc/promise volume on first run. Slow cadence (drive health changes
 # slowly + avoid hammering SMART). Writes /run/promise/hdsentinel.json for the
 # drive pages + promise-alerts. Dormant if fetch fails -> pages fall back to smartctl.
-if [ "${VESSAPP_HDSENTINEL:-0}" = 1 ]; then
+# Fetch (opt-in download of the proprietary binary) only when explicitly enabled.
+if [ "${VESSAPP_HDSENTINEL:-}" = 1 ]; then
   /usr/bin/python3 -I /opt/promise/bin/promise-hdsentinel --fetch >/dev/null 2>&1 || true
+fi
+# Parse on a slow loop whenever the binary is present (run() self-no-ops if not),
+# unless explicitly disabled - so a persisted volume that already holds the binary
+# keeps refreshing even if the app's stored env doesn't carry VESSAPP_HDSENTINEL.
+if [ "${VESSAPP_HDSENTINEL:-1}" != 0 ]; then
   hds_refresh() { /usr/bin/python3 -I /opt/promise/bin/promise-hdsentinel >/dev/null 2>&1 || true; }
   hds_refresh
   ( while true; do sleep "${HDS_REFRESH:-900}"; hds_refresh; done ) &
