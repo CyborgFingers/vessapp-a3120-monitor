@@ -68,6 +68,7 @@ function oneFeature($text, $ref)
 </head>
 
 <body class=<?= $showbody ?> >
+<?php require_once 'winupdate.php'; winupdate_banner(); ?>
 
 <table align="center" width="500">
 	<tr>

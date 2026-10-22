@@ -139,6 +139,16 @@ if [ "${VESSAPP_TRUENAS_SYNC:-0}" = 1 ]; then
       /opt/promise/bin/promise-webpam-group-sync >/dev/null 2>&1 || true; done ) &
 fi
 
+# --- updater: apply a queued update (root). update.php (www-data) drops the
+# target tag in /run/promise/update.request; we perform the pull + restart via the
+# host app updater, so the unprivileged web tier never updates itself. -----------
+( while true; do
+    if [ -f /run/promise/update.request ]; then
+      /opt/promise/bin/promise-webpam-update >/dev/null 2>&1 || true
+    fi
+    sleep 10
+  done ) &
+
 # --- serve (php-fpm workers = www-data read the snapshot; nginx front) ---------
 echo "[entrypoint] starting php-fpm + nginx (read-only monitor) on :8443 (:8088 redirects)"
 php-fpm8.4 -F &
