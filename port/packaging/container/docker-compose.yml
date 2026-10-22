@@ -7,7 +7,7 @@
 # has no drive-management code path at all.
 services:
   webpam-monitor:
-    image: ghcr.io/weta-technologies/vessapp-a3120-monitor:latest
+    image: ghcr.io/cyborgfingers/vessapp-a3120-monitor:latest
     # Published by .github/workflows/release.yml on each version tag; the in-app
     # updater pulls newer tags from here. (Follows the repo owner - update if the
     # repo moves.) For local dev, build it yourself (see README) and set

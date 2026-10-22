@@ -13,7 +13,7 @@ therefore needs **`privileged: true` + `pid: host`** — and it only ever *reads
 **Apps → Discover Apps → Custom App → "Install via YAML"**, paste
 `docker-compose.yml` from this directory, set `WEBPAM_PASSWORD`, and install.
 TrueNAS pulls the published image
-(`ghcr.io/weta-technologies/vessapp-a3120-monitor:latest`) — **no build step** —
+(`ghcr.io/cyborgfingers/vessapp-a3120-monitor:latest`) — **no build step** —
 starts it, and keeps it running.
 
 Then open `https://<nas-ip>:8443/` and log in as `administrator` with that
