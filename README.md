@@ -1,8 +1,10 @@
 # Vess A3120 — Read-Only Health Monitor (unofficial)
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE) ![Platform: TrueNAS · Proxmox](https://img.shields.io/badge/platform-TrueNAS%20%C2%B7%20Proxmox-informational) ![Disks: read-only](https://img.shields.io/badge/disks-read--only-success)
+
 > **⚠️ Independent, unofficial project — NOT affiliated with, endorsed by, or associated with Promise Technology, Inc.** See [Legal & Trademarks](#legal--trademarks).
 >
-> **🔒 Proprietary — All Rights Reserved.** Access to this source does **not** grant any license. No use, modification, or redistribution is permitted without prior **written permission**. See [LICENSE](LICENSE).
+> **📜 Free software — GPL-3.0.** Use, study, modify, and redistribute under the [GNU General Public License v3.0](LICENSE). Provided with no warranty.
 
 A **read-only health-monitor** edition of the Vess A3120 Linux stack, built to
 run safely alongside an existing OS on the **same A3120 chassis** — designed for
@@ -74,7 +76,10 @@ property of their respective owners.
 
 ## License
 
-**Proprietary — All Rights Reserved.** © 2026 Number 8 Technologies Limited.
-See [LICENSE](LICENSE). No use, modification, or redistribution without prior
-written permission. To request permission, contact the copyright holder via
-[github.com/Number-8-Technologies](https://github.com/Number-8-Technologies).
+**GNU General Public License v3.0** — © 2026 Number 8 Technologies Limited.
+You may use, study, modify, and redistribute this software under the terms of
+the [GPL-3.0](LICENSE). Distributed in the hope it will be useful, but **with no
+warranty**.
+
+The GPL covers copyright only and grants **no rights in any Promise Technology
+name or trademark** — see [Legal & Trademarks](#legal--trademarks).
