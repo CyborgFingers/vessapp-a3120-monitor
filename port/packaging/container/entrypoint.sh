@@ -93,7 +93,10 @@ if [ "${VESSAPP_BACKEND:-}" = smbus ]; then
   # Load the host i2c drivers (host kernel, via nsenter) so /dev/i2c-<bus> exists,
   # then materialise the device node in THIS (privileged) container so php_i2 and
   # promise-encld can open the SMBus (PCA9555 LEDs @0x20/0x21, NCT7802Y @0x2e).
-  nsenter -t 1 -m -u -i -n -p -- modprobe i2c-dev i2c-i801 nct6775 2>/dev/null || true
+  # -a: load ALL THREE as modules. Without it, modprobe reads "i2c-i801 nct6775"
+  # as PARAMETERS to i2c-dev, so the nct6775 Super-I/O (CPU fan + system voltages)
+  # never loads and the sensor page shows no CPU fan / empty voltages.
+  nsenter -t 1 -m -u -i -n -p -- modprobe -a i2c-dev i2c-i801 nct6775 2>/dev/null || true
   for n in 0 1 2 3 4 5; do [ -e "/dev/i2c-$n" ] || mknod "/dev/i2c-$n" c 89 "$n" 2>/dev/null || true; done
   # php-fpm workers (www-data) read the NCT7802Y blowers over SMBus via php_i2, so
   # www-data needs rw on the node - mknod leaves it root-only, which silently drops
