@@ -128,6 +128,17 @@ if [ "${VESSAPP_BACKEND:-}" = smbus ]; then
   fi
 fi
 
+# --- TrueNAS user sync: mirror the `webpam` group (+ TrueNAS admins) into the
+# WebPAM allowlist so those users sign in with their TrueNAS password. Opt-in via
+# VESSAPP_TRUENAS_SYNC=1 (set in the TrueNAS compose; left off on a plain Docker
+# host, which has no midclt). Runs as root here, so nsenter can reach midclt. ----
+if [ "${VESSAPP_TRUENAS_SYNC:-0}" = 1 ]; then
+  /opt/promise/bin/promise-webpam-group-sync \
+    || echo "[entrypoint] WARNING: TrueNAS group sync failed (is midclt reachable via nsenter?)"
+  ( while true; do sleep "${WEBPAM_SYNC_REFRESH:-300}"; \
+      /opt/promise/bin/promise-webpam-group-sync >/dev/null 2>&1 || true; done ) &
+fi
+
 # --- serve (php-fpm workers = www-data read the snapshot; nginx front) ---------
 echo "[entrypoint] starting php-fpm + nginx (read-only monitor) on :8443 (:8088 redirects)"
 php-fpm8.4 -F &

@@ -21,6 +21,10 @@ services:
       #   docker exec webpam-monitor /opt/promise/bin/promise-webpam-passwd <pw>)
       WEBPAM_PASSWORD: "change-me-please"
       HEALTH_REFRESH: "60"             # seconds between host health snapshots
+      # Mirror the TrueNAS `webpam` group (+ TrueNAS admins) into WebPAM login, so
+      # those users sign in with their TrueNAS password. Leave unset on a plain
+      # Docker host (no midclt). See port/packaging/promise-webpam-group-sync.
+      VESSAPP_TRUENAS_SYNC: "1"
     volumes:
       - webpam_monitor_cfg:/etc/promise # persist the TLS cert + login password
 volumes:

@@ -21,7 +21,8 @@ RUN set -eux; cd /src/port/php-ext; \
     ./configure --enable-i2=shared --with-php-config="$(command -v php-config)"; \
     make -j"$(nproc)"; \
     test -f modules/i2.so; \
-    cc -O2 -o /promise-webpam-passwd /src/port/src/tools/promise_webpam_passwd.c -lcrypt
+    cc -O2 -o /promise-webpam-passwd /src/port/src/tools/promise_webpam_passwd.c -lcrypt; \
+    cc -O2 -o /promise-pam-auth-shim /src/port/src/tools/promise_pam_auth_shim.c
 # enclosure daemon: drives the A3120 fans + front-panel LEDs over SMBus
 RUN set -eux; cd /src/port; \
     cmake -B build-encld -DCMAKE_BUILD_TYPE=Release >/dev/null 2>&1; \
@@ -45,6 +46,12 @@ COPY port/web/htdocs                       /opt/promise/webpam/htdocs
 # require()s it, so it must be present or all pages fatal.
 COPY port/packaging/compat-prepend.php     /opt/promise/webpam/compat-prepend.php
 COPY port/packaging/promise-health-probe   /opt/promise/bin/promise-health-probe
+# TrueNAS user sync + midclt auth backend (sign in with your TrueNAS login). The
+# setuid-root shim lands at the hardcoded promise-pam-auth path php_i2 execs; it
+# re-execs the python backend as root so it can nsenter -> the host's `midclt`.
+COPY --from=build /promise-pam-auth-shim          /opt/promise/bin/promise-pam-auth
+COPY port/packaging/promise-midclt-auth           /opt/promise/bin/promise-midclt-auth
+COPY port/packaging/promise-webpam-group-sync     /opt/promise/bin/promise-webpam-group-sync
 COPY port/packaging/php-webpam.ini         /etc/php/8.4/fpm/conf.d/90-promise-webpam.ini
 COPY port/packaging/fpm-webpam.conf        /etc/php/8.4/fpm/pool.d/webpam.conf
 COPY port/packaging/nginx-webpam.conf      /etc/nginx/conf.d/webpam.conf
@@ -54,6 +61,9 @@ COPY port/packaging/container/entrypoint.sh /entrypoint.sh
 RUN set -eux; \
     rm -f /etc/php/8.4/fpm/pool.d/www.conf /etc/nginx/sites-enabled/default; \
     chmod +x /opt/promise/bin/promise-health-probe /opt/promise/bin/promise-encld /entrypoint.sh; \
+    chown root:root /opt/promise/bin/promise-pam-auth /opt/promise/bin/promise-midclt-auth /opt/promise/bin/promise-webpam-group-sync; \
+    chmod 4755 /opt/promise/bin/promise-pam-auth; \
+    chmod 0755 /opt/promise/bin/promise-midclt-auth /opt/promise/bin/promise-webpam-group-sync; \
     php8.4 -n -d extension=/opt/promise/lib/php/i2.so -m | grep -qx i2; \
     mkdir -p /run/promise /run/php /opt/promise/share; \
     printf '%s\n' '{ "EthLed1": { "Interface": "", "Mac": "", "Mode": 0 }, "EthLed2": { "Interface": "", "Mac": "", "Mode": 0 } }' > /opt/promise/share/frontpanel.json
