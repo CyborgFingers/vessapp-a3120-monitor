@@ -46,10 +46,16 @@ Read-only is structural, not just "buttons hidden":
 
 ## Quick start
 
-- **TrueNAS:** Apps → Discover → Custom App → **Install via YAML**, paste
-  [`port/packaging/container/docker-compose.yml`](port/packaging/container/docker-compose.yml)
-  (it pulls the published image — **no build**), set `WEBPAM_PASSWORD`, install.
-  See [`port/packaging/container/README.md`](port/packaging/container/README.md).
+- **TrueNAS (easy — 3 commands):**
+  ```bash
+  git clone https://github.com/CyborgFingers/vessapp-a3120-monitor
+  cd vessapp-a3120-monitor
+  sudo bash port/packaging/truenas-setup.sh
+  ```
+  Builds the image, deploys the Custom App, and enables TrueNAS login. Full
+  walkthrough: [`docs/TRUENAS.md`](docs/TRUENAS.md). (Or paste
+  [`docker-compose.yml`](port/packaging/container/docker-compose.yml) via
+  Apps → Install via YAML.)
 - **Proxmox / Debian host:** `sudo bash port/packaging/install-webpam-monitor.sh`
 
 Then browse `https://<host>:8443/` (container) or `http://<host>:8088/`
