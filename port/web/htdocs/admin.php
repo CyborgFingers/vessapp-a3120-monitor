@@ -101,6 +101,12 @@ $columns = array(
 table_row_cols($columns);
 
 $columns = array(
+  array('SSL / TLS Certificate', 'sslsettings.php'),
+  'Install your own server certificate + CA chain, or regenerate the self-signed certificate.'
+);
+table_row_cols($columns);
+
+$columns = array(
   array(gprop('emailsetting'), 'email.php?act=create&tab=0'),
   gprop('emailsettingdesc')
 );

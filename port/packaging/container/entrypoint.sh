@@ -18,8 +18,8 @@ install -d -m 0775 -o www-data -g www-data /etc/promise/hwmon 2>/dev/null || tru
 # Modern browsers IGNORE the CN and REQUIRE a subjectAltName; a SAN-less cert is
 # rejected outright (ERR_CERT_COMMON_NAME_INVALID). So we put the host's own IPs
 # (what you actually browse to) + hostname in the SAN. It is still self-signed,
-# so the browser shows a one-time "not trusted" prompt until you trust/install it
-# (see the Certificate help page, /certhelp.php) - but it is now VALID for the IP.
+# so the browser shows a one-time "not trusted" prompt until you install your own
+# cert (Administration -> SSL / TLS Certificate) - but it is now VALID for the IP.
 # Host IPs come from the host netns (privileged + pid:host); on a plain docker
 # host set WEBPAM_SAN="192.0.2.10 nas.lan" to the names/IPs you reach it by.
 build_san() {
@@ -205,6 +205,9 @@ fi
     fi
     if [ -f /run/promise/mailsync.request ]; then
       /opt/promise/bin/promise-webpam-mail-sync >/dev/null 2>&1 || true
+    fi
+    if [ -f /run/promise/ssl.request ]; then
+      /usr/bin/python3 -I /opt/promise/bin/promise-webpam-ssl >/dev/null 2>&1 || true
     fi
     sleep 10
   done ) &
