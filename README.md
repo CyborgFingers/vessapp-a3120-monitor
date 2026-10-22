@@ -76,7 +76,7 @@ property of their respective owners.
 
 ## License
 
-**GNU General Public License v3.0** — © 2026 Number 8 Technologies Limited.
+**GNU General Public License v3.0** — © 2026 [CyborgFingers](https://github.com/CyborgFingers).
 You may use, study, modify, and redistribute this software under the terms of
 the [GPL-3.0](LICENSE). Distributed in the hope it will be useful, but **with no
 warranty**.
