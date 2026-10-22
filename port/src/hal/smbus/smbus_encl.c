@@ -249,10 +249,12 @@ static int collect_fans(fan_rec *out, int max) {
     return n;
 }
 
-/* Golden A3120 temp model: exactly two sensors, "CPU" and "Controller",
- * healthy < 90 C (warn) / 100 C (crit). CPU <- coretemp "Package id 0"
- * (fallback "Core 0"); Controller <- nct6776 "SYSTIN" - the only valid board
- * sensor on this box (CPUTIN/AUXTIN float negative = unwired). */
+/* A3120 temp model, healthy < 90 C (warn) / 100 C (crit). The first two are the
+ * golden pair: CPU <- coretemp "Package id 0" (fallback "Core 0"); Controller <-
+ * nct6776 "SYSTIN". We then append the other REAL board sensors - the per-core
+ * CPU temps and the PCH chipset - so the page reflects all live silicon. The
+ * junk pins are dropped by the value<=0 filter (CPUTIN/AUXTIN float negative,
+ * PCH_CHIP/CPU/MCH read 0) and PECI is skipped as a duplicate CPU reading. */
 #define TEMP_WARN_C 90
 #define TEMP_CRIT_C 100
 
@@ -279,6 +281,18 @@ static int collect_temps(hwmon_reading *out, int max) {
         snprintf(out[c].label, sizeof out[c].label, "Controller");
         c++;
     }
+    /* Extra real sensors: per-core CPU temps + PCH chipset. Skip the input
+     * already reported as CPU, and only accept the known-good labels. */
+    for (int i = 0; i < n && c < max; i++) {
+        if (t[i].value <= 0 || &t[i] == cpu) continue;
+        const char *disp = NULL;
+        if (strncmp(t[i].label, "Core ", 5) == 0)              disp = t[i].label;  /* Core 0..3 */
+        else if (strcmp(t[i].label, "pch_skylake_temp1") == 0) disp = "PCH";
+        if (!disp) continue;
+        out[c].value = t[i].value;
+        snprintf(out[c].label, sizeof out[c].label, "%s", disp);
+        c++;
+    }
     return c;
 }
 
@@ -291,6 +305,8 @@ static const struct { const char *hwlabel; const char *rail; } VOLT_RAILS[] = {
     { "nct6776_in0", "Vcore" },
     { "nct6776_in2", "AVCC"  },
     { "nct6776_in3", "+3.3V" },
+    { "nct6776_in7", "3VSB"  },   /* standby 3.3V rail (verified in7=3.38V) */
+    { "nct6776_in8", "Vbat"  },   /* CMOS coin cell  (verified in8=3.17V)   */
 };
 
 static int collect_volts(hwmon_reading *out, int max) {
