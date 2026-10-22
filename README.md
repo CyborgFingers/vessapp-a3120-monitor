@@ -1,8 +1,12 @@
 <div align="center">
 
-# Vess A3120 Read-Only Monitor
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
+  <img alt="Vess A3120 — Read-Only Monitor. Health dashboard + full enclosure control — unofficial, independent, structurally read-only, built to run beside your NAS on the same box." src="assets/banner-light.svg" width="100%">
+</picture>
 
-**Health dashboard + full enclosure control for the Promise Vess A3120 — unofficial, structurally read-only, built to run beside TrueNAS or Proxmox on the same chassis.**
+<br>
 
 <p>
   <a href="LICENSE"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
@@ -14,21 +18,23 @@
 </p>
 
 <p>
-  <a href="#-install-on-truenas--3-commands">Install</a> ·
-  <a href="#what-you-get">Features</a> ·
-  <a href="#why-its-safe-on-a-live-nas">Why it's safe</a> ·
-  <a href="#how-it-works">How it works</a> ·
-  <a href="#using-it">Using it</a> ·
-  <a href="#configuration">Configuration</a> ·
+  <a href="#-install-on-truenas--3-commands"><b>Install</b></a> ·
+  <a href="#-what-you-get">Features</a> ·
+  <a href="#-why-its-safe-on-a-live-nas">Why it's safe</a> ·
+  <a href="#-how-it-works">How it works</a> ·
+  <a href="#-using-it">Using it</a> ·
+  <a href="#-configuration">Configuration</a> ·
   <a href="docs/TRUENAS.md">Full guide</a> ·
-  <a href="#legal--trademarks">Legal</a>
+  <a href="#-legal--trademarks">Legal</a>
 </p>
 
 </div>
 
-> **⚠️ Independent, unofficial project — NOT affiliated with, endorsed by, or associated with Promise Technology, Inc.** See [Legal & Trademarks](#legal--trademarks).
->
-> **📜 Free software — GPL-3.0.** Use, study, modify, and redistribute under the [GNU General Public License v3.0](LICENSE). Provided with no warranty.
+> [!IMPORTANT]
+> **Independent, unofficial project — NOT affiliated with, endorsed by, or associated with Promise Technology, Inc.** See [Legal & Trademarks](#-legal--trademarks).
+
+> [!NOTE]
+> **Free software — GPL-3.0.** Use, study, modify, and redistribute under the [GNU General Public License v3.0](LICENSE). Provided with no warranty.
 
 A drive / pool / SMART / temperature **health dashboard** with full **enclosure fan,
 LED and buzzer control** for the **Promise Vess A3120**, designed to run safely
@@ -37,7 +43,7 @@ LED and buzzer control** for the **Promise Vess A3120**, designed to run safely
 no create / delete / migrate / rebuild path anywhere in it. Not a hidden button —
 the RAID write path simply does not exist in this codebase.
 
----
+<br>
 
 ## 🚀 Install on TrueNAS — 3 commands
 
@@ -73,25 +79,59 @@ Re-running the setup script is safe: an existing app is redeployed onto a fresh 
 
 **Full walkthrough: [`docs/TRUENAS.md`](docs/TRUENAS.md).**
 
----
+<br>
 
-## What you get
+## ✨ What you get
 
-| | |
-|---|---|
-| 🩺 **Health dashboard — ZFS *and* mdadm/LVM** | Pools, arrays, logical & physical drives with SMART + temperature. Onboard/OS disks show as **Internal**, not in empty bays. |
-| 🔒 **Structurally read-only** | A dedicated health backend fills every view from a periodic **read-only snapshot** (`zpool` / `smartctl` / `lsblk` / `mdstat`). **No RAID write-helper is installed**, and the drive-management pages are nav-stripped and guarded. |
-| 🌀 **Full enclosure control** | CPU-fan and chassis-blower **fan curves with 1% granularity** + optional PWM→RPM calibration; front-panel **status LEDs** and **network LEDs**; the **fault buzzer**. *(Needs real A3120 hardware.)* |
-| 🌡️ **System hardware monitoring** | CPU **package + per-core** temps, **PCH/chipset** temp, **controller/board** temp. Voltage rails: **Vcore, AVCC, +3.3V, 3VSB** and the **CMOS battery (Vbat)**. CPU fan + chassis blowers, with empty-port **"Not Installed"** detection — no false alarms. |
-| 💾 **Per-drive Health %** | Normalised health score, temperature and power-on hours via **[Hard Disk Sentinel](https://www.hdsentinel.com)**, auto-installed from hdsentinel.com on first run (proprietary freeware — **not bundled**; see [Acknowledgements](#acknowledgements)). Plus full `smartctl` identity on each drive page: **serial, firmware, interface** (e.g. SATA 3.3 / 6.0 Gb/s), **block size, capacity, SMART status**. |
-| 📋 **System Events** | One page merging **TrueNAS system alerts** (`alert.list`), the **enclosure sensor faults** WebPAM detects, **drive-health warnings**, and the **host syslog** — with **email on each new fault**. |
-| 👤 **Sign in with TrueNAS** | Members of the auto-created **`webpam` group** — and **any TrueNAS admin** — log in with their **TrueNAS password**. No separate account to manage. |
-| ⬆️ **One-click updater** | Checks for new releases on login and updates **in place**, keeping your settings. |
-| ✉️ **Email relay** | Route TrueNAS's own alert emails through the SMTP server configured in WebPAM. |
-| 🔐 **Your own TLS certificate** | **Administration → SSL / TLS Certificate**: install your server certificate + CA/intermediate chain (validated, nginx auto-reloads, auto-restores on failure), or regenerate the built-in self-signed cert — which includes the box's **IP in its SAN**. |
-| 📦 **Easy to deploy** | One command on TrueNAS, or paste the compose YAML in the Apps UI; Proxmox/Debian host script included; pre-built image on **GHCR** with no local build. |
+<table>
+<tr>
+<td width="50%" valign="top">
 
-## Why it's safe on a live NAS
+### 🩺 Monitor
+
+- **Health dashboard — ZFS *and* mdadm/LVM.** Pools, arrays, logical & physical drives with SMART + temperature. Onboard/OS disks show as **Internal**, not in empty bays.
+- **System hardware.** CPU **package + per-core** temps, **PCH/chipset** temp, **controller/board** temp. Voltage rails: **Vcore, AVCC, +3.3V, 3VSB** and the **CMOS battery (Vbat)**. CPU fan + chassis blowers, with empty-port **"Not Installed"** detection — no false alarms.
+- **Per-drive Health %.** Normalised health score, temperature and power-on hours via **[Hard Disk Sentinel](https://www.hdsentinel.com)**, auto-installed from hdsentinel.com on first run (proprietary freeware — **not bundled**; see [Acknowledgements](#-acknowledgements)). Plus full `smartctl` identity on each drive page: **serial, firmware, interface** (e.g. SATA 3.3 / 6.0 Gb/s), **block size, capacity, SMART status**.
+
+</td>
+<td width="50%" valign="top">
+
+### 🌀 Control & events
+
+- **Full enclosure control.** CPU-fan and chassis-blower **fan curves with 1% granularity** + optional PWM→RPM calibration; front-panel **status LEDs** and **network LEDs**; the **fault buzzer**. *(Needs real A3120 hardware.)*
+- **System Events.** One page merging **TrueNAS system alerts** (`alert.list`), the **enclosure sensor faults** WebPAM detects, **drive-health warnings**, and the **host syslog** — with **email on each new fault**.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 🔒 Safe & simple to run
+
+- **Structurally read-only.** A dedicated health backend fills every view from a periodic **read-only snapshot** (`zpool` / `smartctl` / `lsblk` / `mdstat`). **No RAID write-helper is installed**, and the drive-management pages are nav-stripped and guarded.
+- **Easy to deploy.** One command on TrueNAS, or paste the compose YAML in the Apps UI; Proxmox/Debian host script included; pre-built image on **GHCR** with no local build.
+- **One-click updater.** Checks for new releases on login and updates **in place**, keeping your settings.
+
+</td>
+<td width="50%" valign="top">
+
+### 🔗 Fits TrueNAS
+
+- **Sign in with TrueNAS.** Members of the auto-created **`webpam` group** — and **any TrueNAS admin** — log in with their **TrueNAS password**. No separate account to manage.
+- **Email relay.** Route TrueNAS's own alert emails through the SMTP server configured in WebPAM.
+- **Your own TLS certificate.** **Administration → SSL / TLS Certificate**: install your server certificate + CA/intermediate chain (validated, nginx auto-reloads, auto-restores on failure), or regenerate the built-in self-signed cert — which includes the box's **IP in its SAN**.
+
+</td>
+</tr>
+</table>
+
+<br>
+
+## 🔒 Why it's safe on a live NAS
+
+| ✅ Reads — never writes | 🌀 Drives — enclosure only | 🚫 Does not exist in this codebase |
+|---|---|---|
+| `zpool` · `smartctl` · `lsblk` · `mdstat` · TrueNAS `alert.list` / users / syslog | Fans · status & network LEDs · fault buzzer — over the A3120 SMBus | create · delete · migrate · rebuild — no RAID write-helper, no privileged path to an array |
 
 Read-only is **structural**, not just hidden buttons:
 
@@ -104,7 +144,9 @@ Read-only is **structural**, not just hidden buttons:
 - The **enclosure** (fans / LEDs / temperatures / buzzer) stays fully functional on
   real A3120 hardware — that is the part you *want* to control.
 
-## How it works
+<br>
+
+## 🧭 How it works
 
 ```mermaid
 flowchart LR
@@ -131,29 +173,26 @@ TrueNAS) by `nsenter`-ing into PID 1 — so tool versions always match the host 
 no ZFS userland ships in the image. That is why the compose uses
 `privileged: true` + `pid: host`; those privileges are used **only to read**.
 
-## Using it
+<br>
 
-- **Log in** as `administrator` (the password you set), or as any TrueNAS user in
-  the `webpam` group / any TrueNAS admin, with their TrueNAS password.
-- **Add people:** TrueNAS → Credentials → Local Groups → `webpam` → Members.
-- **Update:** click the banner that appears on login → **Update now**.
-- **Email relay:** WebPAM **Email** page → set your SMTP → tick *"route TrueNAS
-  alerts through this SMTP server."*
-- **System events & alerts:** the **Events** page merges TrueNAS system alerts,
-  the enclosure sensor faults WebPAM detects, drive-health warnings, and the host
-  syslog; each new fault is emailed once your SMTP (above) is set.
-- **HTTPS certificate:** ships with a self-signed cert that includes the box's
-  **IP in the SAN** (no name-mismatch error). To remove the browser warning for
-  good, go to **Administration → SSL / TLS Certificate** and install your own
-  server certificate + CA chain (e.g. from your internal PKI), or regenerate the
-  self-signed one. Reaching WebPAM by a hostname? Set `WEBPAM_SAN="nas.lan"`.
-- **Rollback:** the prior image is kept as `webpam-monitor:stable-patched`.
-- **Uninstall:** TrueNAS → Apps → `webpam-monitor` → Delete (optionally remove the
-  `webpam` group afterwards).
+## 🧰 Using it
+
+| I want to… | Do this |
+|---|---|
+| **Log in** | As `administrator` (the password you set), or as any TrueNAS user in the `webpam` group / any TrueNAS admin, with their TrueNAS password. |
+| **Add people** | TrueNAS → Credentials → Local Groups → `webpam` → Members. |
+| **Update** | Click the banner that appears on login → **Update now**. |
+| **Relay email** | WebPAM **Email** page → set your SMTP → tick *"route TrueNAS alerts through this SMTP server."* |
+| **See events & alerts** | The **Events** page merges TrueNAS system alerts, the enclosure sensor faults WebPAM detects, drive-health warnings, and the host syslog; each new fault is emailed once your SMTP (above) is set. |
+| **Fix the HTTPS warning** | Ships with a self-signed cert that includes the box's **IP in the SAN** (no name-mismatch error). To remove the browser warning for good, go to **Administration → SSL / TLS Certificate** and install your own server certificate + CA chain (e.g. from your internal PKI), or regenerate the self-signed one. Reaching WebPAM by a hostname? Set `WEBPAM_SAN="nas.lan"`. |
+| **Roll back** | The prior image is kept as `webpam-monitor:stable-patched`. |
+| **Uninstall** | TrueNAS → Apps → `webpam-monitor` → Delete (optionally remove the `webpam` group afterwards). |
 
 See [`docs/TRUENAS.md`](docs/TRUENAS.md) for the full guide.
 
-## Configuration
+<br>
+
+## 🔧 Configuration
 
 Set these in the app's environment (the setup script and
 [`docker-compose.yml`](port/packaging/container/docker-compose.yml) already set
@@ -167,19 +206,21 @@ the first three):
 | `WEBPAM_SAN` | *(unset)* | Extra names/IPs for the self-signed certificate's SAN, e.g. `WEBPAM_SAN="192.0.2.10 nas.lan"`. |
 | `HEALTH_REFRESH` | `60` | Seconds between host health snapshots. |
 
-## Requirements
+## 📋 Requirements
 
-- **TrueNAS SCALE 24.10 (Electric Eel) or newer** (Docker-based apps), or a
-  Proxmox / Debian host.
-- Enclosure fan/LED control needs real **A3120 hardware**; the health dashboard
-  works anywhere.
+| | |
+|---|---|
+| **Host** | **TrueNAS SCALE 24.10 (Electric Eel) or newer** (Docker-based apps), or a Proxmox / Debian host. |
+| **Hardware** | Enclosure fan/LED control needs real **A3120 hardware**; the health dashboard works anywhere. |
 
-## Related project
+## 🔗 Related project
 
 - **vessapp-a3120-linux** — the **full management** edition (create / delete /
   migrate / rebuild arrays). More capable, and correspondingly more dangerous.
 
-## Legal & Trademarks
+<br>
+
+## 📄 Legal & Trademarks
 
 This project is **independent and unofficial**. It is **not** affiliated with,
 authorized by, endorsed by, sponsored by, or associated with **Promise
@@ -191,7 +232,7 @@ software interoperates with (nominative fair use). This project contains **no
 Promise Technology source code**. All product and company names are the property
 of their respective owners.
 
-## License
+## 📜 License
 
 **GNU General Public License v3.0** — © 2026 [CyborgFingers](https://github.com/CyborgFingers).
 You may use, study, modify, and redistribute this software under the terms of the
@@ -199,9 +240,9 @@ You may use, study, modify, and redistribute this software under the terms of th
 warranty**.
 
 The GPL covers copyright only and grants **no rights in any Promise Technology
-name or trademark** — see [Legal & Trademarks](#legal--trademarks).
+name or trademark** — see [Legal & Trademarks](#-legal--trademarks).
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
 Drive **Health %** scoring is provided by **[Hard Disk Sentinel](https://www.hdsentinel.com)**
 © János Máthé — a separate, proprietary freeware tool. It is **not bundled** with
@@ -209,3 +250,9 @@ this GPL project; when enabled, the free Linux console build is downloaded from
 hdsentinel.com into the app's own volume on first run, and WebPAM reads its
 output. All credit for the health analysis belongs to Hard Disk Sentinel. If the
 tool is absent, the drive pages fall back to native `smartctl` status.
+
+<br>
+
+<div align="center">
+<sub>© 2026 CyborgFingers · GPL-3.0 · independent &amp; unofficial — see <a href="#-legal--trademarks">Legal &amp; Trademarks</a></sub>
+</div>
