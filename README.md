@@ -46,13 +46,20 @@ Read-only is structural, not just "buttons hidden":
 
 ## Quick start
 
-- **TrueNAS SCALE:** build the image and install it as a Custom App — see
-  [`port/packaging/container/README.md`](port/packaging/container/README.md).
+- **TrueNAS:** Apps → Discover → Custom App → **Install via YAML**, paste
+  [`port/packaging/container/docker-compose.yml`](port/packaging/container/docker-compose.yml)
+  (it pulls the published image — **no build**), set `WEBPAM_PASSWORD`, install.
+  See [`port/packaging/container/README.md`](port/packaging/container/README.md).
 - **Proxmox / Debian host:** `sudo bash port/packaging/install-webpam-monitor.sh`
 
 Then browse `https://<host>:8443/` (container) or `http://<host>:8088/`
 (host install) and log in as `administrator` with the password you set
 (`promise-webpam-passwd <password>`).
+
+**TrueNAS users:** the app creates a `webpam` group in TrueNAS — anyone in it, or
+any TrueNAS admin, signs in with their TrueNAS login. **Updates:** WebPAM checks
+for new releases on login and updates in place (settings kept) from the
+**Update now** button.
 
 > ⚠️ Read-only for **disks**, but it still drives real chassis **fans and LEDs**.
 > Provided **with no warranty** — see [LICENSE](LICENSE). Keep backups.
