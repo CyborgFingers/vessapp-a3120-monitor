@@ -43,6 +43,8 @@ admin password. Then open **`https://<nas-ip>:8443/`** and sign in as
 | 🌀 **Enclosure control** | CPU-fan and chassis-blower curves with **1% granularity** + optional PWM→RPM calibration, front-panel status & network LEDs, and the fault buzzer. |
 | 👤 **Sign in with TrueNAS** | Members of the auto-created `webpam` group — and any TrueNAS admin — log in with their **TrueNAS credentials**. No separate password to manage. |
 | ⬆️ **One-click updates** | WebPAM checks for new releases on login and updates **in place**, keeping your settings. |
+| 💾 **Drive health scoring** | Per-drive **Health %**, temperature and power-on hours from **[Hard Disk Sentinel](https://www.hdsentinel.com)** (auto-installed on first run), shown on the drive pages with alerts when a disk degrades. |
+| 📋 **System event log** | One page merging TrueNAS system alerts, the enclosure sensor faults WebPAM detects, and the host syslog — with email on each new fault. |
 | ✉️ **Alerts through your mail server** | Point TrueNAS's own alert emails at the SMTP server you set in WebPAM. |
 
 ## Why it's safe on a live NAS
@@ -101,3 +103,12 @@ warranty**.
 
 The GPL covers copyright only and grants **no rights in any Promise Technology
 name or trademark** — see [Legal & Trademarks](#legal--trademarks).
+
+## Acknowledgements
+
+Drive **Health %** scoring is provided by **[Hard Disk Sentinel](https://www.hdsentinel.com)**
+© János Máthé — a separate, proprietary freeware tool. It is **not bundled** with
+this GPL project; when enabled, the free Linux console build is downloaded from
+hdsentinel.com into the app's own volume on first run, and WebPAM reads its
+output. All credit for the health analysis belongs to Hard Disk Sentinel. If the
+tool is absent, the drive pages fall back to native `smartctl` status.

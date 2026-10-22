@@ -49,6 +49,18 @@ else
   echo "[entrypoint] WARNING: probe produced no snapshot. Needs 'privileged: true' + 'pid: host'"
   echo "[entrypoint]          so nsenter can read the host's zpool/smartctl. Pages will be empty."
 fi
+# Hard Disk Sentinel drive-health bridge (opt-in). HD Sentinel is PROPRIETARY
+# freeware -> not bundled in this GPL image; fetched from hdsentinel.com into the
+# persisted /etc/promise volume on first run. Slow cadence (drive health changes
+# slowly + avoid hammering SMART). Writes /run/promise/hdsentinel.json for the
+# drive pages + promise-alerts. Dormant if fetch fails -> pages fall back to smartctl.
+if [ "${VESSAPP_HDSENTINEL:-0}" = 1 ]; then
+  /usr/bin/python3 -I /opt/promise/bin/promise-hdsentinel --fetch >/dev/null 2>&1 || true
+  hds_refresh() { /usr/bin/python3 -I /opt/promise/bin/promise-hdsentinel >/dev/null 2>&1 || true; }
+  hds_refresh
+  ( while true; do sleep "${HDS_REFRESH:-900}"; hds_refresh; done ) &
+fi
+
 # System Events snapshot: TrueNAS alert.list + enclosure sensor faults + syslog
 # tail -> /run/promise/alerts.json for events.php; emails new enclosure faults
 # through the TrueNAS mail relay (midclt mail.send). Root, same nsenter path.

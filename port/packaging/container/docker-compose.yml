@@ -28,6 +28,12 @@ services:
       # those users sign in with their TrueNAS password. Leave unset on a plain
       # Docker host (no midclt). See port/packaging/promise-webpam-group-sync.
       VESSAPP_TRUENAS_SYNC: "1"
+      # Drive health via Hard Disk Sentinel (normalised Health % + temp). It is
+      # PROPRIETARY freeware, so it is NOT bundled - set to 1 and the free Linux
+      # console binary is downloaded from hdsentinel.com into the persisted
+      # volume on first run. Set 0 to disable (drive pages then use smartctl only).
+      # Credit: Hard Disk Sentinel (c) Janos Mathe - https://www.hdsentinel.com
+      VESSAPP_HDSENTINEL: "1"
     volumes:
       - webpam_monitor_cfg:/etc/promise # persist the TLS cert + login password
 volumes:

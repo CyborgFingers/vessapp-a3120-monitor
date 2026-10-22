@@ -163,6 +163,19 @@ if ($physicalDrive == null) {
       table_row(gprop('protocolversion'), $physicalDrive->pdi_ProtocolMajorVer);
     }
     table_row(gprop('visibleto'), $physicalDrive->_visibleto);
+    /* HD Sentinel normalised drive health (if installed; else these rows vanish
+     * and the native SMART fields above stand alone). hdsentinel.com */
+    $hds = webpam_hdsentinel(
+      isset($physicalDrive->pdi_DriveSerialNo) ? $physicalDrive->pdi_DriveSerialNo : '',
+      isset($physicalDrive->pdi_OsName) ? $physicalDrive->pdi_OsName : ''
+    );
+    if ($hds) {
+      $hcolor = $hds['health'] < 50 ? 'red' : ($hds['health'] < 90 ? '#ffa800' : null);
+      table_row('HD Sentinel Health', $hds['health'] . '%', null, $hcolor);
+      table_row('HD Sentinel Temperature', $hds['temp'] . ' C');
+      table_row('Power-on Time', number_format($hds['power_on_h']) . ' hours');
+      table_row('Health Source', 'Hard Disk Sentinel (hdsentinel.com)');
+    }
     table_foot_fold();
 
     if (!isset($physicalDrive->_missing) && isset($physicalDrive->showAD) && ($physicalDrive->showAD == 1)) {

@@ -11,6 +11,26 @@
 include 'table.php';
 include 'common2.php';
 
+/* HD Sentinel drive health. promise-hdsentinel writes /run/promise/hdsentinel.json
+ * (normalised Health % + temp per drive). Returns the record matched by serial,
+ * else by OS name (sdX), else null when HD Sentinel is not installed (pages then
+ * just show the native SMART fields). Credit: Hard Disk Sentinel (c) Janos Mathe
+ * - https://www.hdsentinel.com */
+function webpam_hdsentinel($serial = '', $osname = '')
+{
+  static $snap = false;
+  if ($snap === false) {
+    $raw = @file_get_contents('/run/promise/hdsentinel.json');
+    $snap = $raw === false ? null : json_decode($raw, true);
+  }
+  if (!is_array($snap)) return null;
+  $serial = trim((string) $serial);
+  if ($serial !== '' && isset($snap['by_serial'][$serial])) return $snap['by_serial'][$serial];
+  $osname = trim((string) $osname);
+  if ($osname !== '' && isset($snap['by_osname'][$osname])) return $snap['by_osname'][$osname];
+  return null;
+}
+
 /* ---- webpam-monitor: read-only drive posture --------------------------------
  * This is the drive-health MONITOR build. Every page that WRITES to a drive or
  * array - create/delete/expand/migrate, spare assign/remove, initialize,

@@ -46,12 +46,16 @@ function onePD($physicalDrive)
 {
   if ($physicalDrive == null) return;
   $a = array('PD' . ($physicalDrive->pdi_FlatId + 1), 'phydrv.php?pdid=' . $physicalDrive->pdi_FlatId);
+  $hds = webpam_hdsentinel($physicalDrive->pdi_DriveSerialNo ?? '', $physicalDrive->pdi_OsName ?? '');
+  $hcell = $hds
+    ? array($hds['health'] . '%', null, ($hds['health'] < 50 ? 'red' : ($hds['health'] < 90 ? '#ffa800' : null)))
+    : '-';
   $columns = array(
     $a, $physicalDrive->pdi_DriveModelNo, $physicalDrive->pdi_DriveTypeString, $physicalDrive->pdi_ConfigurableSize,
     isset($physicalDrive->pdi_SlotId)
       ? ('Encl ' . ($physicalDrive->pdi_EnclosureId + 1) . ' Slot ' . $physicalDrive->pdi_SlotId)
       : ('Internal' . (isset($physicalDrive->pdi_OsName) && $physicalDrive->pdi_OsName !== '' ? (' (' . $physicalDrive->pdi_OsName . ')') : '')),
-    array($physicalDrive->_opStatus, null, getStatusColor($physicalDrive->_opStatus)), $physicalDrive->_cfgStatus
+    array($physicalDrive->_opStatus, null, getStatusColor($physicalDrive->_opStatus)), $physicalDrive->_cfgStatus, $hcell
   );
   table_row_cols($columns, null, 'pd' . (isset($physicalDrive->pdi_SlotId) ? (int)$physicalDrive->pdi_SlotId : $physicalDrive->pdi_FlatId));
 }
@@ -94,8 +98,8 @@ else {
 table_tab_foot();
 
 table_head_fold(gprop('physicaldrivelist'), 'PD', null, null, array('pad' => 2, 'space' => 1, 'border' => 0, 'class' => 'tableContentInner'));
-$columns = array(gprop('device'), gprop('model'), gprop('type'), gprop('configurablecapacity'), gprop('location'), gprop('opstatus'), gprop('configurationstatus'));
-$widths = array(10, 20, 8, 15, 12, 15, 20);
+$columns = array(gprop('device'), gprop('model'), gprop('type'), gprop('configurablecapacity'), gprop('location'), gprop('opstatus'), gprop('configurationstatus'), 'Health');
+$widths = array(10, 18, 7, 14, 12, 14, 16, 9);
 table_header_cols($columns, $widths);
 
 if (isset($_SESSION['pegasus'])) {

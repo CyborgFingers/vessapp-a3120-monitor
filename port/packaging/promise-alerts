@@ -206,13 +206,14 @@ def diff_and_notify(faults):
     new_raise = [(k, v) for k, v in cur.items() if k not in prev]
     cleared = [k for k in prev if k not in cur]
 
+    src = lambda key: "Drive" if key.startswith("disk:") else "Enclosure"
     hist = []
     for key, (sev, desc) in new_raise:
-        hist.append({"source": "Enclosure", "severity": sev, "time": now, "id": key, "desc": desc})
-        send_mail(f"[WebPAM] Enclosure {sev}: {desc}",
-                  f"WebPAM detected an enclosure hardware fault.\r\n\r\n    {desc}\r\n")
+        hist.append({"source": src(key), "severity": sev, "time": now, "id": key, "desc": desc})
+        send_mail(f"[WebPAM] {src(key)} {sev}: {desc}",
+                  f"WebPAM detected a {src(key).lower()} fault.\r\n\r\n    {desc}\r\n")
     for key in cleared:
-        hist.append({"source": "Enclosure", "severity": "info", "time": now, "id": key,
+        hist.append({"source": src(key), "severity": "info", "time": now, "id": key,
                      "desc": f"RESOLVED: {prev[key][1] if isinstance(prev[key], (list, tuple)) else key}"})
     append_history(hist)
     tmp = STATE + ".tmp"
@@ -222,8 +223,18 @@ def diff_and_notify(faults):
     return hist
 
 
+def hdsentinel_faults():
+    """Disk-health faults computed by promise-hdsentinel (single source)."""
+    try:
+        snap = json.load(open("/run/promise/hdsentinel.json"))
+    except (OSError, ValueError):
+        return []
+    return [tuple(x) for x in snap.get("faults", [])]
+
+
 def run():
     _, faults = read_sensors()
+    faults += hdsentinel_faults()
     diff_and_notify(faults)
     events = truenas_events() + syslog_events()
     # enclosure history (recent) rounds out the event log with raise/clear
