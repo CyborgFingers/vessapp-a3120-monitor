@@ -66,6 +66,9 @@ Read-only is **structural**, not just hidden buttons:
 - **Update:** click the banner that appears on login → **Update now**.
 - **Email relay:** WebPAM **Email** page → set your SMTP → tick *"route TrueNAS
   alerts through this SMTP server."*
+- **System events & alerts:** the **Events** page merges TrueNAS system alerts,
+  the enclosure sensor faults WebPAM detects, drive-health warnings, and the host
+  syslog; each new fault is emailed once your SMTP (above) is set.
 - **Rollback:** the prior image is kept as `webpam-monitor:stable-patched`.
 
 See [`docs/TRUENAS.md`](docs/TRUENAS.md) for the full guide.

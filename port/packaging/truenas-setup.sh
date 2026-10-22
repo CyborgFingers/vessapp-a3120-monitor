@@ -47,6 +47,7 @@ services:
     environment:
       WEBPAM_PASSWORD: "$PASSWORD"
       VESSAPP_TRUENAS_SYNC: "1"
+      VESSAPP_HDSENTINEL: "1"
     volumes:
       - webpam_monitor_cfg:/etc/promise
 volumes:
